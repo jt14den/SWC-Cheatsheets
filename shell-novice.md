@@ -29,7 +29,8 @@ The shell has been around a long long time, since the 1960's.  It's survived bec
 
 # Our hypothetical example: Nelle the marine biologist
 Nelle has collected 1520 samples of marine life from the North Pacific Gyre.  
-She wants to run protein assays on each of these samples to measure the relative abundances of 300 different proteins.  
+She wants to run protein assays on each of these samples to measure the relative abundances of 300 different 
+proteins.  
 The assay machine she's using spits out a text file with one line for each protein.  
 
 She's on a deadline and has to: 
@@ -38,10 +39,12 @@ She's on a deadline and has to:
 3). Compare the statistics for the proteins to each other using goodiff, which her labmate wrote.
 4). Write up her results, ideally within a month.  
 
-If she had to run goostat and goodiff by hand she'll have to type in the filenames and click OK 46,370 times.  Even if she can do this quickly, it will take weeks, and she'll certainly have typeos.  
+If she had to run goostat and goodiff by hand she'll have to type in the filenames and click OK 46,370 times.  
+Even if she can do this quickly, it will take weeks, and she'll certainly have typeos.  
 
 We're going to explore the shell to get at what she could do instead.
-We want to automate the repetitive steps in her workflow so that her computer can do all the work while she writes her paper.  
+We want to automate the repetitive steps in her workflow so that her computer can do all the work 
+while she writes her paper.  
 Plus, once she puts a workflow together, she can use it again if she collects more data.
 
 
@@ -84,7 +87,8 @@ cd Desktop # cd stands for change directory
 cd data-shell
 cd data
 
-# cd doesn't tell us anything back, but we can check using our tools from before, to see that we are in the data directory
+# cd doesn't tell us anything back, but we can check using our tools from before, 
+# to see that we are in the data directory
 pwd
 ls -F
 
@@ -109,7 +113,8 @@ ls -Fa
 ls ..
 
 # So ls, cd, and pwd are how we navigate around our filesystem
-# What happens if you just type cd and press enter?  Where do you go?  Let's figure it out, and put up a green sticky when you have the answer
+# What happens if you just type cd and press enter?  Where do you go?  Let's figure it out, 
+# and put up a green sticky when you have the answer
 # %%%%% Socrative %%%%%
 
 # Takes us back to the home directory
