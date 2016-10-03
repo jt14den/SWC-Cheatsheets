@@ -5,9 +5,10 @@
 
 
 
-### Introduce socrative ###
-# Start the quiz in teacher mode
-# Advise to go to https://b.socrative.com/login/student/
+### Introduce Socrative ###
+# You can import my quiz with SOC-24313213
+# Start the quiz in teacher mode, so you can step through one question at a time
+# Advise learners to go to https://b.socrative.com/login/student/
 # Type in MICKLEY for the room name
 
 # QUESTION: How many of you have used the shell before?
@@ -388,7 +389,132 @@ wc -l *[AB].txt
 
 
 ##### 5. Loops #####
-# How can we perform the same repetitive actions on many files
+# How can we perform the same repetitive actions on many files? Using loops
+# Also reduces amount of typing and mistakes
+
+# We're going to work in the creatures directory
+# Here we have two files, let's assume they're genome data files and we have a lot more than 2
+cd ../creatures
+ls
+
+# We can inspect one to see
+head -n 10 unicorn.dat
+
+# Say we wanted to modify these files, but we wanted to save a backup first
+# We could try, this but it won't work
+cp *.dat original-*dat
+
+# That would expand to the following, and try to copy 2 files to a directory that doesn't exist
+cp basilisk.dat unicorn.dat original-*.dat
+
+# Instead, we'll have to use a loop.  We'll come back to this example
+
+# A simple example of a for loop
+# Note that the > character here means that our command isn't finished yet.  
+# We need the done to finish it
+for filename in basilisk.dat unicorn.dat
+do
+head -n 3 $filename
+done
+
+# The for loop does something for each thing in a list
+# In this case, the list is the two filenames
+# Each time through the loop, the filename we're working on is saved in a variable named filename
+# Inside the loop, we can get and substitute the variable's value by putting a $ in front of it
+# Finally, the thing we're actually doing each time is just head
+
+# Note that the > now has multiple meanings.
+# It can mean "redirect to a file" if we put it in our command
+# Or the shell prints it it's expecting us to type something, command not finished. 
+# > and $ are two different "prompts"
+
+# We could use x as a variable name instead
+# Indenting the things we're doing inside the loop makes the code easier to read
+for x in basilisk.dat unicorn.dat
+do
+    head -n 3 $x
+done
+
+# Best to pick variable names that make sense with what you're doing, filename is better than x
+
+# %%%%% Socrative #12 %%%%%
+
+# A slightly more complicated loop
+# We could also use curly braces to get our variable ${filename} is the same as $filename
+for filename in *.dat
+do
+    echo $filename
+    head -n 100 ${filename} | tail -n 20
+done
+
+# We use a wildcard for the filenames instead of listing them ourself
+# This time we run two commands.  The first is echo, which just echos/prints the filename
+# We couldn't just put $filename there. 
+# Then the shell would expand it to basilisk.dat and try to run that
+# Finally, we take the first 100 rows, and then the last 20 of those, = rows 81-100
+
+# Testing echo
+echo hello there
+
+# Say we had some filenames with spaces, eg red dragon.dat.  We'd have to quote them
+# Otherwise, the shell would treat them as separate files
+# Again, it's often easier to just avoid spaces
+for filename in "red dragon.dat" "purple unicorn.dat"
+
+# Back to our file copying problem, we can solve it with this loop
+for filename in *.dat
+do 
+  cp $filename original-$filename
+done
+
+# Each time through it runs a different file
+#cp basilisk.dat original-basilisk.dat
+#cp unicorn.dat original-unicorn.dat
+
+# Check for copies
+ls
+
+### Back to our friend Nelle, building her pipeline ###
+
+# First she wants to make sure she can select the right files
+cd ../north-pacific-gyre/2012-07-03
+for datafile in *[AB].txt
+do
+  echo $datafile
+done
+
+# Now she wants to run her goostats program on them and write the results to files
+# To be safe, we're still using echo here
+for datafile in *[AB].txt
+do
+  echo $datafile stats-$datafile
+done
+
+# All this typing is increasing our chance of mistakes though.  
+# Fortunately, we can reuse some of our typing
+# Hitting the up arrow key gives us the last command.  
+# Note the semicolons, these separate different lines
+# We can then move around and change echo to bash goostats to run the program
+
+# Now it's running the stats, but we have no idea as to progress!  
+# We can stop the for loop with CTRL+C
+# Lets add echo $datafile; back in so we can see which file we're working on
+# If you know how many files you have, you can estimate how long this will take to run
+
+# Editing the previous command still takes a while using the arrow keys
+# CTRL+A takes us the the beginning of the line, and CTRL+E to the end
+# Also, we could keep hitting up arrow to go through our history, eg find the ls command
+
+# Alternatively we could use the history command and pipe it through tail to get the last 15
+history | tail -n 15
+
+# Notice that the history entries are numbered.  We can run any of them with an exclamation point
+!132 # Run the ls command"
+
+# %%%%% Socrative #13 %%%%%
+
+
+############################
 
 
 ##### 6. Shell Scripts #####
