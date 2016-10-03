@@ -49,6 +49,10 @@
 # while she writes her paper.  
 # Plus, once she puts a workflow together, she can use it again if she collects more data.
 
+
+###############################################
+
+
 ##### 2. Navigating Files and Directories #####
 
 # Setup prompt
@@ -114,8 +118,9 @@ ls ..
 
 # So ls, cd, and pwd are how we navigate around our filesystem
 # What happens if you just type cd and press enter?  Where do you go?  Let's figure it out, 
-# and put up a green sticky when you have the answer
-# %%%%% Socrative %%%%%
+# and put up a green sticky when think you have the answer
+
+# %%%%% Socrative #2 %%%%%
 
 # Takes us back to the home directory
 cd
@@ -134,22 +139,128 @@ cd /Volumes/mickles/Desktop/data-shell
 cd ~/Desktop # Tilda is the same as the user's home directory (/Volumes/mickles for me)
 cd - # This takes you to the previous directory you were in, very useful for switching back and forth
 
-# %%%%% Challenge %%%%%
-#
-# %%%%%%%%%%%%%%%%%%%%%
+# %%%%% Socrative #3 %%%%%
+# %%%%% Socrative #4 %%%%%
+
+# QUESTION: What does the command ls do when used with the -l and -h arguments?
+# Use your stickies
+
+### Back to Nelle ###
+# Nelle makes a directory called north-pacific-gyre for where the data came from
+ls 
+
+# Inside of it is a folder named by the date
+ls north-pacific-gyre
+
+# Notice how this is named.  
+# The filesystem sorts things by name, so if she makes more directories, they'll automatically be sorted
+# This becomes more important later on if we want to run something that works with each directory in sequence
+
+# Let's see what's inside the dated folder. 
+# Lot's to type, introduce tab completion: folder 1, folder2, and contents
+ls nor
 
 
-What does the command ls do when used with the -l and -h arguments?
+#################################################
 
-
-
-
-
-# %%%%% Challenge %%%%%
-#
-# %%%%%%%%%%%%%%%%%%%%%
 
 ##### 3. Working With Files and Directories #####
+
+# Ok, we know how to explore files and directories, but how do we create them?
+cd ~/Desktop/data-shell
+ls -F
+
+# Let's create a new directory called thesis using mkdir
+mkdir thesis # Make directory.  Relative path, so in current working directory
+
+# Check that it's there.  We can also check with our GUI
+ls -F
+
+# Good naming conventions
+# 1. Don't use spaces.  It's possible to (and I do), but the shell interprets them as arg breaks
+# 2. Don't begin the name with -, since that means "flag"
+# 3. Stick with letters, numbers, ., -, _  Many other characters have special meanings
+
+# Now let's make a new file, using an editor in the shell called nano
+# You could use any other text editor instead, nano is just convenient
+# Notepad++ (Windows) or Sublime are good ones
+cd thesis
+nano draft.txt
+
+# Explore nano commands using the control key (^)
+
+# Write something like: 
+# As the facts change, change your thesis!  Don't be a stubborn mule or you'll get killed.
+
+# Now let's write this out using Ctrl+O
+
+# Our file exists!
+ls 
+
+# We can remove this file using rm
+# Careful though!  In shell, deleting is forever!  No "are you sure?".  No trash bin.
+rm draft.txt
+ls
+
+# Let's recreate the file, and move back one directory to data-shell
+nano draft.txt
+ls
+cd ..
+
+# Now let's try to remove the whole thesis directory
+# Doesn't work.  rm only works with files by default, not directories.  This is a good thing.
+rm thesis
+
+# If we add the recursive (-r) flag, we can delete everything inside thesis, and it too
+# But this is super powerful, and again you need to be careful!!  We might forget what else is inside.
+rm -r thesis
+
+# A better way is to add the interactive flag to rm too
+# We use y and n for yes and no (which also work)
+rm -r -i thesis
+ls -F 
+
+# %%%%% Socrative #5 %%%%%
+
+# Let's recreate it again.  This time we don't need to be in the thesis directory
+pwd
+mkdir thesis
+nano thesis/draft.txt
+ls thesis
+
+# Let's change the name to something more appropriate
+# mv stands for move.  First argument is the file we're moving, 2nd is where to go
+mv thesis/draft.txt thesis/quotes.txt 
+ls thesis
+
+# Be careful with mv too.  It overwrites files without telling you.  
+# You can avoid this with -i
+
+# Let's move quotes.txt into the current working directory.  Remember, . is pwd
+mv thesis/quotes.txt .
+ls thesis
+
+# If we give a filename to ls, it only looks for that file
+ls quotes.txt
+
+# We also have a copy command called cp
+cp quotes.txt thesis/quotations.txt
+ls quotes.txt thesis/quotations.txt
+
+# Just to prove we have a copy, let's delete the original
+rm quotes.txt
+ls quotes.txt thesis/quotations.txt
+
+# Names and extensions
+# The files we're working with have names that are something dot something
+# This extension at the end isn't required.  We could have just called this quotes
+# But extensions are helpful for us (and programs) to know how to interpret them
+
+# %%%%% Socrative #6 %%%%%
+# %%%%% Socrative #7 %%%%%
+
+
+################################
 
 
 ##### 4. Pipes and Filters #####
