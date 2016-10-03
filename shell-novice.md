@@ -54,6 +54,7 @@
 
 
 ##### 2. Navigating Files and Directories #####
+# Moving around in the filesystem and seeing what's there
 
 # Setup prompt
 PS1='$ ' # (Or PS1="\n\w: \$ ")
@@ -165,6 +166,7 @@ ls nor
 
 
 ##### 3. Working With Files and Directories #####
+# Creating, copying, deleting, and editing
 
 # Ok, we know how to explore files and directories, but how do we create them?
 cd ~/Desktop/data-shell
@@ -264,9 +266,129 @@ ls quotes.txt thesis/quotations.txt
 
 
 ##### 4. Pipes and Filters #####
+# Combining commands to do novel things
+
+# Combining commands or programs together is where we really get into the shell's power
+
+# Let's look in the molecules directory.  
+This has some files describing some organic molecules in protein data bank (pdb) format
+pwd
+ls molecules
+
+# Le'ts go into that directory and run wordcount
+# This shows the # of lines, words, and characters
+cd molecules
+wc *.pdb
+
+# The * character is a "wildcard". It matches 0 or more characters, so *.pdb matches all pdb files
+# We could also use p*.pdb for only pentane and propane
+wc p*.pdb
+
+# Another wildcard is ?, but it only matches a single character.  
+# So p?.pdb wouldn't match pentane.pdb, only pi.pdb
+
+# We could use multiple wildcards at once
+wc ??hane.p* # This will only match ethane
+
+
+# One note:  If nothing matches, our wildcard match gets passed as-is, eg:
+# The shell is creating a list of matching files BEFORE running wc
+wc *.pdf # Doesn't work
+
+# %%%%% Socrative #8 %%%%%
+
+# If we add the -l flag to wc we only get the # of lines
+# We could also use -w and -c for the # of words or characters
+wc -l *.pdb
+
+# Say we wanted to know which file was the shortest.  
+# Easy with only 6 (methane), but what if there were thousands of files?
+
+# First step, save the lengths to a file
+# The > symbol REDIRECTS the output to the filename (and we don't see it!)
+# Creates or overwrites the file
+wc -l *.pdb > lengths.txt
+ls lengths.txt
+
+# Now we want to see what's in the file
+# We can print it using cat = concatenate (can be used with multiple files)
+cat lengths.txt
+
+# One disadvantage of cat is it dumps the entire file.  Not so good if file is long
+# Can use less instead to just show a screen at a time
+less lengths.txt  # Press q to quit
+
+# Now that we have a file, we can use the sort command to sort its contents
+# We also have to use the -n flag for numeric sort (otherwise 100 and 10 will end up together)
+sort -n lengths.txt
+
+# We can save these sorted lengths
+sort -n lengths.txt > sorted-lengths.txt
+cat lengths.txt
+cat sorted-lengths.txt
+
+# We can also use a command called head to just get the first line. -n is the # of lines to get
+head -n 1 sorted-lengths.txt
+
+# Things are getting confusing with all these intermediate files
+# Fortunately we can avoid those intermediates by running everything together
+sort -n lengths.txt | head -n 1
+
+# The | is called a pipe, and it's very useful!!!
+# It means take the output of the left side and use it as input for the right side
+
+# We could also do this for wordcount and sort
+wc -l *.pdb | sort -n
+
+# And for everything all at once, no intermediate files!
+# Go over what this is doing, basically reading backwards: head of sort of wordcount
+wc -l *.pdb | sort -n | head -n 1
+
+# %%%%% Socrative #9 %%%%%
+
+# So we end up with lots of little tools that do one job well and can be strung together
+# Keeps things from getting too complicated
+# wc and sort then act as filters and pipe between each other.  
+# They take input, transform and give us output
+
+# We used > to redirect output to a file.  We can also redirect a file to input using < 
+wc < methane.pdb # same as wc methane.pdb, but there's no filename to open, it's redirected
+
+### Back to our biologist Nelly ###
+
+# Nelle decides to check the length of her data files
+cd north-pacific-gyre/2012-07-03
+wc -l *.txt
+
+# Things like this can be good for error checking.  There's a file that's too short, missing data
+
+# Still a lot of work to go through though if she's got thousands of files
+# So we do this instead to look at the shortest 5
+wc -l *.txt | sort -n | head -n 5
+
+# We could also look for files that are too big using tail (similar to head, but last lines)
+# That looks ok sizewize, but what's that Z doing in the 2nd line?  
+# Should just be A or B for 2 different depths
+wc -l *.txt | sort -n | tail -n 5
+
+# Let's see if there are any others like it
+# Turns out there are two, where depth wasn't recorded
+ls *Z.txt
+
+# We could delete these files using rm, but we might want to use them later
+# Instead we can just exclude them from all analyses with wildcards
+# [AB] means match one character that is either an A or a B
+wc -l *[AB].txt
+
+# %%%%% Socrative #10 %%%%%
+# %%%%% Socrative #11 %%%%%
+
+
+####################
 
 
 ##### 5. Loops #####
+# How can we perform the same repetitive actions on many files
 
 
 ##### 6. Shell Scripts #####
