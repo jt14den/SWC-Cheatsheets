@@ -3,6 +3,48 @@
 ```bash
 ##### 1. Introducing the Shell #####
 
+# Introduce socrative
+Start the quiz in teacher mode
+Advise to go to https://b.socrative.com/login/student/
+Type in MICKLEY for the room name
+
+# QUESTION: How many of you have used the shell before?
+
+# Computers do 4 things:
+- run programs
+- store data
+- communicate with each other
+- and interact with us
+
+Mostly we interact nowadays using a GUI (graphical interface).  
+But we can also use a command interface (CLI) with the shell
+We type something in, the computer evaluates it, and prints out something for us to read
+This is what the shell does, it's a program that lets us run other programs
+
+The shell has been around a long long time, since the 1960's.  It's survived because it's simple and powerful
+
+- Useful for repetitive tasks and constructing a workflow
+- Even comes bundled with a lots of little simple programs
+- Important if you’re using something like an HPC cluster
+
+# Our hypothetical example: Nelle the marine biologist
+Nelle has collected 1520 samples of marine life from the North Pacific Gyre.  
+She wants to run protein assays on each of these samples to measure the relative abundances of 300 different proteins.  
+The assay machine she's using spits out a text file with one line for each protein.  
+
+She's on a deadline and has to: 
+1). Run each sample through the machine, which will take a few weeks
+2). Calculate statistics for each of the proteins separately using a program her supervisor wrote called goostat.
+3). Compare the statistics for the proteins to each other using goodiff, which her labmate wrote.
+4). Write up her results, ideally within a month.  
+
+If she had to run goostat and goodiff by hand she'll have to type in the filenames and click OK 46,370 times.  Even if she can do this quickly, it will take weeks, and she'll certainly have typeos.  
+
+We're going to explore the shell to get at what she could do instead.
+We want to automate the repetitive steps in her workflow so that her computer can do all the work while she writes her paper.  
+Plus, once she puts a workflow together, she can use it again if she collects more data.
+
+
 
 ##### 2. Navigating Files and Directories #####
 
@@ -68,6 +110,7 @@ ls ..
 
 # So ls, cd, and pwd are how we navigate around our filesystem
 # What happens if you just type cd and press enter?  Where do you go?  Let's figure it out, and put up a green sticky when you have the answer
+# %%%%% Socrative %%%%%
 
 # Takes us back to the home directory
 cd
@@ -91,7 +134,7 @@ cd - # This takes you to the previous directory you were in, very useful for swi
 # %%%%%%%%%%%%%%%%%%%%%
 
 
-
+What does the command ls do when used with the -l and -h arguments?
 
 
 
