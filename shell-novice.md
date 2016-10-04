@@ -625,16 +625,73 @@ cat haiku.txt
 # Look for lines that have "not" in them
 grep not haiku.txt
 
-# Or day
+# Or day.  But this includes words containing day
 grep day haiku.txt
 
-
+# To just get day, we can use -w (for word)
 grep -w day haiku.txt
 
+# We can also search for a phrase with quotes
 grep -w "is not" haiku.txt
 
+# It's also useful to get the line numbers of the lines that match
 grep -n "it" haiku.txt
 
+# Flags can be combined: line numbers and words
+grep -n -w "the" haiku.txt
+
+# Line numbers, words, and case-insensitive
+grep -n -w -i "the" haiku.txt
+
+# Or we can invert our search, show the lines that do NOT contain "the"
+grep -n -w -v "the" haiku.txt
+
+# Grep has lots of other options
+man grep
+grep --help
+
+# Grep supports something called regular expressions, which is like our wildcards
+# http://regexr.com/
+# -E extended regex, Quotes to prevent shell expansion, ^ = beginning, . = single character
+grep -E '^.o' haiku.txt
+
+# grep finds lines in files, but the find command finds files themselves
+# This finds all the files in the current directory (and it's recursive)
+find .
+
+# Only show directories
+find . -type d
+
+# Only show files
+find . -type f
+
+# We can also match by name
+# This doesn't actually find all of them, remember the shell expands BEFORE command runs
+find . -name *.txt
+find . -name haiku.txt # Ends up same as this
+
+# Putting in single quotes prevents shell from expanding
+find . -name '*.txt'
+
+# Pretty similar to ls right?  But find lets us restrict our search
+
+# Shell runs whatever is inside $() first
+wc -l $(find . -name '*.txt')
+
+# Same as this
+wc -l ./data/one.txt ./data/two.txt ./haiku.txt
+
+# We often string grep and find together
+
+# Find all the .pdb files contained in the parent directory of this one, then look for FE in them.
+grep "FE" $(find .. -name '*.pdb')
+
+# %%%%% Socrative #15 %%%%%
+
+### Challenge ###
+Write a short explanatory comment for the following shell script:
+wc -l $(find . -name '*.dat') | sort -n
+
+
+
 ```
-
-
