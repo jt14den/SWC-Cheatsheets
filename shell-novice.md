@@ -12,13 +12,12 @@
 **QUESTION: How many of you have used the shell before?**
 
 Computers do 4 things:
-- run programs
-- store data
-- communicate with each other
-- and interact with us
+* run programs
+* store data
+* communicate with each other
+* and interact with us
 
-
-- Mostly we interact nowadays using a GUI (graphical interface).  
+- Mostly we interact nowadays using a GUI (graphical interface).
 - But we can also use a command interface (CLI) with the shell
 - We type something in, the computer evaluates it, and prints out something for us to read
 - This is what the shell does, it's a program that lets us run other programs
@@ -408,8 +407,10 @@ Computers do 4 things:
 
 ### Back to our friend Nelle, building her pipeline
 
+
 - First she wants to make sure she can select the right files
   - **`cd ../north-pacific-gyre/2012-07-03`**
+  - cd north pacific
   - 
     
     ```
