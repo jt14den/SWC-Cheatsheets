@@ -410,9 +410,8 @@ Computers do 4 things:
 
 - First she wants to make sure she can select the right files
   - **`cd ../north-pacific-gyre/2012-07-03`**
-  - cd north pacific
   - 
-    
+
     ```
     for datafile in *[AB].txt
     do
