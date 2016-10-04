@@ -512,16 +512,128 @@ history | tail -n 15
 !132 # Run the ls command"
 
 # %%%%% Socrative #13 %%%%%
+# %%%%% Socrative #14 %%%%%
 
 
 ############################
 
 
 ##### 6. Shell Scripts #####
+# How we save and reuse groups of commands
+
+# Now we're going to save our whole workflow in a file, so that we can just run the file
+
+# First let's go back to the molecules directory
+cd ~/Desktop/data-shell/molecules
+
+# Now let's edit a new file
+nano middle.sh
+
+# Put in the following: which selects lines 11-15
+# We're not running this as a command, we're just putting it in a file
+head -n octane.pdb | tail -n 5
+
+# Save and exit: CTRL+O, CTRL+X
+
+# Now we can run the file, which in turn runs the commands inside of it
+bash middle.sh
+
+# Compare to running the command directly: they're the same
+head -n 15 octane.pdb | tail -n 5
+
+# What if we want to select lines of an arbitrary file?
+# Editing middle.sh isn't a great solution
+# Instead, we can use a special variable called $1
+# This will be replaced by whatever argument we give our middle.sh
+nano middle.sh
+head -n 15 "$1" | tail -n 5
+
+# Now we can run the following
+bash middle.sh octane.pdb
+bash middle.sh pentane.pdb
+
+# We put it in quotes in case it has spaces (better safe than sorry)
+
+# What if we wanted to change the range of lines though?
+# We can add more special variables for more arguments
+nano middle.sh
+head -n "$2" "$1" | tail -n "$3"
+
+# Now we can run:
+bash middle.sh pentane.pdb 15 5
+bash middle.sh pentane.pdb 20 5
+
+# Works great, but what if someone else needs to use this, or we want to use it 6 months later?
+# Add Comments!!! They start with a #, and the computer ignores these lines when parsing them.
+nano middle.sh
+
+# Select lines from the middle of a file.
+# Usage: bash middle.sh filename end_line num_lines
+
+# What if we want to process many files in one pipeline?  
+# We could put something like this in a file, but it'd only work for .pdb
+# $1 and $2 won't work either, we don't know how many files there will be
+wc -l *.pdb | sort -n
+
+# Luckily, there's a special variable $@ which means "All the arguments"
+nano sorted.sh
+wc -l "$@" | sort -n 
+
+# And it works:
+bash sorted.sh *.pdb
+bash sorted.sh *.pdb ../creatures/*.dat
+
+# What if we don't give it any arguments?  Now $@ expands to nothing
+# wc just waits for input, since it didn't get a filename
+bash sorted.sh
+
+# We could save our history, to avoid typos, but it'll take some editing
+history | tail -n 5 > redo-figure-3.sh
+cat redo-figure-3.sh
+
+### Nelle's script ###
+# Nelle forgot some arguments for goostats.  Luckily, its easy to re-run, and she can make a script
+cd ../north-pacific-gyre/2012-07-03
+nano do-stats.sh
+
+# Calculate reduced stats for data files at J = 100 c/bp.
+for datafile in "$@"
+do
+    echo $datafile
+    bash goostats -J 100 -r $datafile stats-$datafile
+done
+
+# Now she can run it, specifying which files to run on
+bash do-stats.sh *[AB].txt
+
+# She could have put the *[AB].txt inside her script.  
+# This might be safer, but it's less flexible
+
+
+# %%%%% Socrative #15 %%%%%
+
+
+#############################
 
 
 ##### 7. Finding Things #####
 
+
+cd ~/Desktop/data-shell/writing
+cat haiku.txt
+
+# Look for lines that have "not" in them
+grep not haiku.txt
+
+# Or day
+grep day haiku.txt
+
+
+grep -w day haiku.txt
+
+grep -w "is not" haiku.txt
+
+grep -n "it" haiku.txt
 
 ```
 
