@@ -592,7 +592,8 @@ Note that the > character here means that our command isn't finished yet.
 
 We need the done to finish it
 
-```for filename in basilisk.dat unicorn.dat
+```
+for filename in basilisk.dat unicorn.dat
 do
 head -n 3 $filename`
 done
@@ -679,10 +680,11 @@ do
 done
 ```
 
-Each time through it runs a different file
-
-#cp basilisk.dat original-basilisk.dat
-#cp unicorn.dat original-unicorn.dat
+Each time through it runs a different file as if we run this
+```
+cp basilisk.dat original-basilisk.dat
+cp unicorn.dat original-unicorn.dat
+```
 
 Check for copies
 
