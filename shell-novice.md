@@ -9,7 +9,6 @@
 - Advise learners to go to https://b.socrative.com/login/student/
 - Type in MICKLEY for the room name
 
-***---------- Socrative #1 ----------***
 
 **QUESTION: How many of you have used the shell before?**
 
@@ -73,29 +72,29 @@ Plus, once she puts a workflow together, she can use it again if she collects mo
 
 Setup prompt
 
-`PS1='$ ' # (Or PS1="\n\w: \$ ")`
+**`PS1='$ ' # (Or PS1="\n\w: \$ ")`**
 
 Explain that whoami is a program that is being run and displaying output
 
-`whoami `
+**`whoami `**
 
 Print working directory: find out where we are.  Directory = folder
 
-`pwd`
+**`pwd`**
 
 Diagram a Unix filesystem and explain the leading / (root directory). There are 2 meanings for /
 
 Listing the contents of current directory with ls
 
-`ls`
+**`ls`**
 
 Kind of hard to tell what's what (which are folders?).  So we'll add a "flag" (explain flags)
 
-`ls -F # Puts a slash after folders`
+**`ls -F # Puts a slash after folders`**
 
 ls has lots of other options, let's look at the help. man stands for manual
 
-`man ls # Windows users: ls --help`
+**`man ls # Windows users: ls --help`**
 
 You can move around in man using mouse, or up/down arrows.  Or b and spacebar to move a page.  q to quit
 
@@ -103,59 +102,59 @@ You can move around in man using mouse, or up/down arrows.  Or b and spacebar to
 We can also tell ls to look in a different directory than the current one.
 
 -F and Desktop are parameters or arguments we're giving to the ls program to tell it how to run
-`ls -F Desktop`
+**`ls -F Desktop`**
 
 Hopefully you see the data-shell directory.  If not, put up a red sticky
 
 
 Now we can see what's inside our data-shell directory
 
-`ls -F Desktop/data-shell`
+**`ls -F Desktop/data-shell`**
 
 Instead of just looking, we can change our current directory.  
 
 Say we want to go to that data directory
 
-`cd Desktop # cd stands for change directory`
+**`cd Desktop # cd stands for change directory`**
 
-`cd data-shell`
+**`cd data-shell`**
 
-`cd data`
+**`cd data`**
 
 cd doesn't tell us anything back, but we can check using our tools from before, 
 
 to see that we are in the data directory
 
-`pwd`
+**`pwd`**
 
-`ls -F`
+**`ls -F`**
 
 So now let's go back to the data-shell directory.  We can try this
 
-`cd data-shell`
+**`cd data-shell`**
 
 Oops, that didn't work.  cd can only see subdirectories inside the one we're in
 
-`cd .. # This takes us back.  .. stands for the directory containing this, or the parent`
+**`cd .. # This takes us back.  .. stands for the directory containing this, or the parent`**
 
 We're back again
 
-`pwd`
+**`pwd`**
 
 We can see this parent directory if we use the -a (all) flag for ls
 
-`ls -F -a`
+**`ls -F -a`**
 
 We can also stack multiple flags together like this instead of writing them separately
 
-`ls -Fa`
+**`ls -Fa`**
 
 Explain hidden files, eg .bash_profile, .DS_Store, ./ (current directory).
 
 
 . and .. don't just belong to cd.  Any program can use them, eg this shows my Desktop:
 
-`ls ..`
+**`ls ..`**
 
 So ls, cd, and pwd are how we navigate around our filesystem
 
@@ -169,28 +168,28 @@ and put up a green sticky when think you have the answer
 
 Takes us back to the home directory
 
-`cd`
+**`cd`**
 
-`pwd`
+**`pwd`**
 
 Let's go back to the data directory.  This time, we don't need to use 3 separate commands, we can string together
 
-`cd Desktop/data-shell/data`
+**`cd Desktop/data-shell/data`**
 
 So far, we've been using "relative paths" (explain).  ls and cd are trying to find where we mean
 
 
 We could also use "absolute paths" these will work no matter where we are.  Remember that leading / means root?
 
-`pwd`
+**`pwd`**
 
-`cd /Volumes/mickles/Desktop/data-shell`
+**`cd /Volumes/mickles/Desktop/data-shell`**
 
 Some shortcuts:
 
-`cd ~/Desktop # Tilda is the same as the user's home directory (/Volumes/mickles for me)`
+**`cd ~/Desktop # Tilda is the same as the user's home directory (/Volumes/mickles for me)`**
 
-`cd - # This takes you to the previous directory you were in, very useful for switching back and forth`
+**`cd - # This takes you to the previous directory you were in, very useful for switching back and forth`**
 
 ***---------- Socrative #3 ----------***
 
@@ -203,11 +202,11 @@ Some shortcuts:
 ### Back to Nelle
 Nelle makes a directory called north-pacific-gyre for where the data came from
 
-`ls `
+**`ls `**
 
 Inside of it is a folder named by the date
 
-`ls north-pacific-gyre`
+**`ls north-pacific-gyre`**
 
 Notice how this is named.  
 
@@ -220,7 +219,7 @@ Let's see what's inside the dated folder.
 
 Lot's to type, introduce tab completion: folder 1, folder2, and contents
 
-`ls nor`
+**`ls nor`**
 
 
 
@@ -230,17 +229,17 @@ Lot's to type, introduce tab completion: folder 1, folder2, and contents
 
 Ok, we know how to explore files and directories, but how do we create them?
 
-`cd ~/Desktop/data-shell`
+**`cd ~/Desktop/data-shell`**
 
-`ls -F`
+**`ls -F`**
 
 Let's create a new directory called thesis using mkdir
 
-`mkdir thesis # Make directory.  Relative path, so in current working directory`
+**`mkdir thesis # Make directory.  Relative path, so in current working directory`**
 
 Check that it's there.  We can also check with our GUI
 
-`ls -F`
+**`ls -F`**
 
 Good naming conventions
 
@@ -257,9 +256,9 @@ You could use any other text editor instead, nano is just convenient
 
 Notepad++ (Windows) or Sublime are good ones
 
-`cd thesis`
+**`cd thesis`**
 
-`nano draft.txt`
+**`nano draft.txt`**
 
 Explore nano commands using the control key (^)
 
@@ -274,64 +273,64 @@ Now let's write this out using Ctrl+O
 
 Our file exists!
 
-`ls `
+**`ls `**
 
 We can remove this file using rm
 
 Careful though!  In shell, deleting is forever!  No "are you sure?".  No trash bin.
 
-`rm draft.txt`
+**`rm draft.txt`**
 
-`ls`
+**`ls`**
 
 Let's recreate the file, and move back one directory to data-shell
 
-`nano draft.txt`
+**`nano draft.txt`**
 
-`ls`
+**`ls`**
 
-`cd ..`
+**`cd ..`**
 
 Now let's try to remove the whole thesis directory
 
 Doesn't work.  rm only works with files by default, not directories.  This is a good thing.
 
-`rm thesis`
+**`rm thesis`**
 
 If we add the recursive (-r) flag, we can delete everything inside thesis, and it too
 
 But this is super powerful, and again you need to be careful!!  We might forget what else is inside.
 
-`rm -r thesis`
+**`rm -r thesis`**
 
 A better way is to add the interactive flag to rm too
 
 We use y and n for yes and no (which also work)
 
-`rm -r -i thesis`
+**`rm -r -i thesis`**
 
-`ls -F `
+**`ls -F `**
 
 ***---------- Socrative #5 ----------***
 
 
 Let's recreate it again.  This time we don't need to be in the thesis directory
 
-`pwd`
+**`pwd`**
 
-`mkdir thesis`
+**`mkdir thesis`**
 
-`nano thesis/draft.txt`
+**`nano thesis/draft.txt`**
 
-`ls thesis`
+**`ls thesis`**
 
 Let's change the name to something more appropriate
 
 mv stands for move.  First argument is the file we're moving, 2nd is where to go
 
-`mv thesis/draft.txt thesis/quotes.txt `
+**`mv thesis/draft.txt thesis/quotes.txt `**
 
-`ls thesis`
+**`ls thesis`**
 
 Be careful with mv too.  It overwrites files without telling you.  
 
@@ -340,25 +339,25 @@ You can avoid this with -i
 
 Let's move quotes.txt into the current working directory.  Remember, . is pwd
 
-`mv thesis/quotes.txt .`
+**`mv thesis/quotes.txt .`**
 
-`ls thesis`
+**`ls thesis`**
 
 If we give a filename to ls, it only looks for that file
 
-`ls quotes.txt`
+**`ls quotes.txt`**
 
 We also have a copy command called cp
 
-`cp quotes.txt thesis/quotations.txt`
+**`cp quotes.txt thesis/quotations.txt`**
 
-`ls quotes.txt thesis/quotations.txt`
+**`ls quotes.txt thesis/quotations.txt`**
 
 Just to prove we have a copy, let's delete the original
 
-`rm quotes.txt`
+**`rm quotes.txt`**
 
-`ls quotes.txt thesis/quotations.txt`
+**`ls quotes.txt thesis/quotations.txt`**
 
 Names and extensions
 
@@ -384,25 +383,25 @@ Combining commands or programs together is where we really get into the shell's 
 
 Let's look in the molecules directory.  
 
-`This has some files describing some organic molecules in protein data bank (pdb) format`
+**`This has some files describing some organic molecules in protein data bank (pdb) format`**
 
-`pwd`
+**`pwd`**
 
-`ls molecules`
+**`ls molecules`**
 
 Le'ts go into that directory and run wordcount
 
 This shows the # of lines, words, and characters
 
-`cd molecules`
+**`cd molecules`**
 
-`wc *.pdb`
+**`wc *.pdb`**
 
 The * character is a "wildcard". It matches 0 or more characters, so *.pdb matches all pdb files
 
 We could also use p*.pdb for only pentane and propane
 
-`wc p*.pdb`
+**`wc p*.pdb`**
 
 Another wildcard is ?, but it only matches a single character.  
 
@@ -411,14 +410,14 @@ So p?.pdb wouldn't match pentane.pdb, only pi.pdb
 
 We could use multiple wildcards at once
 
-`wc ??hane.p* # This will only match ethane`
+**`wc ??hane.p* # This will only match ethane`**
 
 
 One note:  If nothing matches, our wildcard match gets passed as-is, eg:
 
 The shell is creating a list of matching files BEFORE running wc
 
-`wc *.pdf # Doesn't work`
+**`wc *.pdf # Doesn't work`**
 
 ***---------- Socrative #8 ----------***
 
@@ -427,7 +426,7 @@ If we add the -l flag to wc we only get the # of lines
 
 We could also use -w and -c for the # of words or characters
 
-`wc -l *.pdb`
+**`wc -l *.pdb`**
 
 Say we wanted to know which file was the shortest.  
 
@@ -440,45 +439,45 @@ The > symbol REDIRECTS the output to the filename (and we don't see it!)
 
 Creates or overwrites the file
 
-`wc -l *.pdb > lengths.txt`
+**`wc -l *.pdb > lengths.txt`**
 
-`ls lengths.txt`
+**`ls lengths.txt`**
 
 Now we want to see what's in the file
 
 We can print it using cat = concatenate (can be used with multiple files)
 
-`cat lengths.txt`
+**`cat lengths.txt`**
 
 One disadvantage of cat is it dumps the entire file.  Not so good if file is long
 
 Can use less instead to just show a screen at a time
 
-`less lengths.txt  # Press q to quit`
+**`less lengths.txt  # Press q to quit`**
 
 Now that we have a file, we can use the sort command to sort its contents
 
 We also have to use the -n flag for numeric sort (otherwise 100 and 10 will end up together)
 
-`sort -n lengths.txt`
+**`sort -n lengths.txt`**
 
 We can save these sorted lengths
 
-`sort -n lengths.txt > sorted-lengths.txt`
+**`sort -n lengths.txt > sorted-lengths.txt`**
 
-`cat lengths.txt`
+**`cat lengths.txt`**
 
-`cat sorted-lengths.txt`
+**`cat sorted-lengths.txt`**
 
 We can also use a command called head to just get the first line. -n is the # of lines to get
 
-`head -n 1 sorted-lengths.txt`
+**`head -n 1 sorted-lengths.txt`**
 
 Things are getting confusing with all these intermediate files
 
 Fortunately we can avoid those intermediates by running everything together
 
-`sort -n lengths.txt | head -n 1`
+**`sort -n lengths.txt | head -n 1`**
 
 The | is called a pipe, and it's very useful!!!
 
@@ -487,13 +486,13 @@ It means take the output of the left side and use it as input for the right side
 
 We could also do this for wordcount and sort
 
-`wc -l *.pdb | sort -n`
+**`wc -l *.pdb | sort -n`**
 
 And for everything all at once, no intermediate files!
 
 Go over what this is doing, basically reading backwards: head of sort of wordcount
 
-`wc -l *.pdb | sort -n | head -n 1`
+**`wc -l *.pdb | sort -n | head -n 1`**
 
 ***---------- Socrative #9 ----------***
 
@@ -509,15 +508,15 @@ They take input, transform and give us output
 
 We used > to redirect output to a file.  We can also redirect a file to input using < 
 
-`wc < methane.pdb # same as wc methane.pdb, but there's no filename to open, it's redirected`
+**`wc < methane.pdb # same as wc methane.pdb, but there's no filename to open, it's redirected`**
 
 ### Back to our biologist Nelly
 
 Nelle decides to check the length of her data files
 
-`cd north-pacific-gyre/2012-07-03`
+**`cd north-pacific-gyre/2012-07-03`**
 
-`wc -l *.txt`
+**`wc -l *.txt`**
 
 Things like this can be good for error checking.  There's a file that's too short, missing data
 
@@ -526,7 +525,7 @@ Still a lot of work to go through though if she's got thousands of files
 
 So we do this instead to look at the shortest 5
 
-`wc -l *.txt | sort -n | head -n 5`
+**`wc -l *.txt | sort -n | head -n 5`**
 
 We could also look for files that are too big using tail (similar to head, but last lines)
 
@@ -534,13 +533,13 @@ That looks ok sizewize, but what's that Z doing in the 2nd line?
 
 Should just be A or B for 2 different depths
 
-`wc -l *.txt | sort -n | tail -n 5`
+**`wc -l *.txt | sort -n | tail -n 5`**
 
 Let's see if there are any others like it
 
 Turns out there are two, where depth wasn't recorded
 
-`ls *Z.txt`
+**`ls *Z.txt`**
 
 We could delete these files using rm, but we might want to use them later
 
@@ -548,7 +547,7 @@ Instead we can just exclude them from all analyses with wildcards
 
 [AB] means match one character that is either an A or a B
 
-`wc -l *[AB].txt`
+**`wc -l *[AB].txt`**
 
 ***---------- Socrative #10 ----------***
 
@@ -566,23 +565,23 @@ We're going to work in the creatures directory
 
 Here we have two files, let's assume they're genome data files and we have a lot more than 2
 
-`cd ../creatures`
+**`cd ../creatures`**
 
-`ls`
+**`ls`**
 
 We can inspect one to see
 
-`head -n 10 unicorn.dat`
+**`head -n 10 unicorn.dat`**
 
 Say we wanted to modify these files, but we wanted to save a backup first
 
 We could try, this but it won't work
 
-`cp *.dat original-*dat`
+**`cp *.dat original-*dat`**
 
 That would expand to the following, and try to copy 2 files to a directory that doesn't exist
 
-`cp basilisk.dat unicorn.dat original-*.dat`
+**`cp basilisk.dat unicorn.dat original-*.dat`**
 
 Instead, we'll have to use a loop.  We'll come back to this example
 
@@ -661,7 +660,7 @@ Finally, we take the first 100 rows, and then the last 20 of those, = rows 81-10
 
 Testing echo
 
-`echo hello there`
+**`echo hello there`**
 
 Say we had some filenames with spaces, eg red dragon.dat.  We'd have to quote them
 
@@ -669,7 +668,7 @@ Otherwise, the shell would treat them as separate files
 
 Again, it's often easier to just avoid spaces
 
-`for filename in "red dragon.dat" "purple unicorn.dat"`
+**`for filename in "red dragon.dat" "purple unicorn.dat"`**
 
 Back to our file copying problem, we can solve it with this loop
 
@@ -687,13 +686,13 @@ Each time through it runs a different file
 
 Check for copies
 
-`ls`
+**`ls`**
 
 ### Back to our friend Nelle, building her pipeline
 
 First she wants to make sure she can select the right files
 
-`cd ../north-pacific-gyre/2012-07-03`
+**`cd ../north-pacific-gyre/2012-07-03`**
 ```
 for datafile in *[AB].txt
 do
@@ -741,11 +740,11 @@ Also, we could keep hitting up arrow to go through our history, eg find the ls c
 
 Alternatively we could use the history command and pipe it through tail to get the last 15
 
-`history | tail -n 15`
+**`history | tail -n 15`**
 
 Notice that the history entries are numbered.  We can run any of them with an exclamation point
 
-`!132 # Run the ls command"`
+**`!132 # Run the ls command"`**
 
 ***---------- Socrative #13 ----------***
 
@@ -761,28 +760,28 @@ Now we're going to save our whole workflow in a file, so that we can just run th
 
 First let's go back to the molecules directory
 
-`cd ~/Desktop/data-shell/molecules`
+**`cd ~/Desktop/data-shell/molecules`**
 
 Now let's edit a new file
 
-`nano middle.sh`
+**`nano middle.sh`**
 
 Put in the following: which selects lines 11-15
 
 We're not running this as a command, we're just putting it in a file
 
-`head -n octane.pdb | tail -n 5`
+**`head -n octane.pdb | tail -n 5`**
 
 Save and exit: CTRL+O, CTRL+X
 
 
 Now we can run the file, which in turn runs the commands inside of it
 
-`bash middle.sh`
+**`bash middle.sh`**
 
 Compare to running the command directly: they're the same
 
-`head -n 15 octane.pdb | tail -n 5`
+**`head -n 15 octane.pdb | tail -n 5`**
 
 What if we want to select lines of an arbitrary file?
 
@@ -792,15 +791,15 @@ Instead, we can use a special variable called $1
 
 This will be replaced by whatever argument we give our middle.sh
 
-`nano middle.sh`
+**`nano middle.sh`**
 
-`head -n 15 "$1" | tail -n 5`
+**`head -n 15 "$1" | tail -n 5`**
 
 Now we can run the following
 
-`bash middle.sh octane.pdb`
+**`bash middle.sh octane.pdb`**
 
-`bash middle.sh pentane.pdb`
+**`bash middle.sh pentane.pdb`**
 
 We put it in quotes in case it has spaces (better safe than sorry)
 
@@ -809,21 +808,21 @@ What if we wanted to change the range of lines though?
 
 We can add more special variables for more arguments
 
-`nano middle.sh`
+**`nano middle.sh`**
 
-`head -n "$2" "$1" | tail -n "$3"`
+**`head -n "$2" "$1" | tail -n "$3"`**
 
 Now we can run:
 
-`bash middle.sh pentane.pdb 15 5`
+**`bash middle.sh pentane.pdb 15 5`**
 
-`bash middle.sh pentane.pdb 20 5`
+**`bash middle.sh pentane.pdb 20 5`**
 
 Works great, but what if someone else needs to use this, or we want to use it 6 months later?
 
 Add Comments!!! They start with a #, and the computer ignores these lines when parsing them.
 
-`nano middle.sh`
+**`nano middle.sh`**
 
 Select lines from the middle of a file.
 
@@ -836,38 +835,38 @@ We could put something like this in a file, but it'd only work for .pdb
 
 $1 and $2 won't work either, we don't know how many files there will be
 
-`wc -l *.pdb | sort -n`
+**`wc -l *.pdb | sort -n`**
 
 Luckily, there's a special variable $@ which means "All the arguments"
 
-`nano sorted.sh`
+**`nano sorted.sh`**
 
-`wc -l "$@" | sort -n `
+**`wc -l "$@" | sort -n `**
 
 And it works:
 
-`bash sorted.sh *.pdb`
+**`bash sorted.sh *.pdb`**
 
-`bash sorted.sh *.pdb ../creatures/*.dat`
+**`bash sorted.sh *.pdb ../creatures/*.dat`**
 
 What if we don't give it any arguments?  Now $@ expands to nothing
 
 wc just waits for input, since it didn't get a filename
 
-`bash sorted.sh`
+**`bash sorted.sh`**
 
 We could save our history, to avoid typos, but it'll take some editing
 
-`history | tail -n 5 > redo-figure-3.sh`
+**`history | tail -n 5 > redo-figure-3.sh`**
 
-`cat redo-figure-3.sh`
+**`cat redo-figure-3.sh`**
 
 ### Nelle's script
 Nelle forgot some arguments for goostats.  Luckily, its easy to re-run, and she can make a script
 
-`cd ../north-pacific-gyre/2012-07-03`
+**`cd ../north-pacific-gyre/2012-07-03`**
 
-`nano do-stats.sh`
+**`nano do-stats.sh`**
 
 Calculate reduced stats for data files at J = 100 c/bp.
 
@@ -879,7 +878,7 @@ done```
 
 Now she can run it, specifying which files to run on
 
-`bash do-stats.sh *[AB].txt`
+**`bash do-stats.sh *[AB].txt`**
 
 She could have put the *[AB].txt inside her script.  
 
@@ -893,47 +892,47 @@ This might be safer, but it's less flexible
 ## 7. Finding Things
 
 
-`cd ~/Desktop/data-shell/writing`
+**`cd ~/Desktop/data-shell/writing`**
 
-`cat haiku.txt`
+**`cat haiku.txt`**
 
 Look for lines that have "not" in them
 
-`grep not haiku.txt`
+**`grep not haiku.txt`**
 
 Or day.  But this includes words containing day
 
-`grep day haiku.txt`
+**`grep day haiku.txt`**
 
 To just get day, we can use -w (for word)
 
-`grep -w day haiku.txt`
+**`grep -w day haiku.txt`**
 
 We can also search for a phrase with quotes
 
-`grep -w "is not" haiku.txt`
+**`grep -w "is not" haiku.txt`**
 
 It's also useful to get the line numbers of the lines that match
 
-`grep -n "it" haiku.txt`
+**`grep -n "it" haiku.txt`**
 
 Flags can be combined: line numbers and words
 
-`grep -n -w "the" haiku.txt`
+**`grep -n -w "the" haiku.txt`**
 
 Line numbers, words, and case-insensitive
 
-`grep -n -w -i "the" haiku.txt`
+**`grep -n -w -i "the" haiku.txt`**
 
 Or we can invert our search, show the lines that do NOT contain "the"
 
-`grep -n -w -v "the" haiku.txt`
+**`grep -n -w -v "the" haiku.txt`**
 
 Grep has lots of other options
 
-`man grep`
+**`man grep`**
 
-`grep --help`
+**`grep --help`**
 
 Grep supports something called regular expressions, which is like our wildcards
 
@@ -941,57 +940,57 @@ http://regexr.com/
 
 -E extended regex, Quotes to prevent shell expansion, ^ = beginning, . = single character
 
-`grep -E '^.o' haiku.txt`
+**`grep -E '^.o' haiku.txt`**
 
 grep finds lines in files, but the find command finds files themselves
 
 This finds all the files in the current directory (and it's recursive)
 
-`find .`
+**`find .`**
 
 Only show directories
 
-`find . -type d`
+**`find . -type d`**
 
 Only show files
 
-`find . -type f`
+**`find . -type f`**
 
 We can also match by name
 
 This doesn't actually find all of them, remember the shell expands BEFORE command runs
 
-`find . -name *.txt`
+**`find . -name *.txt`**
 
-`find . -name haiku.txt # Ends up same as this`
+**`find . -name haiku.txt # Ends up same as this`**
 
 Putting in single quotes prevents shell from expanding
 
-`find . -name '*.txt'`
+**`find . -name '*.txt'`**
 
 Pretty similar to ls right?  But find lets us restrict our search
 
 
 Shell runs whatever is inside $() first
 
-`wc -l $(find . -name '*.txt')`
+**`wc -l $(find . -name '*.txt')`**
 
 Same as this
 
-`wc -l ./data/one.txt ./data/two.txt ./haiku.txt`
+**`wc -l ./data/one.txt ./data/two.txt ./haiku.txt`**
 
 We often string grep and find together
 
 
 Find all the .pdb files contained in the parent directory of this one, then look for FE in them.
 
-`grep "FE" $(find .. -name '*.pdb')`
+**`grep "FE" $(find .. -name '*.pdb')`**
 
 ***---------- Socrative #15 ----------***
 
 
 ### Challenge
-`Write a short explanatory comment for the following shell script:`
+**`Write a short explanatory comment for the following shell script:`**
 
-`wc -l $(find . -name '*.dat') | sort -n`
+**`wc -l $(find . -name '*.dat') | sort -n`**
 
