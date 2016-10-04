@@ -330,7 +330,7 @@ Computers do 4 things:
 - A simple example of a for loop
 - Note that the > character here means that our command isn't finished yet.  
 - We need the done to finish it
-  - 
+  - &nbsp;
     
     ```
     for filename in basilisk.dat unicorn.dat
@@ -347,7 +347,7 @@ Computers do 4 things:
 - > and $ are two different "prompts"
 - We could use x as a variable name instead
 - Indenting the things we're doing inside the loop makes the code easier to read
-  - 
+  - &nbsp;
     
     ```
     for x in basilisk.dat unicorn.dat
@@ -364,7 +364,7 @@ Computers do 4 things:
 
 - A slightly more complicated loop
 - We could also use curly braces to get our variable ${filename} is the same as $filename
-  - 
+  - &nbsp;
     
     ```
     for filename in *.dat
@@ -385,7 +385,7 @@ Computers do 4 things:
 - Again, it's often easier to just avoid spaces
   - **`for filename in "red dragon.dat" "purple unicorn.dat"`**
 - Back to our file copying problem, we can solve it with this loop
-  - 
+  - &nbsp;
 
     ```
     for filename in *.dat
@@ -395,7 +395,7 @@ Computers do 4 things:
     ```
 
 - Each time through it runs a different file as if we run this
-  - 
+  - &nbsp;
     
     ```
     cp basilisk.dat original-basilisk.dat
@@ -410,7 +410,7 @@ Computers do 4 things:
 
 - First she wants to make sure she can select the right files
   - **`cd ../north-pacific-gyre/2012-07-03`**
-  - 
+  - &nbsp;
 
     ```
     for datafile in *[AB].txt
@@ -421,7 +421,7 @@ Computers do 4 things:
 
 - Now she wants to run her goostats program on them and write the results to files
 - To be safe, we're still using echo here
-  - 
+  - &nbsp;
     
     ```
     for datafile in *[AB].txt
@@ -483,7 +483,7 @@ Computers do 4 things:
 - Works great, but what if someone else needs to use this, or we want to use it 6 months later?
 - Add Comments!!! They start with a #, and the computer ignores these lines when parsing them.
   - **`nano middle.sh`**
-  -
+  - &nbsp;
     
     ```
     # Select lines from the middle of a file.
@@ -512,7 +512,7 @@ Computers do 4 things:
 - Nelle forgot some arguments for goostats.  Luckily, its easy to re-run, and she can make a script
   - **`cd ../north-pacific-gyre/2012-07-03`**
   - **`nano do-stats.sh`**
-  - 
+  - &nbsp;
     
     ```
     # Calculate reduced stats for data files at J = 100 c/bp.
