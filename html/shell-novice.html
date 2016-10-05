@@ -121,7 +121,8 @@
 </ul></li>
 <li>Oops, that didn't work. cd can only see subdirectories inside the one we're in
 <ul>
-<li><code>cd .. # This takes us back.  .. stands for the directory containing this, or the parent</code></li>
+<li>This takes us back. .. stands for the directory containing this, or the parent</li>
+<li><code>cd ..</code></li>
 </ul></li>
 <li>We're back again
 <ul>
@@ -156,15 +157,20 @@
 <li><code>cd Desktop/data-shell/data</code></li>
 </ul></li>
 <li>So far, we've been using &quot;relative paths&quot; (explain). ls and cd are trying to find where we mean</li>
-<li>We could also use &quot;absolute paths&quot; these will work no matter where we are. Remember that leading / means root?
+<li>We could also use &quot;absolute paths&quot; these will work no matter where we are.
 <ul>
+<li>Remember that leading / means root?</li>
 <li><code>pwd</code></li>
 <li><code>cd /Volumes/mickles/Desktop/data-shell</code></li>
 </ul></li>
-<li>Some shortcuts:
+<li>Some shortcuts:</li>
+<li>Tilda is the same as the user's home directory (/Volumes/mickles for me)
 <ul>
-<li><code>cd ~/Desktop # Tilda is the same as the user's home directory (/Volumes/mickles for me)</code></li>
-<li><code>cd - # This takes you to the previous directory you were in, very useful for switching back and forth</code></li>
+<li><code>cd ~/Desktop</code></li>
+</ul></li>
+<li>This takes you to the previous directory you were in, useful for switching back and forth
+<ul>
+<li><code>cd -</code></li>
 </ul></li>
 </ul>
 <p><strong><em>---------- Socrative #3 ----------</em></strong></p>
@@ -200,7 +206,8 @@
 </ul></li>
 <li>Let's create a new directory called thesis using mkdir
 <ul>
-<li><code>mkdir thesis # Make directory.  Relative path, so in current working directory</code></li>
+<li>Make directory. Relative path, so in current working directory</li>
+<li><code>mkdir thesis</code></li>
 </ul></li>
 <li>Check that it's there. We can also check with our GUI
 <ul>
@@ -222,7 +229,9 @@
 <li>Explore nano commands using the control key (^)</li>
 <li>Write something like:
 <ul>
-<li><code>As the facts change, change your thesis!  Don't be a stubborn mule or you'll get killed.</code></li>
+<li><p><span></span></p>
+<pre><code>As the facts change, change your thesis!  
+Don&#39;t be a stubborn mule or you&#39;ll get killed.</code></pre></li>
 </ul></li>
 <li>Now let's write this out using Ctrl+O</li>
 <li>Our file exists!
@@ -308,7 +317,7 @@
 <li>Combining commands or programs together is where we really get into the shell's power</li>
 <li>Let's look in the molecules directory.
 <ul>
-<li><code>This has some files describing some organic molecules in protein data bank (pdb) format</code></li>
+<li>This has some files describing some organic molecules in protein data bank (pdb) format</li>
 <li><code>pwd</code></li>
 <li><code>ls molecules</code></li>
 </ul></li>
@@ -404,7 +413,8 @@
 <li>They take input, transform and give us output</li>
 <li>We used &gt; to redirect output to a file. We can also redirect a file to input using &lt;
 <ul>
-<li><code>wc &lt; methane.pdb # same as wc methane.pdb, but there's no filename to open, it's redirected</code></li>
+<li>Same as wc methane.pdb, but there's no filename to open, it's redirected</li>
+<li><code>wc &lt; methane.pdb</code></li>
 </ul></li>
 </ul>
 <h3 id="back-to-our-biologist-nelly">Back to our biologist Nelly</h3>
@@ -468,11 +478,14 @@
 <li>A simple example of a for loop</li>
 <li>Note that the &gt; character here means that our command isn't finished yet.<br />
 </li>
-<li><h2 id="we-need-the-done-to-finish-it">We need the done to finish it</h2>
+<li>We need the done to finish it
+<ul>
+<li><p><span></span></p>
 <pre><code>for filename in basilisk.dat unicorn.dat
 do
 head -n 3 $filename`
 done</code></pre></li>
+</ul></li>
 <li>The for loop does something for each thing in a list. In this case, the list is the two filenames</li>
 <li>Each time through the loop, the filename we're working on is saved in a variable named filename</li>
 <li>Inside the loop, we can get and substitute the variable's value by putting a $ in front of it</li>
@@ -482,22 +495,28 @@ done</code></pre></li>
 <p>and $ are two different &quot;prompts&quot;</p>
 </blockquote></li>
 <li>We could use x as a variable name instead</li>
-<li><h2 id="indenting-the-things-were-doing-inside-the-loop-makes-the-code-easier-to-read">Indenting the things we're doing inside the loop makes the code easier to read</h2>
+<li>Indenting the things we're doing inside the loop makes the code easier to read
+<ul>
+<li><p><span></span></p>
 <pre><code>for x in basilisk.dat unicorn.dat
 do
     head -n 3 $x
 done</code></pre></li>
+</ul></li>
 <li>Best to pick variable names that make sense with what you're doing, filename is better than x</li>
 </ul>
 <p><strong><em>---------- Socrative #12 ----------</em></strong></p>
 <ul>
 <li>A slightly more complicated loop</li>
-<li><h2 id="we-could-also-use-curly-braces-to-get-our-variable-filename-is-the-same-as-filename">We could also use curly braces to get our variable ${filename} is the same as $filename</h2>
+<li>We could also use curly braces to get our variable ${filename} is the same as $filename
+<ul>
+<li><p><span></span></p>
 <pre><code>for filename in *.dat
 do
     echo $filename
 head -n 100 ${filename} | tail -n 20
 done</code></pre></li>
+</ul></li>
 <li>We use a wildcard for the filenames instead of listing them ourself</li>
 <li>This time we run two commands. The first is echo, which just echos/prints the filename</li>
 <li>We couldn't just put $filename there.</li>
@@ -512,14 +531,20 @@ done</code></pre></li>
 <ul>
 <li><code>for filename in &quot;red dragon.dat&quot; &quot;purple unicorn.dat&quot;</code></li>
 </ul></li>
-<li><h2 id="back-to-our-file-copying-problem-we-can-solve-it-with-this-loop">Back to our file copying problem, we can solve it with this loop</h2>
+<li>Back to our file copying problem, we can solve it with this loop
+<ul>
+<li><p><span></span></p>
 <pre><code>for filename in *.dat
 do
     cp $filename original-$filename
 done</code></pre></li>
-<li><h2 id="each-time-through-it-runs-a-different-file-as-if-we-run-this">Each time through it runs a different file as if we run this</h2>
+</ul></li>
+<li>Each time through it runs a different file as if we run this
+<ul>
+<li><p><span></span></p>
 <pre><code>cp basilisk.dat original-basilisk.dat
 cp unicorn.dat original-unicorn.dat</code></pre></li>
+</ul></li>
 <li>Check for copies
 <ul>
 <li><code>ls</code></li>
@@ -530,18 +555,21 @@ cp unicorn.dat original-unicorn.dat</code></pre></li>
 <li>First she wants to make sure she can select the right files
 <ul>
 <li><code>cd ../north-pacific-gyre/2012-07-03</code></li>
-<li></li>
-</ul>
+<li><p><span></span></p>
 <pre><code>for datafile in *[AB].txt
 do
     echo $datafile
 done</code></pre></li>
+</ul></li>
 <li>Now she wants to run her goostats program on them and write the results to files</li>
-<li><h2 id="to-be-safe-were-still-using-echo-here">To be safe, we're still using echo here</h2>
+<li>To be safe, we're still using echo here
+<ul>
+<li><p><span></span></p>
 <pre><code>for datafile in *[AB].txt
 do
     echo $datafile stats-$datafile
 done</code></pre></li>
+</ul></li>
 <li>All this typing is increasing our chance of mistakes though. Fortunately, we can reuse some of our typing</li>
 <li>Hitting the up arrow key gives us the last command. Note the semicolons, these separate different lines. We can then move around and change echo to bash goostats to run the program</li>
 <li>Now it's running the stats, but we have no idea as to progress! We can stop the for loop with CTRL+C</li>
@@ -614,10 +642,10 @@ done</code></pre></li>
 <li>Add Comments!!! They start with a #, and the computer ignores these lines when parsing them.
 <ul>
 <li><code>nano middle.sh</code></li>
-<li></li>
-</ul>
+<li><p><span></span></p>
 <pre><code># Select lines from the middle of a file.
 # Usage: bash middle.sh filename end_line num_lines</code></pre></li>
+</ul></li>
 <li>What if we want to process many files in one pipeline?<br />
 </li>
 <li>We could put something like this in a file, but it'd only work for .pdb</li>
@@ -648,14 +676,14 @@ done</code></pre></li>
 <ul>
 <li><code>cd ../north-pacific-gyre/2012-07-03</code></li>
 <li><code>nano do-stats.sh</code></li>
-<li></li>
-</ul>
+<li><p><span></span></p>
 <pre><code># Calculate reduced stats for data files at J = 100 c/bp.
 for datafile in &quot;$@&quot;
 do
     echo $datafile
     bash goostats -J 100 -r $datafile stats-$datafile
 done</code></pre></li>
+</ul></li>
 <li>Now she can run it, specifying which files to run on
 <ul>
 <li><code>bash do-stats.sh *[AB].txt</code></li>

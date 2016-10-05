@@ -81,7 +81,8 @@
 -    So now let's go back to the data-shell directory.  We can try this
     -    `cd data-shell`
 -    Oops, that didn't work.  cd can only see subdirectories inside the one we're in
-    -    `cd .. # This takes us back.  .. stands for the directory containing this, or the parent`
+    -    This takes us back.  .. stands for the directory containing this, or the parent
+    -    `cd ..`
 -    We're back again
     -    `pwd`
 -    We can see this parent directory if we use the -a (all) flag for ls
@@ -103,12 +104,15 @@
 -    Let's go back to the data directory.  This time, we don't need to use 3 separate commands, we can string together
     -    `cd Desktop/data-shell/data`
 -    So far, we've been using "relative paths" (explain).  ls and cd are trying to find where we mean
--    We could also use "absolute paths" these will work no matter where we are.  Remember that leading / means root?
+-    We could also use "absolute paths" these will work no matter where we are.  
+    -    Remember that leading / means root?
     -    `pwd`
     -    `cd /Volumes/mickles/Desktop/data-shell`
 -    Some shortcuts:
-    -    `cd ~/Desktop # Tilda is the same as the user's home directory (/Volumes/mickles for me)`
-    -    `cd - # This takes you to the previous directory you were in, very useful for switching back and forth`
+-    Tilda is the same as the user's home directory (/Volumes/mickles for me)
+    -    `cd ~/Desktop `
+-    This takes you to the previous directory you were in, useful for switching back and forth
+    -    `cd - `
 
 ***---------- Socrative #3 ----------***
 
@@ -137,7 +141,8 @@
     -    `cd ~/Desktop/data-shell`
     -    `ls -F`
 -    Let's create a new directory called thesis using mkdir
-    -    `mkdir thesis # Make directory.  Relative path, so in current working directory`
+    -    Make directory.  Relative path, so in current working directory
+    -    `mkdir thesis`
 -    Check that it's there.  We can also check with our GUI
     -    `ls -F`
 -    Good naming conventions
@@ -151,7 +156,13 @@
     -    `nano draft.txt`
 -    Explore nano commands using the control key (^)
 -    Write something like: 
-    -    `As the facts change, change your thesis!  Don't be a stubborn mule or you'll get killed.`
+    -     <span></span>
+    
+        ```
+        As the facts change, change your thesis!  
+        Don't be a stubborn mule or you'll get killed.
+        ```
+
 -    Now let's write this out using Ctrl+O
 -    Our file exists!
     -    `ls `
@@ -217,7 +228,7 @@
 
 -    Combining commands or programs together is where we really get into the shell's power
 -    Let's look in the molecules directory.  
-    -    `This has some files describing some organic molecules in protein data bank (pdb) format`
+    -    This has some files describing some organic molecules in protein data bank (pdb) format
     -    `pwd`
     -    `ls molecules`
 -    Let's go into that directory and run wordcount
@@ -284,7 +295,8 @@
 -    wc and sort then act as filters and pipe between each other.  
 -    They take input, transform and give us output
 -    We used > to redirect output to a file.  We can also redirect a file to input using < 
-    -    `wc < methane.pdb # same as wc methane.pdb, but there's no filename to open, it's redirected`
+    -    Same as wc methane.pdb, but there's no filename to open, it's redirected
+    -    `wc < methane.pdb`
 
 ### Back to our biologist Nelly
 
@@ -333,14 +345,14 @@
 -    A simple example of a for loop
 -    Note that the > character here means that our command isn't finished yet.  
 -    We need the done to finish it
-    -     
+    -     <span></span>
     
-    ```
-    for filename in basilisk.dat unicorn.dat
-    do
-    head -n 3 $filename`
-    done
-    ```
+        ```
+        for filename in basilisk.dat unicorn.dat
+        do
+        head -n 3 $filename`
+        done
+        ```
 
 -    The for loop does something for each thing in a list.  In this case, the list is the two filenames
 -    Each time through the loop, the filename we're working on is saved in a variable named filename
@@ -350,14 +362,14 @@
 -    > and $ are two different "prompts"
 -    We could use x as a variable name instead
 -    Indenting the things we're doing inside the loop makes the code easier to read
-    -     
+    -     <span></span>
     
-    ```
-    for x in basilisk.dat unicorn.dat
-    do
-        head -n 3 $x
-    done
-    ```
+        ```
+        for x in basilisk.dat unicorn.dat
+        do
+            head -n 3 $x
+        done
+        ```
 
 -    Best to pick variable names that make sense with what you're doing, filename is better than x
 
@@ -367,15 +379,15 @@
 
 -    A slightly more complicated loop
 -    We could also use curly braces to get our variable ${filename} is the same as $filename
-    -     
+    -     <span></span>
     
-    ```
-    for filename in *.dat
-    do
-        echo $filename
-    head -n 100 ${filename} | tail -n 20
-    done
-    ```
+        ```
+        for filename in *.dat
+        do
+            echo $filename
+        head -n 100 ${filename} | tail -n 20
+        done
+        ```
 
 -    We use a wildcard for the filenames instead of listing them ourself
 -    This time we run two commands.  The first is echo, which just echos/prints the filename
@@ -388,22 +400,22 @@
 -    Again, it's often easier to just avoid spaces
     -    `for filename in "red dragon.dat" "purple unicorn.dat"`
 -    Back to our file copying problem, we can solve it with this loop
-    -     
+    -     <span></span>
 
-    ```
-    for filename in *.dat
-    do
-        cp $filename original-$filename
-    done
-    ```
+        ```
+        for filename in *.dat
+        do
+            cp $filename original-$filename
+        done
+        ```
 
 -    Each time through it runs a different file as if we run this
-    -     
+    -    <span></span>
     
-    ```
-    cp basilisk.dat original-basilisk.dat
-    cp unicorn.dat original-unicorn.dat
-    ```
+        ```
+        cp basilisk.dat original-basilisk.dat
+        cp unicorn.dat original-unicorn.dat
+        ```
 
 -    Check for copies
     -    `ls`
@@ -413,25 +425,25 @@
 
 -    First she wants to make sure she can select the right files
     -    `cd ../north-pacific-gyre/2012-07-03`
-    -     
+    -    <span></span>  
 
-    ```
-    for datafile in *[AB].txt
-    do
-        echo $datafile
-    done
-    ```
+        ```
+        for datafile in *[AB].txt
+        do
+            echo $datafile
+        done
+        ```
 
 -    Now she wants to run her goostats program on them and write the results to files
 -    To be safe, we're still using echo here
-    -     
+    -     <span></span>
     
-    ```
-    for datafile in *[AB].txt
-    do
-        echo $datafile stats-$datafile
-    done
-    ```
+        ```
+        for datafile in *[AB].txt
+        do
+            echo $datafile stats-$datafile
+        done
+        ```
 
 -    All this typing is increasing our chance of mistakes though.  Fortunately, we can reuse some of our typing
 -    Hitting the up arrow key gives us the last command.  Note the semicolons, these separate different lines.  We can then move around and change echo to bash goostats to run the program
@@ -486,12 +498,12 @@
 -    Works great, but what if someone else needs to use this, or we want to use it 6 months later?
 -    Add Comments!!! They start with a #, and the computer ignores these lines when parsing them.
     -    `nano middle.sh`
-    -     
+    -     <span></span>
     
-    ```
-    # Select lines from the middle of a file.
-    # Usage: bash middle.sh filename end_line num_lines
-    ```
+        ```
+        # Select lines from the middle of a file.
+        # Usage: bash middle.sh filename end_line num_lines
+        ```
 
 -    What if we want to process many files in one pipeline?  
 -    We could put something like this in a file, but it'd only work for .pdb
@@ -515,16 +527,16 @@
 -    Nelle forgot some arguments for goostats.  Luckily, its easy to re-run, and she can make a script
     -    `cd ../north-pacific-gyre/2012-07-03`
     -    `nano do-stats.sh`
-    -     
+    -     <span></span>
     
-    ```
-    # Calculate reduced stats for data files at J = 100 c/bp.
-    for datafile in "$@"
-    do
-        echo $datafile
-        bash goostats -J 100 -r $datafile stats-$datafile
-    done
-    ```
+        ```
+        # Calculate reduced stats for data files at J = 100 c/bp.
+        for datafile in "$@"
+        do
+            echo $datafile
+            bash goostats -J 100 -r $datafile stats-$datafile
+        done
+        ```
 
 -    Now she can run it, specifying which files to run on
     -    `bash do-stats.sh *[AB].txt`
