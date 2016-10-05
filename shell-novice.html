@@ -1,0 +1,764 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="notes.css" type="text/css" />
+</head>
+<body>
+<h2 id="introducing-the-shell">1. Introducing the Shell</h2>
+<h3 id="introduce-socrative">Introduce Socrative</h3>
+<ul>
+<li>You can import my quiz with SOC-24313213</li>
+<li>Start the quiz in teacher mode, so you can step through one question at a time</li>
+<li>Advise learners to go to https://b.socrative.com/login/student/</li>
+<li>Type in MICKLEY for the room name</li>
+</ul>
+<p><strong>QUESTION: How many of you have used the shell before?</strong></p>
+<p><strong>Computers do 4 things:</strong></p>
+<ul>
+<li>Run programs</li>
+<li>Store data</li>
+<li>Communicate with each other</li>
+<li>Interact with us</li>
+</ul>
+<p><strong>Interfaces</strong></p>
+<ul>
+<li>Mostly we interact nowadays using a GUI (graphical interface)</li>
+<li>But we can also use a command interface (CLI) with the shell</li>
+<li>We type something in, the computer evaluates it, and prints out something for us to read</li>
+<li>This is what the shell does, it's a program that lets us run other programs</li>
+<li>The shell has been around a long time, since the 1960s. It's survived because it's simple and powerful
+<ul>
+<li>Useful for repetitive tasks and constructing a workflow</li>
+<li>Comes bundled with lots of little simple programs</li>
+<li>Important if you're using something like a HPC cluster, may not have a GUI</li>
+</ul></li>
+</ul>
+<h3 id="our-hypothetical-example-nelle-the-marine-biologist">Our hypothetical example: Nelle the marine biologist</h3>
+<ul>
+<li>Nelle has collected 1520 samples of marine life from the North Pacific Gyre.<br />
+</li>
+<li>She wants to run protein assays on each of these samples to measure the relative abundances of 300 different proteins.<br />
+</li>
+<li>The assay machine she's using spits out a text file with one line for each protein.<br />
+</li>
+<li>She's on a deadline and has to:
+<ol style="list-style-type: decimal">
+<li>Run each sample through the machine, which will take a few weeks</li>
+<li>Calculate statistics for each of the proteins separately using a program her supervisor wrote called goostat.</li>
+<li>Compare the statistics for the proteins to each other using goodiff, which her labmate wrote.</li>
+<li>Write up her results, ideally within a month.<br />
+</li>
+</ol></li>
+<li>If she had to run goostat and goodiff by hand she'll have to type in the filenames and click OK 46,370 times.<br />
+</li>
+<li>Even if she can do this quickly, it will take weeks, and she'll certainly have typeos.<br />
+</li>
+<li>We're going to explore the shell to get at what she could do instead.</li>
+<li>We want to automate the repetitive steps in her workflow so that her computer can do all the work while she writes her paper.<br />
+</li>
+<li>Plus, once she puts a workflow together, she can use it again if she collects more data.</li>
+</ul>
+<h2 id="navigating-files-and-directories">2. Navigating Files and Directories</h2>
+<h4 id="moving-around-in-the-filesystem-and-seeing-whats-there">Moving around in the filesystem and seeing what's there</h4>
+<ul>
+<li>Setup prompt
+<ul>
+<li><code>PS1='$ ' # (Or PS1=&quot;\n\w: \$ &quot;)</code></li>
+</ul></li>
+<li>Explain that whoami is a program that is being run and displaying output
+<ul>
+<li><code>whoami</code></li>
+</ul></li>
+<li>Print working directory: find out where we are. Directory = folder
+<ul>
+<li><code>pwd</code></li>
+</ul></li>
+<li>Diagram a Unix filesystem and explain the leading / (root directory). There are 2 meanings for /</li>
+<li>Listing the contents of current directory with ls
+<ul>
+<li><code>ls</code></li>
+</ul></li>
+<li>Kind of hard to tell what's what (which are folders?). So we'll add a &quot;flag&quot; (explain flags)
+<ul>
+<li><code>ls -F # Puts a slash after folders</code></li>
+</ul></li>
+<li>ls has lots of other options, let's look at the help. man stands for manual
+<ul>
+<li><code>man ls # Windows users: ls --help</code></li>
+</ul></li>
+<li>You can move around in man using mouse, or up/down arrows. Or b and spacebar to move a page. q to quit</li>
+<li>We can also tell ls to look in a different directory than the current one.</li>
+<li>-F and Desktop are parameters or arguments we're giving to the ls program to tell it how to run
+<ul>
+<li><code>ls -F Desktop</code></li>
+</ul></li>
+<li>Hopefully you see the data-shell directory. If not, put up a red sticky</li>
+<li>Now we can see what's inside our data-shell directory
+<ul>
+<li><code>ls -F Desktop/data-shell</code></li>
+</ul></li>
+<li>Instead of just looking, we can change our current directory.<br />
+</li>
+<li>Say we want to go to that data directory
+<ul>
+<li><code>cd Desktop # cd stands for change directory</code></li>
+<li><code>cd data-shell</code></li>
+<li><code>cd data</code></li>
+</ul></li>
+<li>cd doesn't tell us anything back, but we can check using our tools from before to see that we are in the data directory
+<ul>
+<li><code>pwd</code></li>
+<li><code>ls -F</code></li>
+</ul></li>
+<li>So now let's go back to the data-shell directory. We can try this
+<ul>
+<li><code>cd data-shell</code></li>
+</ul></li>
+<li>Oops, that didn't work. cd can only see subdirectories inside the one we're in
+<ul>
+<li><code>cd .. # This takes us back.  .. stands for the directory containing this, or the parent</code></li>
+</ul></li>
+<li>We're back again
+<ul>
+<li><code>pwd</code></li>
+</ul></li>
+<li>We can see this parent directory if we use the -a (all) flag for ls
+<ul>
+<li><code>ls -F -a</code></li>
+</ul></li>
+<li>We can also stack multiple flags together like this instead of writing them separately
+<ul>
+<li><code>ls -Fa</code></li>
+</ul></li>
+<li>Explain hidden files, eg .bash_profile, .DS_Store, ./ (current directory).</li>
+<li>. and .. don't just belong to cd. Any program can use them, eg this shows my Desktop:
+<ul>
+<li><code>ls ..</code></li>
+</ul></li>
+<li>So ls, cd, and pwd are how we navigate around our filesystem</li>
+<li>What happens if you just type cd and press enter? Where do you go? Let's figure it out,</li>
+<li>and put up a green sticky when think you have the answer</li>
+</ul>
+<p><strong><em>---------- Socrative #2 ----------</em></strong></p>
+<ul>
+<li>Takes us back to the home directory
+<ul>
+<li><code>cd</code></li>
+<li><code>pwd</code></li>
+</ul></li>
+<li>Let's go back to the data directory. This time, we don't need to use 3 separate commands, we can string together
+<ul>
+<li><code>cd Desktop/data-shell/data</code></li>
+</ul></li>
+<li>So far, we've been using &quot;relative paths&quot; (explain). ls and cd are trying to find where we mean</li>
+<li>We could also use &quot;absolute paths&quot; these will work no matter where we are. Remember that leading / means root?
+<ul>
+<li><code>pwd</code></li>
+<li><code>cd /Volumes/mickles/Desktop/data-shell</code></li>
+</ul></li>
+<li>Some shortcuts:
+<ul>
+<li><code>cd ~/Desktop # Tilda is the same as the user's home directory (/Volumes/mickles for me)</code></li>
+<li><code>cd - # This takes you to the previous directory you were in, very useful for switching back and forth</code></li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #3 ----------</em></strong></p>
+<p><strong><em>---------- Socrative #4 ----------</em></strong></p>
+<p><strong>QUESTION: What does the command ls do when used with the -l and -h arguments?</strong> Use your stickies</p>
+<h3 id="back-to-nelle">Back to Nelle</h3>
+<ul>
+<li>Nelle makes a directory called north-pacific-gyre for where the data came from
+<ul>
+<li><code>ls</code></li>
+</ul></li>
+<li>Inside of it is a folder named by the date
+<ul>
+<li><code>ls north-pacific-gyre</code></li>
+</ul></li>
+<li>Notice how this is named.<br />
+</li>
+<li>The filesystem sorts things by name, so if she makes more directories, they'll automatically be sorted</li>
+<li>This becomes more important later on if we want to run something that works with each directory in sequence</li>
+<li>Let's see what's inside the dated folder.</li>
+<li>Lots to type, introduce tab completion: folder 1, folder2, and contents
+<ul>
+<li><code>ls nor</code></li>
+</ul></li>
+</ul>
+<h2 id="working-with-files-and-directories">3. Working With Files and Directories</h2>
+<h4 id="creating-copying-deleting-and-editing">Creating, copying, deleting, and editing</h4>
+<ul>
+<li>Ok, we know how to explore files and directories, but how do we create them?
+<ul>
+<li><code>cd ~/Desktop/data-shell</code></li>
+<li><code>ls -F</code></li>
+</ul></li>
+<li>Let's create a new directory called thesis using mkdir
+<ul>
+<li><code>mkdir thesis # Make directory.  Relative path, so in current working directory</code></li>
+</ul></li>
+<li>Check that it's there. We can also check with our GUI
+<ul>
+<li><code>ls -F</code></li>
+</ul></li>
+<li>Good naming conventions
+<ol style="list-style-type: decimal">
+<li>Don't use spaces. It's possible to (and I do), but the shell interprets them as arg breaks</li>
+<li>Don't begin the name with -, since that means &quot;flag&quot;</li>
+<li>Stick with letters, numbers, ., -, _ Many other characters have special meanings</li>
+</ol></li>
+<li>Now let's make a new file, using an editor in the shell called nano</li>
+<li>You could use any other text editor instead, nano is just convenient</li>
+<li>Notepad++ (Windows) or Sublime are good ones
+<ul>
+<li><code>cd thesis</code></li>
+<li><code>nano draft.txt</code></li>
+</ul></li>
+<li>Explore nano commands using the control key (^)</li>
+<li>Write something like:
+<ul>
+<li><code>As the facts change, change your thesis!  Don't be a stubborn mule or you'll get killed.</code></li>
+</ul></li>
+<li>Now let's write this out using Ctrl+O</li>
+<li>Our file exists!
+<ul>
+<li><code>ls</code></li>
+</ul></li>
+<li>We can remove this file using rm</li>
+<li>Careful though! In shell, deleting is forever! No &quot;are you sure?&quot;. No trash bin.
+<ul>
+<li><code>rm draft.txt</code></li>
+<li><code>ls</code></li>
+</ul></li>
+<li>Let's recreate the file, and move back one directory to data-shell
+<ul>
+<li><code>nano draft.txt</code></li>
+<li><code>ls</code></li>
+<li><code>cd ..</code></li>
+</ul></li>
+<li>Now let's try to remove the whole thesis directory</li>
+<li>Doesn't work. rm only works with files by default, not directories. This is a good thing.
+<ul>
+<li><code>rm thesis</code></li>
+</ul></li>
+<li>If we add the recursive (-r) flag, we can delete everything inside thesis, and it too</li>
+<li>But this is super powerful, and again you need to be careful!! We might forget what else is inside.
+<ul>
+<li><code>rm -r thesis</code></li>
+</ul></li>
+<li>A better way is to add the interactive flag to rm too</li>
+<li>We use y and n for yes and no (which also work)
+<ul>
+<li><code>rm -r -i thesis</code></li>
+<li><code>ls -F</code></li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #5 ----------</em></strong></p>
+<ul>
+<li>Let's recreate it again. This time we don't need to be in the thesis directory
+<ul>
+<li><code>pwd</code></li>
+<li><code>mkdir thesis</code></li>
+<li><code>nano thesis/draft.txt</code></li>
+<li><code>ls thesis</code></li>
+</ul></li>
+<li>Let's change the name to something more appropriate</li>
+<li>mv stands for move. First argument is the file we're moving, 2nd is where to go
+<ul>
+<li><code>mv thesis/draft.txt thesis/quotes.txt</code></li>
+<li><code>ls thesis</code></li>
+</ul></li>
+<li>Be careful with mv too. It overwrites files without telling you.<br />
+</li>
+<li>You can avoid this with -i</li>
+<li>Let's move quotes.txt into the current working directory. Remember, . is pwd
+<ul>
+<li><code>mv thesis/quotes.txt .</code></li>
+<li><code>ls thesis</code></li>
+</ul></li>
+<li>If we give a filename to ls, it only looks for that file
+<ul>
+<li><code>ls quotes.txt</code></li>
+</ul></li>
+<li>We also have a copy command called cp
+<ul>
+<li><code>cp quotes.txt thesis/quotations.txt</code></li>
+<li><code>ls quotes.txt thesis/quotations.txt</code></li>
+</ul></li>
+<li>Just to prove we have a copy, let's delete the original
+<ul>
+<li><code>rm quotes.txt</code></li>
+<li><code>ls quotes.txt thesis/quotations.txt</code></li>
+</ul></li>
+<li>Names and extensions</li>
+<li>The files we're working with have names that are something dot something</li>
+<li>This extension at the end isn't required. We could have just called this quotes</li>
+<li>But extensions are helpful for us (and programs) to know how to interpret them</li>
+</ul>
+<p><strong><em>---------- Socrative #6 ----------</em></strong></p>
+<p><strong><em>---------- Socrative #7 ----------</em></strong></p>
+<h2 id="pipes-and-filters">4. Pipes and Filters</h2>
+<h4 id="combining-commands-to-do-novel-things">Combining commands to do novel things</h4>
+<ul>
+<li>Combining commands or programs together is where we really get into the shell's power</li>
+<li>Let's look in the molecules directory.
+<ul>
+<li><code>This has some files describing some organic molecules in protein data bank (pdb) format</code></li>
+<li><code>pwd</code></li>
+<li><code>ls molecules</code></li>
+</ul></li>
+<li>Let's go into that directory and run wordcount</li>
+<li>This shows the # of lines, words, and characters
+<ul>
+<li><code>cd molecules</code></li>
+<li><code>wc *.pdb</code></li>
+</ul></li>
+<li>The * character is a &quot;wildcard&quot;. It matches 0 or more characters, so *.pdb matches all pdb files</li>
+<li>We could also use p*.pdb for only pentane and propane
+<ul>
+<li><code>wc p*.pdb</code></li>
+</ul></li>
+<li>Another wildcard is ?, but it only matches a single character.<br />
+</li>
+<li>So p?.pdb wouldn't match pentane.pdb, only pi.pdb</li>
+<li>We could use multiple wildcards at once
+<ul>
+<li><code>wc ??hane.p* # This will only match ethane</code></li>
+</ul></li>
+<li>One note: If nothing matches, our wildcard match gets passed as-is, eg:</li>
+<li>The shell is creating a list of matching files BEFORE running wc
+<ul>
+<li><code>wc *.pdf # Doesn't work</code></li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #8 ----------</em></strong></p>
+<ul>
+<li>If we add the -l flag to wc we only get the # of lines</li>
+<li>We could also use -w and -c for the # of words or characters
+<ul>
+<li><code>wc -l *.pdb</code></li>
+</ul></li>
+<li>Say we wanted to know which file was the shortest.<br />
+</li>
+<li>Easy with only 6 (methane), but what if there were thousands of files?</li>
+<li>First step, save the lengths to a file</li>
+<li>The &gt; symbol REDIRECTS the output to the filename (and we don't see it!)</li>
+<li>Creates or overwrites the file
+<ul>
+<li><code>wc -l *.pdb &gt; lengths.txt</code></li>
+<li><code>ls lengths.txt</code></li>
+</ul></li>
+<li>Now we want to see what's in the file</li>
+<li>We can print it using cat = concatenate (can be used with multiple files)
+<ul>
+<li><code>cat lengths.txt</code></li>
+</ul></li>
+<li>One disadvantage of cat is it dumps the entire file. Not so good if file is long</li>
+<li>Can use less instead to just show a screen at a time
+<ul>
+<li><code>less lengths.txt  # Press q to quit</code></li>
+</ul></li>
+<li>Now that we have a file, we can use the sort command to sort its contents</li>
+<li>We also have to use the -n flag for numeric sort (otherwise 100 and 10 will end up together)
+<ul>
+<li><code>sort -n lengths.txt</code></li>
+</ul></li>
+<li>We can save these sorted lengths
+<ul>
+<li><code>sort -n lengths.txt &gt; sorted-lengths.txt</code></li>
+<li><code>cat lengths.txt</code></li>
+<li><code>cat sorted-lengths.txt</code></li>
+</ul></li>
+<li>We can also use a command called head to just get the first line. -n is the # of lines to get
+<ul>
+<li><code>head -n 1 sorted-lengths.txt</code></li>
+</ul></li>
+<li>Things are getting confusing with all these intermediate files</li>
+<li>Fortunately we can avoid those intermediates by running everything together
+<ul>
+<li><code>sort -n lengths.txt | head -n 1</code></li>
+</ul></li>
+<li>The | is called a pipe, and it's very useful!!!</li>
+<li>It means take the output of the left side and use it as input for the right side</li>
+<li>We could also do this for wordcount and sort
+<ul>
+<li><code>wc -l *.pdb | sort -n</code></li>
+</ul></li>
+<li>And for everything all at once, no intermediate files!</li>
+<li>Go over what this is doing, basically reading backwards: head of sort of wordcount
+<ul>
+<li><code>wc -l *.pdb | sort -n | head -n 1</code></li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #9 ----------</em></strong></p>
+<ul>
+<li>So we end up with lots of little tools that do one job well and can be strung together</li>
+<li>Keeps things from getting too complicated</li>
+<li>wc and sort then act as filters and pipe between each other.<br />
+</li>
+<li>They take input, transform and give us output</li>
+<li>We used &gt; to redirect output to a file. We can also redirect a file to input using &lt;
+<ul>
+<li><code>wc &lt; methane.pdb # same as wc methane.pdb, but there's no filename to open, it's redirected</code></li>
+</ul></li>
+</ul>
+<h3 id="back-to-our-biologist-nelly">Back to our biologist Nelly</h3>
+<ul>
+<li>Nelle decides to check the length of her data files
+<ul>
+<li><code>cd north-pacific-gyre/2012-07-03</code></li>
+<li><code>wc -l *.txt</code></li>
+</ul></li>
+<li>Things like this can be good for error checking. There's a file that's too short, missing data</li>
+<li>Still a lot of work to go through though if she's got thousands of files</li>
+<li>So we do this instead to look at the shortest 5
+<ul>
+<li><code>wc -l *.txt | sort -n | head -n 5</code></li>
+</ul></li>
+<li>We could also look for files that are too big using tail (similar to head, but last lines)</li>
+<li>That looks ok sizewize, but what's that Z doing in the 2nd line?<br />
+</li>
+<li>Should just be A or B for 2 different depths
+<ul>
+<li><code>wc -l *.txt | sort -n | tail -n 5</code></li>
+</ul></li>
+<li>Let's see if there are any others like it</li>
+<li>Turns out there are two, where depth wasn't recorded
+<ul>
+<li><code>ls *Z.txt</code></li>
+</ul></li>
+<li>We could delete these files using rm, but we might want to use them later</li>
+<li>Instead we can just exclude them from all analyses with wildcards</li>
+<li>[AB] means match one character that is either an A or a B
+<ul>
+<li><code>wc -l *[AB].txt</code></li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #10 ----------</em></strong></p>
+<p><strong><em>---------- Socrative #11 ----------</em></strong></p>
+<h2 id="loops">5. Loops</h2>
+<h4 id="how-can-we-perform-the-same-repetitive-actions-on-many-files-using-loops">How can we perform the same repetitive actions on many files? Using loops</h4>
+<ul>
+<li>Also reduces amount of typing and mistakes</li>
+<li>We're going to work in the creatures directory</li>
+<li>Here we have two files, let's assume they're genome data files and we have a lot more than 2
+<ul>
+<li><code>cd ../creatures</code></li>
+<li><code>ls</code></li>
+</ul></li>
+<li>We can inspect one to see
+<ul>
+<li><code>head -n 10 unicorn.dat</code></li>
+</ul></li>
+<li>Say we wanted to modify these files, but we wanted to save a backup first</li>
+<li>We could try, this but it won't work
+<ul>
+<li><code>cp *.dat original-*dat</code></li>
+</ul></li>
+<li>That would expand to the following, and try to copy 2 files to a directory that doesn't exist
+<ul>
+<li><code>cp basilisk.dat unicorn.dat original-*.dat</code></li>
+</ul></li>
+<li>Instead, we'll have to use a loop. We'll come back to this example</li>
+<li>A simple example of a for loop</li>
+<li>Note that the &gt; character here means that our command isn't finished yet.<br />
+</li>
+<li><h2 id="we-need-the-done-to-finish-it">We need the done to finish it</h2>
+<pre><code>for filename in basilisk.dat unicorn.dat
+do
+head -n 3 $filename`
+done</code></pre></li>
+<li>The for loop does something for each thing in a list. In this case, the list is the two filenames</li>
+<li>Each time through the loop, the filename we're working on is saved in a variable named filename</li>
+<li>Inside the loop, we can get and substitute the variable's value by putting a $ in front of it</li>
+<li>Finally, the thing we're actually doing each time is just head</li>
+<li>Note that the &gt; now has multiple meanings. It can mean &quot;redirect to a file&quot; if we put it in our command. Or the shell prints it it's expecting us to type something, command not finished.</li>
+<li><blockquote>
+<p>and $ are two different &quot;prompts&quot;</p>
+</blockquote></li>
+<li>We could use x as a variable name instead</li>
+<li><h2 id="indenting-the-things-were-doing-inside-the-loop-makes-the-code-easier-to-read">Indenting the things we're doing inside the loop makes the code easier to read</h2>
+<pre><code>for x in basilisk.dat unicorn.dat
+do
+    head -n 3 $x
+done</code></pre></li>
+<li>Best to pick variable names that make sense with what you're doing, filename is better than x</li>
+</ul>
+<p><strong><em>---------- Socrative #12 ----------</em></strong></p>
+<ul>
+<li>A slightly more complicated loop</li>
+<li><h2 id="we-could-also-use-curly-braces-to-get-our-variable-filename-is-the-same-as-filename">We could also use curly braces to get our variable ${filename} is the same as $filename</h2>
+<pre><code>for filename in *.dat
+do
+    echo $filename
+head -n 100 ${filename} | tail -n 20
+done</code></pre></li>
+<li>We use a wildcard for the filenames instead of listing them ourself</li>
+<li>This time we run two commands. The first is echo, which just echos/prints the filename</li>
+<li>We couldn't just put $filename there.</li>
+<li>Then the shell would expand it to basilisk.dat and try to run that</li>
+<li>Finally, we take the first 100 rows, and then the last 20 of those, = rows 81-100</li>
+<li>Testing echo
+<ul>
+<li><code>echo hello there</code></li>
+</ul></li>
+<li>Say we had some filenames with spaces, eg red dragon.dat. We'd have to quote them. Otherwise, the shell would treat them as separate files</li>
+<li>Again, it's often easier to just avoid spaces
+<ul>
+<li><code>for filename in &quot;red dragon.dat&quot; &quot;purple unicorn.dat&quot;</code></li>
+</ul></li>
+<li><h2 id="back-to-our-file-copying-problem-we-can-solve-it-with-this-loop">Back to our file copying problem, we can solve it with this loop</h2>
+<pre><code>for filename in *.dat
+do
+    cp $filename original-$filename
+done</code></pre></li>
+<li><h2 id="each-time-through-it-runs-a-different-file-as-if-we-run-this">Each time through it runs a different file as if we run this</h2>
+<pre><code>cp basilisk.dat original-basilisk.dat
+cp unicorn.dat original-unicorn.dat</code></pre></li>
+<li>Check for copies
+<ul>
+<li><code>ls</code></li>
+</ul></li>
+</ul>
+<h3 id="back-to-our-friend-nelle-building-her-pipeline">Back to our friend Nelle, building her pipeline</h3>
+<ul>
+<li>First she wants to make sure she can select the right files
+<ul>
+<li><code>cd ../north-pacific-gyre/2012-07-03</code></li>
+<li></li>
+</ul>
+<pre><code>for datafile in *[AB].txt
+do
+    echo $datafile
+done</code></pre></li>
+<li>Now she wants to run her goostats program on them and write the results to files</li>
+<li><h2 id="to-be-safe-were-still-using-echo-here">To be safe, we're still using echo here</h2>
+<pre><code>for datafile in *[AB].txt
+do
+    echo $datafile stats-$datafile
+done</code></pre></li>
+<li>All this typing is increasing our chance of mistakes though. Fortunately, we can reuse some of our typing</li>
+<li>Hitting the up arrow key gives us the last command. Note the semicolons, these separate different lines. We can then move around and change echo to bash goostats to run the program</li>
+<li>Now it's running the stats, but we have no idea as to progress! We can stop the for loop with CTRL+C</li>
+<li>Lets add echo $datafile; back in so we can see which file we're working on. If you know how many files you have, you can estimate how long this will take to run</li>
+<li>Editing the previous command still takes a while using the arrow keys. CTRL+A takes us the the beginning of the line, and CTRL+E to the end.<br />
+</li>
+<li>Also, we could keep hitting up arrow to go through our history, eg find the ls command. Alternatively we could use the history command and pipe it through tail to get the last 15
+<ul>
+<li><code>history | tail -n 15</code></li>
+</ul></li>
+<li>Notice that the history entries are numbered. We can run any of them with an exclamation point
+<ul>
+<li><code>!132 # Run the ls command&quot;</code></li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #13 ----------</em></strong></p>
+<p><strong><em>---------- Socrative #14 ----------</em></strong></p>
+<h2 id="shell-scripts">6. Shell Scripts</h2>
+<h4 id="how-we-save-and-reuse-groups-of-commands">How we save and reuse groups of commands</h4>
+<ul>
+<li>Now we're going to save our whole workflow in a file, so that we can just run the file</li>
+<li>First let's go back to the molecules directory
+<ul>
+<li><code>cd ~/Desktop/data-shell/molecules</code></li>
+</ul></li>
+<li>Now let's edit a new file
+<ul>
+<li><code>nano middle.sh</code></li>
+</ul></li>
+<li>Put in the following: which selects lines 11-15</li>
+<li>We're not running this as a command, we're just putting it in a file
+<ul>
+<li><code>head -n octane.pdb | tail -n 5</code></li>
+</ul></li>
+<li>Save and exit: CTRL+O, CTRL+X</li>
+<li>Now we can run the file, which in turn runs the commands inside of it
+<ul>
+<li><code>bash middle.sh</code></li>
+</ul></li>
+<li>Compare to running the command directly: they're the same
+<ul>
+<li><code>head -n 15 octane.pdb | tail -n 5</code></li>
+</ul></li>
+<li>What if we want to select lines of an arbitrary file?</li>
+<li>Editing middle.sh isn't a great solution</li>
+<li>Instead, we can use a special variable called $1</li>
+<li>This will be replaced by whatever argument we give our middle.sh
+<ul>
+<li><code>nano middle.sh</code></li>
+<li><code>head -n 15 &quot;$1&quot; | tail -n 5</code></li>
+</ul></li>
+<li>Now we can run the following
+<ul>
+<li><code>bash middle.sh octane.pdb</code></li>
+<li><code>bash middle.sh pentane.pdb</code></li>
+</ul></li>
+<li>We put it in quotes in case it has spaces (better safe than sorry)</li>
+<li>What if we wanted to change the range of lines though?</li>
+<li>We can add more special variables for more arguments
+<ul>
+<li><code>nano middle.sh</code></li>
+<li><code>head -n &quot;$2&quot; &quot;$1&quot; | tail -n &quot;$3&quot;</code></li>
+</ul></li>
+<li>Now we can run:
+<ul>
+<li><code>bash middle.sh pentane.pdb 15 5</code></li>
+<li><code>bash middle.sh pentane.pdb 20 5</code></li>
+</ul></li>
+<li>Works great, but what if someone else needs to use this, or we want to use it 6 months later?</li>
+<li>Add Comments!!! They start with a #, and the computer ignores these lines when parsing them.
+<ul>
+<li><code>nano middle.sh</code></li>
+<li></li>
+</ul>
+<pre><code># Select lines from the middle of a file.
+# Usage: bash middle.sh filename end_line num_lines</code></pre></li>
+<li>What if we want to process many files in one pipeline?<br />
+</li>
+<li>We could put something like this in a file, but it'd only work for .pdb</li>
+<li>$1 and $2 won't work either, we don't know how many files there will be
+<ul>
+<li><code>wc -l *.pdb | sort -n</code></li>
+</ul></li>
+<li>Luckily, there's a special variable <span class="math inline">$@ which means &quot;All the arguments&quot; - `nano sorted.sh` - `wc -l &quot;$</span>@&quot; | sort -n `</li>
+<li>And it works:
+<ul>
+<li><code>bash sorted.sh *.pdb</code></li>
+<li><code>bash sorted.sh *.pdb ../creatures/*.dat</code></li>
+</ul></li>
+<li>What if we don't give it any arguments? Now $@ expands to nothing</li>
+<li>wc just waits for input, since it didn't get a filename
+<ul>
+<li><code>bash sorted.sh</code></li>
+</ul></li>
+<li>We could save our history, to avoid typos, but it'll take some editing
+<ul>
+<li><code>history | tail -n 5 &gt; redo-figure-3.sh</code></li>
+<li><code>cat redo-figure-3.sh</code></li>
+</ul></li>
+</ul>
+<h3 id="nelles-script">Nelle's script</h3>
+<ul>
+<li>Nelle forgot some arguments for goostats. Luckily, its easy to re-run, and she can make a script
+<ul>
+<li><code>cd ../north-pacific-gyre/2012-07-03</code></li>
+<li><code>nano do-stats.sh</code></li>
+<li></li>
+</ul>
+<pre><code># Calculate reduced stats for data files at J = 100 c/bp.
+for datafile in &quot;$@&quot;
+do
+    echo $datafile
+    bash goostats -J 100 -r $datafile stats-$datafile
+done</code></pre></li>
+<li>Now she can run it, specifying which files to run on
+<ul>
+<li><code>bash do-stats.sh *[AB].txt</code></li>
+</ul></li>
+<li>She could have put the *[AB].txt inside her script.<br />
+</li>
+<li>This might be safer, but it's less flexible</li>
+</ul>
+<p><strong><em>---------- Socrative #15 ----------</em></strong></p>
+<h2 id="finding-things">7. Finding Things</h2>
+<ul>
+<li><code>cd ~/Desktop/data-shell/writing</code></li>
+<li><code>cat haiku.txt</code></li>
+<li>Look for lines that have &quot;not&quot; in them
+<ul>
+<li><code>grep not haiku.txt</code></li>
+</ul></li>
+<li>Or day. But this includes words containing day
+<ul>
+<li><code>grep day haiku.txt</code></li>
+</ul></li>
+<li>To just get day, we can use -w (for word)
+<ul>
+<li><code>grep -w day haiku.txt</code></li>
+</ul></li>
+<li>We can also search for a phrase with quotes
+<ul>
+<li><code>grep -w &quot;is not&quot; haiku.txt</code></li>
+</ul></li>
+<li>It's also useful to get the line numbers of the lines that match
+<ul>
+<li><code>grep -n &quot;it&quot; haiku.txt</code></li>
+</ul></li>
+<li>Flags can be combined: line numbers and words
+<ul>
+<li><code>grep -n -w &quot;the&quot; haiku.txt</code></li>
+</ul></li>
+<li>Line numbers, words, and case-insensitive
+<ul>
+<li><code>grep -n -w -i &quot;the&quot; haiku.txt</code></li>
+</ul></li>
+<li>Or we can invert our search, show the lines that do NOT contain &quot;the&quot;
+<ul>
+<li><code>grep -n -w -v &quot;the&quot; haiku.txt</code></li>
+</ul></li>
+<li>Grep has lots of other options
+<ul>
+<li><code>man grep</code></li>
+<li><code>grep --help</code></li>
+</ul></li>
+<li>Grep supports something called regular expressions, which is like our wildcards
+<ul>
+<li>http://regexr.com/</li>
+</ul></li>
+<li>-E extended regex, Quotes to prevent shell expansion, ^ = beginning, . = single character
+<ul>
+<li><code>grep -E '^.o' haiku.txt</code></li>
+</ul></li>
+<li>grep finds lines in files, but the find command finds files themselves</li>
+<li>This finds all the files in the current directory (and it's recursive)
+<ul>
+<li><code>find .</code></li>
+</ul></li>
+<li>Only show directories
+<ul>
+<li><code>find . -type d</code></li>
+</ul></li>
+<li>Only show files
+<ul>
+<li><code>find . -type f</code></li>
+</ul></li>
+<li>We can also match by name</li>
+<li>This doesn't actually find all of them, remember the shell expands BEFORE command runs
+<ul>
+<li><code>find . -name *.txt</code></li>
+<li><code>find . -name haiku.txt # Ends up same as this</code></li>
+</ul></li>
+<li>Putting in single quotes prevents shell from expanding
+<ul>
+<li><code>find . -name '*.txt'</code></li>
+</ul></li>
+<li>Pretty similar to ls right? But find lets us restrict our search</li>
+<li>Shell runs whatever is inside $() first
+<ul>
+<li><code>wc -l $(find . -name '*.txt')</code></li>
+</ul></li>
+<li>Same as this
+<ul>
+<li><code>wc -l ./data/one.txt ./data/two.txt ./haiku.txt</code></li>
+</ul></li>
+<li>We often string grep and find together</li>
+<li>Find all the .pdb files contained in the parent directory of this one, then look for FE in them.
+<ul>
+<li><code>grep &quot;FE&quot; $(find .. -name '*.pdb')</code></li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #15 ----------</em></strong></p>
+<h3 id="challenge">Challenge</h3>
+<ul>
+<li>Write a short explanatory comment for the following shell script:
+<ul>
+<li><code>wc -l $(find . -name '*.dat') | sort -n</code></li>
+</ul></li>
+</ul>
+</body>
+</html>
