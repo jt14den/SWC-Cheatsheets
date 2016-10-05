@@ -1,0 +1,70 @@
+/*
+ * CSS file that looks good when printed
+ */
+
+
+body {
+  font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+  font-size: 16px;
+  line-height: 1.33;
+  padding: 1em;
+  margin: auto;
+  max-width: 50em;
+}
+
+code, pre {
+  font-family: monospace, monospace;
+  _font-family: 'courier new', monospace;
+  font-size: 0.98em;
+  background-color: #ddeaff;
+  /* top/bottom, right/left */
+  padding: 1px 5px;
+  font-weight: bold;
+}
+
+a {
+  color: #06e;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:visited {
+  color: #06e;
+}
+
+
+ul, ol {
+  margin: 1em 0;
+  padding: 0 0 0 2em;
+}
+
+li p:last-child {
+  margin-bottom: 0;
+}
+
+ul ul, ol ol {
+  margin: .3em 0;
+}
+
+table {
+  margin-bottom: 2em;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+table th {
+  padding: .2em 1em;
+  background-color: #eee;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+table td {
+  padding: .2em 1em;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  vertical-align: top;
+}
+
