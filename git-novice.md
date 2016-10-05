@@ -1,41 +1,41 @@
 # Git Guacamole
 
-*Credits to Bryon Smith ([@bsmith89](https://github.com/bsmith89)) for this.  He started [this lesson](https://github.com/bsmith89/git-novice-outline), and I've merely added to it*
+*Credits to Bryon Smith ([&#64;bsmith89](https://github.com/bsmith89)) for this.  He started [this lesson](https://github.com/bsmith89/git-novice-outline), and I've merely added to it*
 
 ## Pre-Workshop Setup ##
 
-**`mv ~/.gitconfig ~/.gitconfig~`**
-**`mv ~/.bash_aliases ~/.bash_aliases~`**
-**`PS1="$ "`**
+-   `mv ~/.gitconfig ~/.gitconfig~`
+-   `mv ~/.bash_aliases ~/.bash_aliases~`
+-   `PS1="$ "`
+-   Open lesson for PhDComics slide: <http://swcarpentry.github.io/git-novice/01-basics/>
 
 ### Open up Socrative again ###
-- You can import my quiz with SOC-24313213
-- Advise learners to go to https://b.socrative.com/login/student/
-- Type in MICKLEY for the room name
+-   You can import my quiz with SOC-24313213
+-   Advise learners to go to <https://b.socrative.com/login/student/>
+-   Type in MICKLEY for the room name
 
 **QUESTION: How many of you have used git or other version control software before?**
-
 
 ## 1. Introduction: Automated Version Control ##
 
 -   Show the PhDComics slide
 -   Talk about a time when git saved my ass
--   Introduce the concept of repositories and commits
--   Lets people collaborate on the same code at the same time (Have you used google docs?)
 -   Unlimited undo, helps us know what each change does: Who made it & why?
+-   Lets people collaborate on the same code at the same time (Have you used google docs?)
 -   All of these things are useful for repeatability, history, fixing problems etc.  
+-   Introduce the concept of repositories and commits
 
 ## 2. Setting up Git ##
 
 - Git needs to know who we are (so we know who changed what)
-    -   **`git config --global user.name "Vlad Dracula"`**
-    -   **`git config --global user.email "vlad@tran.sylvan.ia"`**
-    -   **`git config --global color.ui "auto"`**
-    -   **`git config --global core.editor "nano -w"`**
--   **`git config --list`**
+    -   `git config --global user.name "Vlad Dracula"`
+    -   `git config --global user.email "vlad@tran.sylvan.ia"`
+    -   `git config --global color.ui "auto"`
+    -   `git config --global core.editor "nano -w"`
+-   `git config --list`
 -   To get help
-    -   **`git config --help`** or git <command> -h
--   Talk about how git is run with subcommands **`git <verb>`**
+    -   `git config --help` or git <command> -h
+-   Talk about how git is run with subcommands `git <verb>`
     -   Kind of like saying bash <verb>.  Git is another commandline interpreter
 -   If email privacy is needed: 
     - https://help.github.com/articles/keeping-your-email-address-private/
@@ -44,50 +44,50 @@
 #### Where does git store information
 
 -   Create the repository
-    -   **`cd ~/Desktop`**
-    -   **`mkdir guacamole; cd guacamole`**
-    -   **`git init`**
+    -   `cd ~/Desktop`
+    -   `mkdir guacamole; cd guacamole`
+    -   `git init`
 -   We can check that it's there.  That .git folder stores all the data, don't delete!
-    -   **`ls -F -a`**
--   **`git status`**
+    -   `ls -F -a`
+-   `git status`
 
 ## 4. Tracking changes ##
 #### Recording changes, checking status, and adding notes
 
--   **`nano instructions.txt`**
+-   `nano instructions.txt`
 -   Write a super simple recipe (with bullet points)
     -   Chop avocados, squeeze lime, add salt, and mix well
--   **`git status`**
+-   `git status`
     -   One untracked file
--   **`git add instruction.txt`**
--   **`git status`**
+-   `git add instruction.txt`
+-   `git status`
 -   Now git knows to keep track of instructions.txt, but it hasn't recorded changes yet
--   **`git commit`**
+-   `git commit`
     -   Adding instructions.txt
     -   This is a short recipe for guacamole
     -   Usually we add a 50 character summary as a title, and then get more descriptive
 -   Now that we've run commit, git saves it in the .git directory
 -   Point out the identifier/hash
--   **`git status`**
--   **`git log`**
+-   `git status`
+-   `git log`
 
 
--   **`nano instructions.txt`**
+-   `nano instructions.txt`
 -   Add "Enjoy!" as the last line
--   **`git status`**
+-   `git status`
     -   Point out the checkout to discard changes bit
--   **`git diff`**
+-   `git diff`
 -   Discuss how to read a diff
 
 ***---------- Socrative #1 ----------***
 
 -   Instead of opening an editor, we can just put the commit message in the command
-    -   **` git commit -m "Edited the guacamole instructions`**
+    -   ` git commit -m "Edited the guacamole instructions`
     -   Oops, we need to add the file first
-    -   **`git status`**
-    -   **`git add instructions.txt`**
-    -   **` git commit -m "Edited the guacamole instructions`**
--   **`git log`**
+    -   `git status`
+    -   `git add instructions.txt`
+    -   ` git commit -m "Edited the guacamole instructions`
+-   `git log`
 -   Draw a diagram of the three "areas" of git
     -   [filesystem] -->add [staging area] -->commit [repository]
     -   Think of commit as taking a snapshot, and add as deciding what's in it
@@ -101,22 +101,22 @@
 ***---------- Socrative #3 ----------***
 
 
--   Add a new file **`ingredients.txt`**: 2 Avocados, 1 lime, 2 tsp salt
-    -   **`git status`**
-    -   **`git add ingredients.txt`**
-    -   **`git commit`**
+-   Add a new file `ingredients.txt`: 2 Avocados, 1 lime, 2 tsp salt
+    -   `git status`
+    -   `git add ingredients.txt`
+    -   `git commit`
 -   Add a new ingredient, onion, to both the instructions and the ingredients;
-    -   **`git status`**
-    -   **`git diff`**
-    -   **`git add .`**
-    -   **`git status`**
-    -   **`git commit -m "Added onion to the recipe"`**
+    -   `git status`
+    -   `git diff`
+    -   `git add .`
+    -   `git status`
+    -   `git commit -m "Added onion to the recipe"`
 -   Discuss changes to multiple files
--   **`git log`**
+-   `git log`
 -   Our log is getting long, some solutions:
     -   d = down, u = up, q = quit
-    -   **`git log -2`**
-    -   **`git log --oneline`**
+    -   `git log -2`
+    -   `git log --oneline`
 
 
 ***---------- Socrative #4 ----------***
@@ -129,18 +129,18 @@
 -   Let's add another step to instructions.txt: Squeeze orange
 -   Remember when we learned that each commit has an identifier?
     -   The most recent commit is called HEAD, 
--   **`git diff HEAD instructions.txt`**
--   **`git diff HEAD~1 instructions.txt`**
--   **`HEAD`** refers to the most recent commit
--   **`~1`** means "minus one"
--   **`git log --oneline`**
--   **`git diff <HASH> instructions.txt`**
+-   `git diff HEAD instructions.txt`
+-   `git diff HEAD~1 instructions.txt`
+-   `HEAD` refers to the most recent commit
+-   `~1` means "minus one"
+-   `git log --oneline`
+-   `git diff <HASH> instructions.txt`
 
 -   If we can see past states, we can also restore them!  Let's get rid of orange.
--   **`git status`**
--   **`git checkout HEAD instructions.txt`**
--   **`git status`**
--   **`cat instructions.txt`**
+-   `git status`
+-   `git checkout HEAD instructions.txt`
+-   `git status`
+-   `cat instructions.txt`
 -   Notice that reverting a small change is much easier becuase we've split
     our work up into multiple files.
 
@@ -150,24 +150,24 @@
 ***---------- Socrative #6 ----------***
 
 
-## 6. Ignoring things (**`.gitignore`**) ##
+## 6. Ignoring things (`.gitignore`) ##
 
 -   What if we include some files that we don't want to track?
-    -   **`nano a.log`**
-    -   **`nano b.log`**
-    -   **`git status`** could get obnoxious
-    -   **`nano .gitignore`**
-    -   **`git status`**
-    -   **`git add .gitignore`**
-    -   **`git commit -m "Ignore some files."`**
-    -   **`git status`**
+    -   `nano a.log`
+    -   `nano b.log`
+    -   `git status` could get obnoxious
+    -   `nano .gitignore`
+    -   `git status`
+    -   `git add .gitignore`
+    -   `git commit -m "Ignore some files."`
+    -   `git status`
 -   We could add anyway by using the -f force option
-    -   **`git add a.log`**
-    -   **`git add -f a.log`**
-    -   **`git status`**
-    -   **`git reset HEAD .`**
-    -   **`git status`**
-    -   **`git status --ignored`**
+    -   `git add a.log`
+    -   `git add -f a.log`
+    -   `git status`
+    -   `git reset HEAD .`
+    -   `git status`
+    -   `git status --ignored`
 
 
 ## 7. Remotes in Github ##
@@ -180,18 +180,18 @@
 -   Follow the instructions to add the remote repository
     -   Be sure to use HTTPS
     -   SSH is preferred and more secure, but it's more complicated to setup
-    -   **`git remote add origin [URL]`**
-    -   **`git remote -v`**
+    -   `git remote add origin [URL]`
+    -   `git remote -v`
     -   The name origin is the local nickname for the remote repository.  
 -   Push our local repository to the remote
-    -   **`git push origin master`**
+    -   `git push origin master`
     -   Pushing branch master to origin
 -   Explore the repository on github
     -   Viewing files, seeing history of file, editing
 -   Show students that local changes which are NOT committed don't end up on the remote.
 -   Ask students to discuss the difference between 'commit' and 'push'.
 -   To get the latest version FROM the remote:
-    -   **`git pull origin master`**
+    -   `git pull origin master`
 
 
 
@@ -200,14 +200,14 @@
 -   Pair students up into groups of two.
 -   One student should add the other as a collaborator
     - Explain git clone
-    -   **`cd ~/Desktop`**
-    -   **`git clone https://github.com/mickley/guacamole.git ~/Desktop/james-guacamole`**
-    -   **`cd james-guacamole`**
+    -   `cd ~/Desktop`
+    -   `git clone https://github.com/mickley/guacamole.git ~/Desktop/james-guacamole`
+    -   `cd james-guacamole`
 -   Make changes and push back to the collaborator's repository.
 
 -   Back in your original repository:
-    -   **`git pull origin master`**
-    -   **`git status`**
+    -   `git pull origin master`
+    -   `git status`
     -   Pull the collaborators changes to your own repository.
     -   Check out the result.
 
@@ -217,27 +217,27 @@
 -   When people are working in parallel (or on 2 computers), there's a chance they could both edit the same file 
 -   So let's make one, and see what happens and what to do about it
 
--   Make an arbitrary change to your collaborators **`instructions.txt`**.
+-   Make an arbitrary change to your collaborators `instructions.txt`.
 -   Push that change upstream.
--   Make (and commit) a different change to _your_ **`instructions.txt`** **on the same
+-   Make (and commit) a different change to _your_ `instructions.txt` **on the same
     line as your collaborator changed**.
--   **`git push origin master`**
+-   `git push origin master`
 
 -   What happened?  Git detected overlap and prevented us from messing it up
 -   We now have to get the changes from the server, and merge them with ours
--   **`git pull origin master`**
--   **`git status`**
--   **`cat instructions.txt`**
+-   `git pull origin master`
+-   `git status`
+-   `cat instructions.txt`
 -   HEAD is your version, the commit id is the version on the github repository (your collaborator's)
 -   You need to rectify things first before you can send it back to the repository
-    -   **`nano instruction.txt`**
-    -   **`git add instuctions.txt`**
-    -   **`git status`**
-    -   **`git commit <...>`**  This actually is the merge
--   **`git log`**
--   **`git push origin master`**
+    -   `nano instruction.txt`
+    -   `git add instuctions.txt`
+    -   `git status`
+    -   `git commit <...>`  This actually is the merge
+-   `git log`
+-   `git push origin master`
 
--   In practice, it's a good idea to run **`git pull origin master`** before making changes
+-   In practice, it's a good idea to run `git pull origin master` before making changes
 -   Show them how to comment on a diff in Github
 -   Merging is another reason to split up changes into small groups of files
 
@@ -265,9 +265,9 @@
 
 ## 10. Open Science ##
     
-    -   This is basically an electronic lab notebook
-    -   It's also a good way to share information for reproducibility
-        -   The data, and code are there together.  Maybe also figures or the paper itself
+-   This is basically an electronic lab notebook
+-   It's also a good way to share information for reproducibility
+    -   The data, and code are there together.  Maybe also figures or the paper itself
 
 ## 14. Using Git from RStudio ##
 
