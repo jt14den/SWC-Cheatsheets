@@ -68,3 +68,16 @@ table td {
   vertical-align: top;
 }
 
+
+@media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
+
+  body {
+    font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.33;
+    padding: 1em;
+    margin: auto;
+    max-width: 90%
+  }
+
+}
