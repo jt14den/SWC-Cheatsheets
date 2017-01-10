@@ -24,18 +24,28 @@
 <li>Advise learners to go to <a href="https://b.socrative.com/login/student/" class="uri">https://b.socrative.com/login/student/</a></li>
 <li>Type in MICKLEY for the room name</li>
 </ul>
-<p><strong>QUESTION: How many of you have used git or other version control software before?</strong></p>
+<p><strong>QUESTION: How many of you end up doing the same thing more than once while analyzing your data?</strong></p>
 <p><strong><em>---------- Socrative #1 ----------</em></strong></p>
 <h2 id="creating-and-using-functions">1. Creating and using functions</h2>
-<h4 id="subheading">Subheading</h4>
 <ul>
+<li>Functions package a bit of code we want to re-use so that we don't have to re-write it or remember how it works later</li>
+<li>Often, the function will take some variables as arguments and return something back to us (but doesn't have to)</li>
+<li>We've actually been using them all along!</li>
+<li><code>read.csv()</code> is a function. We give it a filename and it gives us a dataframe</li>
+<li>Do any of you know what it actually does?</li>
+<li><p><span></span></p>
+<pre><code>fahr_to_kelvin &lt;- function(temp) {
+  kelvin &lt;- ((temp - 32) * (5 / 9)) + 273.15
+  return(kelvin)
+}</code></pre></li>
 <li>Testing things</li>
-<li><code>plot(0)</code></li>
+<li><p><code>plot(0)</code></p></li>
 </ul>
 <h2 id="loops-and-conditional-statements">2. Loops and conditional statements</h2>
 <h2 id="plotting-and-creating-publication-quality-graphics">3. Plotting and creating publication-quality graphics</h2>
 <h2 id="subsettingand-reshaping-data-with-dplyr-and-tidyr">4. Subsettingand reshaping data with dplyr and tidyr</h2>
 <h2 id="producing-reports-and-notebooks-with-knitr">5. Producing reports and notebooks with knitr</h2>
 <h2 id="writing-good-software">6. Writing good software</h2>
+<h4 id="subheading">Subheading</h4>
 </body>
 </html>
