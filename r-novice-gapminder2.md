@@ -12,12 +12,23 @@ subtitle: R for Reproducible Scientific Analysis Part 2
 -   Advise learners to go to <https://b.socrative.com/login/student/>
 -   Type in MICKLEY for the room name
 
-**QUESTION: How many of you have used git or other version control software before?**
+**QUESTION: How many of you end up doing the same thing more than once while analyzing your data?**
 
 ***---------- Socrative #1 ----------***
 
 ## 1. Creating and using functions
-#### Subheading 
+- Functions package a bit of code we want to re-use so that we don't have to re-write it or remember how it works later
+- Often, the function will take some variables as arguments and return something back to us (but doesn't have to)
+- We've actually been using them all along!
+  - `read.csv()` is a function.  We give it a filename and it gives us a dataframe
+  - Do any of you know what it actually does?
+- <span></span>
+    ```
+    fahr_to_kelvin <- function(temp) {
+      kelvin <- ((temp - 32) * (5 / 9)) + 273.15
+      return(kelvin)
+    }
+    ```
 
 - Testing things
   -   `plot(0)`
@@ -37,3 +48,4 @@ subtitle: R for Reproducible Scientific Analysis Part 2
 ## 6. Writing good software
 
 
+#### Subheading 
