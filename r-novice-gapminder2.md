@@ -1,5 +1,7 @@
-# R for Reproducible Scientific Analysis Part 2 (novice gapminder)
-
+---
+title: R Novice Gapminder #2
+subtitle: R for Reproducible Scientific Analysis Part 2
+...
 
 ## Pre-Workshop Setup ##
 

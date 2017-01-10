@@ -1,4 +1,8 @@
-# Setup steps
+---
+title: Workshop Setup
+subtitle: Prepping & beginning of workshop
+...
+
 
 ## Before leaving home
 

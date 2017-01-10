@@ -1,4 +1,7 @@
-# Lesson Title
+---
+title: Lesson Title
+subtitle: Lesson subtitle
+...
 
 ## Pre-Workshop Setup ##
 - Setup instructions

@@ -46,6 +46,21 @@ ul ul, ol ol {
   margin: .3em 0;
 }
 
+.title{
+
+}
+
+.subtitle {
+  font-size: 1.4em;
+  text-align: center;
+
+}
+
+.title {
+  font-size: 2em;
+  text-align: center;
+}
+
 table {
   margin-bottom: 2em;
   border-bottom: 1px solid #ddd;

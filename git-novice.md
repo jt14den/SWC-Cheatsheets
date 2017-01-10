@@ -1,4 +1,7 @@
-# Git Guacamole
+---
+title: Git Guacamole
+subtitle: Novice Git Lesson
+...
 
 *Credits to Bryon Smith ([&#64;bsmith89](https://github.com/bsmith89)) for this.  He started [this lesson](https://github.com/bsmith89/git-novice-outline), and I've merely added to it*
 
