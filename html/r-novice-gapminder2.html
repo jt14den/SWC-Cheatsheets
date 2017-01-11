@@ -16,11 +16,20 @@
 </div>
 <h2 id="pre-workshop-setup">Pre-Workshop Setup</h2>
 <ul>
-<li>Load the gapminder dataset</li>
-<li><code>gapminder &lt;- read.csv(&quot;&quot;)</code></li>
-<li>Install packages</li>
-<li><p><code>install.packages(c(&quot;ggplot2&quot;, &quot;cowplot&quot;, &quot;tidyr&quot;, &quot;dplyr&quot;))</code></p></li>
-<li><p><span></span> <code></code></p></li>
+<li>Load the gapminder dataset
+<ul>
+<li><code>gapminder &lt;- read.csv(&quot;data/gapminder-FiveYearData.csv&quot;)</code></li>
+</ul></li>
+<li>Install packages
+<ul>
+<li><code>install.packages(c(&quot;ggplot2&quot;, &quot;cowplot&quot;, &quot;tidyr&quot;, &quot;dplyr&quot;))</code></li>
+</ul></li>
+<li><p><span></span></p>
+<pre><code></code></pre>
+<ul>
+<li><p><span></span></p>
+<pre><code></code></pre></li>
+</ul></li>
 </ul>
 <h3 id="open-up-socrative-again">Open up Socrative again</h3>
 <ul>
@@ -34,22 +43,29 @@
 <ul>
 <li>Functions package a bit of code we want to re-use so that we don't have to re-write it or remember how it works later</li>
 <li>Often, the function will take some variables as arguments and return something back to us (but doesn't have to)</li>
-<li>We've actually been using them all along!</li>
+<li>We've actually been using them all along!
+<ul>
 <li><code>read.csv()</code> is a function. We give it a filename and it gives us a dataframe</li>
 <li>Do any of you know what it actually does?</li>
+</ul></li>
 <li><p><span></span></p>
-<pre><code>   fahr_to_kelvin &lt;- function(temp)
+<pre><code>fahr_to_kelvin &lt;- function(temp)
   kelvin &lt;- ((temp - 32) * (5 / 9)) + 273.15
   return(kelvin)
 }
 
 # Without running previous code: 
 fahr_to_kelvin(32)</code></pre></li>
-<li>Freezing point</li>
+<li>Freezing point
+<ul>
 <li><code>fahr_to_kelvin(32)</code></li>
-<li>Boiling point</li>
+</ul></li>
+<li>Boiling point
+<ul>
 <li><code>fahr_to_kelvin(212)</code></li>
-<li>We can make another function to convert to Celsius</li>
+</ul></li>
+<li>We can make another function to convert to Celsius
+<ul>
 <li><p><span></span></p>
 <pre><code>kelvin_to_celsius &lt;- function(temp) {
   celsius &lt;- temp - 273.15
@@ -57,14 +73,18 @@ fahr_to_kelvin(32)</code></pre></li>
 }
 
 kelvin_to_celsius(0)</code></pre></li>
+</ul></li>
 <li>Variable Scope: Variables defined inside functions stay there, a function is it's own little box/environment</li>
-<li>Pass-by-Value: Functions don't change the variables we give them either (usually), we work on a copy. Safer!</li>
-<li><p><code>print(celsius)</code></p></li>
+<li>Pass-by-Value: Functions don't change the variables we give them either (usually), we work on a copy. Safer!
+<ul>
+<li><code>print(celsius)</code></li>
+</ul></li>
 </ul>
 <p><strong><em>---------- Socrative #1 ----------</em></strong></p>
 <ul>
 <li><p>Defensive programming: notice how we used a different name for the output of the function = better</p></li>
-<li>We can mix, match and combine functions with themselves to get larger chunks of code</li>
+<li>We can mix, match and combine functions with themselves to get larger chunks of code
+<ul>
 <li><p><span></span></p>
 <pre><code>fahr_to_celsius &lt;- function(temp) {
   temp_k &lt;- fahr_to_kelvin(temp)
@@ -74,13 +94,17 @@ kelvin_to_celsius(0)</code></pre></li>
 
 # freezing point of water in Celsius
 fahr_to_celsius(32.0)</code></pre></li>
-<li>Another way to do this would be to nest the first two functions together (walk through this)</li>
-<li><p><code>kelvin_to_celsius(fahr_to_kelvin(32.0))</code></p></li>
+</ul></li>
+<li>Another way to do this would be to nest the first two functions together (walk through this)
+<ul>
+<li><code>kelvin_to_celsius(fahr_to_kelvin(32.0))</code></li>
+</ul></li>
 </ul>
 <h3 id="challenge">Challenge</h3>
 <ul>
 <li>Write a function to convert celsius to fahrenheit</li>
-<li>Write a function to calculate GDP from our dataset</li>
+<li>Write a function to calculate GDP from our dataset
+<ul>
 <li>Function should take a dataset with pop and gdpPercap columns and return a vector of gdps</li>
 <li><p><span></span></p>
 <pre><code># Takes a dataset and multiplies the population column
@@ -89,6 +113,7 @@ calcGDP &lt;- function(dat) {
   gdp &lt;- dat$pop * dat$gdpPercap
   return(gdp)
 }</code></pre></li>
+</ul></li>
 </ul>
 <h3 id="centering-data">Centering data</h3>
 <ul>
@@ -107,179 +132,456 @@ calcGDP &lt;- function(dat) {
 <ul>
 <li>Write a function called center() to center data around a particular number</li>
 <li>Should take two arguments, a vector called data, and a number to center around called desired</li>
-<li><p>Return the centered vector</p></li>
-<li><p><span></span> <code>center &lt;- function(data, desired) { new_data &lt;- (data - mean(data)) + desired return(new_data)   }</code></p></li>
-<li>Test your function first on made-up data to make sure it works</li>
-<li><span></span> <code>test &lt;- c(0, 0, 0, 0)   test   center(test, 3)</code></li>
-<li>It looks like it works, so let's try on our data and store as a separate column</li>
+<li>Return the centered vector
+<ul>
+<li><p><span></span></p>
+<pre><code>center &lt;- function(data, desired) {
+    new_data &lt;- (data - mean(data)) + desired
+    return(new_data)
+}</code></pre></li>
+</ul></li>
+<li>Test your function first on made-up data to make sure it works
+<ul>
+<li><p><span></span></p>
+<pre><code>test &lt;- c(0, 0, 0, 0)
+test
+center(test, 3)</code></pre></li>
+</ul></li>
+<li>It looks like it works, so let's try on our data and store as a separate column
+<ul>
 <li><code>dat$year_centered &lt;- center(dat$year, 1990)</code></li>
-<li><p><strong>TODO: check if this works!</strong></p></li>
+<li><strong>TODO: check if this works!</strong></li>
+</ul></li>
 <li>When you write a function like this, you often don't use it again until months later. Or someone else needs to use it.<br />
 </li>
 <li>So it's a good idea to add documentation!</li>
 <li>We can also add a default value for some of the arguments, so we don't need to include them unless we want to</li>
-<li><p><span></span> ``` center &lt;- function(data, desired = 0) { # Centers data around zero or a specified value # Takes a vector and the desired center as arguments # Returns a new vector containing the original data centered around the desired center # Example: center(c(1, 2, 3), 0) =&gt; c(-1, 0, 1) new_data &lt;- (data - mean(data)) + desired return(new_data) }</p></li>
+<li><p><span></span></p>
+<pre><code>center &lt;- function(data, desired = 0) {
+# Centers data around zero or a specified value
+# Takes a vector and the desired center as arguments
+# Returns a new vector containing the original data 
+# centered around the desired center
+# Example: center(c(1, 2, 3), 0) =&gt; c(-1, 0, 1)
+new_data &lt;- (data - mean(data)) + desired
+return(new_data)
+}
+
+center(c(1,2,3,4,5,6))</code></pre></li>
+<li>Specifically, we want to say:
+<ol style="list-style-type: decimal">
+<li>What does the function do?<br />
+</li>
+<li>What are it's arguments?</li>
+<li>What does it return?</li>
+</ol></li>
+<li><p>Note that we need to re-run the function code for the changes to take effect!</p></li>
 </ul>
-<p>center(c(1,2,3,4,5,6)) ``` - Specifically, we want to say: 1. What does the function do?<br />
-2. What are it's arguments? 3. What does it return? - Note that we need to re-run the function code for the changes to take effect!</p>
 <h2 id="loops-and-conditional-statements">2. Loops and conditional statements</h2>
 <h2 id="plotting-and-creating-publication-quality-graphics">3. Plotting and creating publication-quality graphics</h2>
-<p>**Question: How many of you have made a plot in R? How many of you have used ggplot? &quot;</p>
+<p><strong>Question: How many of you have made a plot in R? How many of you have used ggplot?</strong></p>
 <ul>
 <li>R has a few different ways to plot things.<br />
 </li>
-<li>It comes with a basic plotting package, but most people don't use this anymore, it's harder to modify</li>
+<li>It comes with a basic plotting package, but most people don't use this anymore, it's harder to modify
+<ul>
 <li><code>plot(x = dat$gdpPercap, y = dat$lifeExp)</code></li>
+</ul></li>
 <li>Show how to zoom a graph in Rstudio</li>
-<li>A better option is ggplot2, which is more flexible, build plots in layers (kinda like photoshop)</li>
+<li>A better option is ggplot2, which is more flexible, build plots in layers (kinda like photoshop)
+<ul>
 <li><code>install.packages(&quot;ggplot2&quot;)</code></li>
 <li><code>library(ggplot2)</code></li>
-<li>Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation</li>
+</ul></li>
+<li>Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation
+<ul>
 <li><p><span></span></p>
 <pre><code>library(&quot;ggplot2&quot;)
 ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()</code></pre></li>
+</ul></li>
 <li>First we load ggplot2</li>
-<li>Then we call ggplot, all the options in here apply to all layers (aes maps the data)</li>
+<li>Then we call ggplot, all the options in here apply to all layers (aes maps the data)
+<ul>
 <li>ggplot is smart enough to look for those columns in the data we gave it, no need to subset</li>
 <li>If we stop here we don't get a graph</li>
 <li><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp))</code></li>
-<li><p>So finally, we add a points (scatterplot) layer called a geometry</p></li>
+<li>So finally, we add a points (scatterplot) layer called a geometry</li>
+</ul></li>
 </ul>
 <p><strong><em>---------- Socrative #??? ----------</em></strong></p>
 <ul>
-<li>Modify the graph to show how life expectancy has changed over time</li>
-<li><p><code>ggplot(data = gapminder, aes(x = year, y = lifeExp)) + geom_point()</code></p></li>
-<li>Using a scatterplot probably isn't a good way to show change over time.</li>
-<li><span></span> <code>ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country, color = continent)) + geom_line()</code></li>
+<li>Modify the graph to show how life expectancy has changed over time
+<ul>
+<li><code>ggplot(data = gapminder, aes(x = year, y = lifeExp)) + geom_point()</code></li>
+</ul></li>
+<li>Using a scatterplot probably isn't a good way to show change over time.
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gapminder, aes(x = year, y = lifeExp, 
+    by = country, color = continent)) +
+    geom_line()</code></pre></li>
+</ul></li>
 <li>We're using a line geometry instead of a points geometry now</li>
 <li>the <strong>by</strong> aesthetic draws a line for each country, and then we color each continent differently.</li>
-<li><strong>Question: What if we wanted the points on the graph too? </strong></li>
-<li><span></span> <code>ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country, color = continent)) + geom_line() +  geom_point()</code></li>
-<li>Layers get drawn on top of each other</li>
-<li><span></span> <code>ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country)) + geom_line(aes(color = continent)) +  geom_point()</code></li>
+<li><strong>Question: What if we wanted the points on the graph too? </strong>
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gapminder, aes(x = year, y = lifeExp, 
+    by = country, color = continent)) +
+    geom_line() + 
+    geom_point()</code></pre></li>
+</ul></li>
+<li>Layers get drawn on top of each other
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country)) +
+    geom_line(aes(color = continent)) + 
+    geom_point()</code></pre></li>
+</ul></li>
 <li>Here we've switched the color aesthetic from global to just the lines</li>
-<li>If we want to set everything on a geometry to the same color, we set it outside the aesthetic function</li>
-<li><p><span></span> <code>ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country)) + geom_line(aes(color = continent)) +  geom_point(color = &quot;blue&quot;)</code></p></li>
+<li>If we want to set everything on a geometry to the same color, we set it outside the aesthetic function
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country)) +
+    geom_line(aes(color = continent)) + 
+    geom_point(color = &quot;blue&quot;)</code></pre></li>
+</ul></li>
 <li>Let's go back to our first example, but color the points by continent
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
-  geom_point()</code></pre></li>
+    geom_point()</code></pre></li>
 </ul></li>
-<li>Hard to see relationship with all those outliers, so let's use a log scale</li>
-<li><p><span></span> ``` ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point(alpha = 0.5) + scale_x_log10()</p></li>
-</ul>
-<p>``` - Notice the data has been transformed before graphing, x axis reflects this (1,000, 10,000, 100,000) - Here we also use transparency so that overlapping points are easier to see. This works with any geometry. We could also set this to use a data column inside aes()</p>
+<li>Hard to see relationship with all those outliers, so let's use a log scale
 <ul>
-<li>We can fit a simple linear regression line (linear model) using a geom_smooth geometry</li>
-<li><span></span> <code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;)</code></li>
-<li>It even gives us a confidence interval! We can make the line thicker using size</li>
-<li><span></span> <code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;, size=1.5)</code></li>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+    geom_point(alpha = 0.5) + 
+    scale_x_log10()</code></pre></li>
+</ul></li>
+<li>Notice the data has been transformed before graphing, x axis reflects this (1,000, 10,000, 100,000)</li>
+<li><p>Here we also use transparency so that overlapping points are easier to see. This works with any geometry. We could also set this to use a data column inside aes()</p></li>
+<li>We can fit a simple linear regression line (linear model) using a geom_smooth geometry
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+    geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;)</code></pre></li>
+</ul></li>
+<li>It even gives us a confidence interval! We can make the line thicker using size
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+    geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;, size=1.5)</code></pre></li>
+</ul></li>
 </ul>
 <p><strong><em>---------- Socrative #??? ----------</em></strong></p>
 <ul>
-<li>Many peope are colorblind. In addition to color, it's a good idea to also use shape</li>
-<li><p><span></span> <code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + geom_point(size = 2, aes(shape = continent)) +  scale_x_log10() +  geom_smooth(method=&quot;lm&quot;)</code></p></li>
-<li>Let's clean it up for publication. We'll add nicer axis labels, a title, and change the y-axis and theme</li>
-<li><p><span></span> ``` ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + geom_point(size = 2, aes(shape = continent)) + scale_x_log10() + geom_smooth(method=&quot;lm&quot;) + scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, by = 10)) + theme_bw() + ggtitle(&quot;Effects of per-capita GDP on Life Expectancy&quot;) xlab(&quot;GDP per Capita ($)&quot;) + ylab(&quot;Life Expectancy (yrs)&quot;)</p></li>
-</ul>
-<p>```</p>
+<li>Many peope are colorblind. In addition to color, it's a good idea to also use shape
 <ul>
-<li>Now we have this graph, but we want to save it!</li>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+    geom_point(size = 2, aes(shape = continent)) + 
+    scale_x_log10() + 
+    geom_smooth(method=&quot;lm&quot;)</code></pre></li>
+</ul></li>
+<li>Let's clean it up for publication. We'll add nicer axis labels, a title, and change the y-axis and theme
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+    geom_point(size = 2, aes(shape = continent)) + 
+    scale_x_log10() + 
+    geom_smooth(method=&quot;lm&quot;) + 
+    scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, by = 10)) + 
+    theme_bw() + 
+    ggtitle(&quot;Effects of per-capita GDP on Life Expectancy&quot;)
+    xlab(&quot;GDP per Capita ($)&quot;) + 
+    ylab(&quot;Life Expectancy (yrs)&quot;)</code></pre></li>
+</ul></li>
+<li>Now we have this graph, but we want to save it!
+<ul>
 <li>Rstudio has an export button: pdf, image, or to clipboard, lets you change size
 <ul>
 <li>The problem with this is that it's not reproducible. You fiddle with the size, but then months from now you need to change something</li>
-<li>Better to do it programmatically</li>
-<li><code>ggsave(file = &quot;life_expectancy.png&quot;, width = 6, height = 6, units = &quot;in&quot;, dpi = 300)</code></li>
-<li><code>ggsave(file = &quot;life_expectancy.pdf&quot;, width = 6, height = 6, units = &quot;in&quot;)</code></li>
+</ul></li>
+<li>Better to do it programmatically
+<ul>
+<li><code>ggsave(file = &quot;life_expectancy.png&quot;)</code></li>
+<li><code>ggsave(file = &quot;life_expectancy.pdf&quot;)</code></li>
+</ul></li>
 </ul></li>
 </ul>
 <p><strong><em>---------- Socrative #??? ----------</em></strong></p>
 <ul>
-<li>Facets (if time permits)</li>
-<li><span></span> <code>starts.with &lt;- substr(gapminder$country, start = 1, stop = 1)   az.countries &lt;- gapminder[starts.with %in% c(&quot;A&quot;, &quot;Z&quot;), ]   ggplot(data = az.countries, aes(x = year, y = lifeExp, color=continent)) + geom_line() + facet_wrap( ~ country)</code></li>
-<li><span></span> ``` L.countries &lt;- gapminder %&gt;% filter(country %in% c(&quot;Lebanon&quot;, &quot;Lesotho&quot;, &quot;Liberia&quot;, &quot;Libya&quot;))</li>
-</ul>
-<p>L.countries</p>
-<p>ggplot(L.countries, aes(x = year, y = lifeExp, color = country)) + geom_line() + facet_wrap( ~ country) ```</p>
+<li>Facets (if time permits)
 <ul>
+<li><p><span></span></p>
+<pre><code>starts.with &lt;- substr(gapminder$country, start = 1, stop = 1)
+az.countries &lt;- gapminder[starts.with %in% c(&quot;A&quot;, &quot;Z&quot;), ]
+ggplot(data = az.countries, aes(x = year, y = lifeExp, color=continent)) +
+geom_line() + facet_wrap( ~ country)</code></pre></li>
+<li><p><span></span></p>
+<pre><code>L.countries &lt;- gapminder %&gt;% 
+    filter(country %in% c(&quot;Lebanon&quot;, &quot;Lesotho&quot;, &quot;Liberia&quot;, &quot;Libya&quot;))
+
+L.countries
+
+ggplot(L.countries, aes(x = year, y = lifeExp, color = country)) + 
+    geom_line() + facet_wrap( ~ country)</code></pre></li>
+</ul></li>
 <li><p>Draws a panel for each unique value in that column</p></li>
-<li>Cover cowplot:</li>
+<li>Cover cowplot:
+<ul>
 <li><code>library(&quot;cowplot&quot;)</code></li>
 <li>Nicer quality than default ggplot, it's a theme</li>
 <li>Also provides a way to merge two plots into one, eg A &amp; B figures, and annotations</li>
-<li>Resources:</li>
-<li>R Graph catalog: http://shiny.stat.ubc.ca/r-graph-catalog/</li>
-<li>GGPlot2 online help: http://docs.ggplot2.org/</li>
-<li>R Graph Cookbook: http://www.cookbook-r.com/Graphs/</li>
-<li>ggplot2 essentials: http://www.sthda.com/english/wiki/ggplot2-essentials</li>
-<li>Rstudio cheatsheets: https://www.rstudio.com/resources/cheatsheets/</li>
-<li><p>Cowplot: https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html</p></li>
+</ul></li>
+<li>Resources:
+<ul>
+<li>R Graph catalog: <a href="http://shiny.stat.ubc.ca/r-graph-catalog/" class="uri">http://shiny.stat.ubc.ca/r-graph-catalog/</a></li>
+<li>GGPlot2 online help: <a href="">http://docs.ggplot2.org/</a></li>
+<li>R Graph Cookbook: <a href="http://www.cookbook-r.com/Graphs/" class="uri">http://www.cookbook-r.com/Graphs/</a></li>
+<li>ggplot2 essentials: <a href="http://www.sthda.com/english/wiki/ggplot2-essentials" class="uri">http://www.sthda.com/english/wiki/ggplot2-essentials</a></li>
+<li>Rstudio cheatsheets: <a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a></li>
+<li>Cowplot: <a href="https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html" class="uri">https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html</a></li>
+</ul></li>
 </ul>
 <h3 id="challenge-2">Challenge:</h3>
 <ul>
-<li>Create a boxplot showing the spread of life expectancy for each continent</li>
-<li><span></span> <code>ggplot(data = gapminder, aes(x = continent, y = lifeExp)) +     geom_boxplot() + geom_jitter(alpha = 0.5, color = &quot;tomato&quot;)</code></li>
+<li>Create a boxplot showing the spread of life expectancy for each continent
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gapminder, aes(x = continent, y = lifeExp)) + 
+   geom_boxplot() + 
+   geom_jitter(alpha = 0.5, color = &quot;tomato&quot;)</code></pre></li>
+</ul></li>
 </ul>
 <h2 id="subsetting-and-reshaping-data-with-dplyr-and-tidyr">4. Subsetting and reshaping data with dplyr and tidyr</h2>
 <ul>
 <li>Like, graphing, the subsetting and data-wrangling tools bundled with R are not the best</li>
 <li>We're going to use dplyr and tidyr instead.</li>
-<li><code>install.packages(c(&quot;tidyr&quot;, &quot;dplyr&quot;)</code></li>
-<li><code>library(tidyr)</code></li>
-<li><p><code>library(dplyr)</code></p></li>
-<li>dplyr is especially nice because you can do most of what you need to with only a handful of functions, easy to remember</li>
+</ul>
+<h3 id="dplyr">dplyr</h3>
+<ul>
+<li>Setup
+<ul>
+<li><code>install.packages(&quot;dplyr&quot;)</code></li>
+<li><code>library(dplyr)</code></li>
+</ul></li>
+<li>dplyr is especially nice because you can do most of what you need to with only a handful of functions, easy to remember
+<ul>
 <li>select(), filter(), group_by(), summarize(), mutate()</li>
-<li>Select lets you only use some columns. You can also re-order them</li>
-<li><span></span> <code>head(gapminder)   year_country_gdp &lt;- select(gapminder, year, country, gdpPercap)   head(year_country_gdp)</code></li>
-<li>dplyr also can use an R version of pipes, like what we saw in the shell lesson</li>
+</ul></li>
+<li>Select lets you only use some columns. You can also re-order them
+<ul>
+<li><p><span></span></p>
+<pre><code>head(gapminder)
+year_country_gdp &lt;- select(gapminder, year, country, gdpPercap)
+head(year_country_gdp)</code></pre></li>
+</ul></li>
+<li>dplyr also can use an R version of pipes, like what we saw in the shell lesson
+<ul>
 <li><code>year_country_gdp &lt;- gapminder %&gt;% select(year, country, gdpPercap)</code></li>
 <li>You don't have to bother giving it the data argument anymore. Easier to read</li>
-<li>Select lets us subset columns, but what if we want to subset rows? filter() does that</li>
-<li><span></span> <code>year_country_gdp_euro &lt;- gapminder %&gt;% filter(continent==&quot;Europe&quot;) %&gt;% select(year,country,gdpPercap)</code></li>
-<li>Walk through this example, showing the flow</li>
-<li><p><code>year_country_gdp_euro &lt;- filter(select(gapminder, year,country,gdpPercap), continent==&quot;Europe&quot;)</code></p></li>
+</ul></li>
+<li>Select lets us subset columns, but what if we want to subset rows? filter() does that
+<ul>
+<li><p><span></span></p>
+<pre><code>year_country_gdp_euro &lt;- gapminder %&gt;%
+    filter(continent==&quot;Europe&quot;) %&gt;%
+    select(year,country,gdpPercap)</code></pre></li>
+<li><p>Walk through this example, showing the flow</p></li>
+<li><p><span></span></p>
+<pre><code>year_country_gdp_euro &lt;- filter(select(gapminder, year,country,gdpPercap), 
+    continent==&quot;Europe&quot;)</code></pre></li>
+</ul></li>
 </ul>
 <p><strong><em>---------- Socrative #??? ----------</em></strong></p>
 <ul>
-<li>Socrative answer:</li>
-<li><span></span> ``` Africa_2007_lifeExp &lt;- gapminder %&gt;% filter(continent == &quot;Africa&quot;, year == 2007) %&gt;% select(year, country, lifeExp)</li>
-</ul>
-<p>str(Africa_2007_lifeExp) ``` - Note that the order is really important! Since select removes continent, it has to come second - We could have used two filter commands instead</p>
+<li>Socrative answer:
 <ul>
+<li><p><span></span></p>
+<pre><code>Africa_2007_lifeExp &lt;- gapminder %&gt;%
+    filter(continent == &quot;Africa&quot;, year == 2007) %&gt;%
+    select(year, country, lifeExp)
+
+str(Africa_2007_lifeExp)</code></pre></li>
+<li>Note that the order is really important! Since select removes continent, it has to come second</li>
+<li><p>We could have used two filter commands instead</p></li>
+</ul></li>
 <li>Summarize lets us condense data down</li>
 <li><code>mean_gdp &lt;- gapminder %&gt;% summarize(meanGDP = mean(gdpPercap))</code></li>
-<li>Not very useful by itself, we could have used this instead</li>
+<li>Not very useful by itself, we could have used this instead
+<ul>
 <li><code>mean(gapminder$gdpPercap)</code></li>
-<li>But if we combine it with the group_by() function, we can get the mean gdp for each continent</li>
-<li><span></span> ``` gdp_by_continents &lt;- gapminder %&gt;% group_by(continent) %&gt;% summarize(mean_gdp = mean(gdpPercap))</li>
+</ul></li>
+<li>But if we combine it with the group_by() function, we can get the mean gdp for each continent
+<ul>
+<li><p><span></span></p>
+<pre><code>gdp_by_continents &lt;- gapminder %&gt;%
+    group_by(continent) %&gt;%
+    summarize(mean_gdp = mean(gdpPercap))
+
+gdp_by_continents</code></pre></li>
+</ul></li>
+<li>Here we're grouping by continent, which means we calculate a <strong>separate</strong> mean for each one</li>
 </ul>
-<p>gdp_by_continents ``` - Here we're grouping by continent, which means we calculate a <strong>separate</strong> mean for each one</p>
 <h3 id="challenge-socrative">Challenge socrative:</h3>
 <ul>
-<li>Let's compile the average life expectancy across all African countries by year. In how many years did it decrease?</li>
-</ul>
-<p>africa_lifeExp &lt;- gapminder %&gt;% filter(continent == &quot;Europe&quot;) %&gt;% group_by(year) %&gt;% summarize(avg_life = mean(lifeExp))</p>
-<p>africa_lifeExp</p>
+<li><p>Let's compile the average life expectancy across all African countries by year. In how many years did it decrease?</p>
 <ul>
-<li>We can group multiple variables and summarize multiple things</li>
-<li><span></span> ``` gdp_by_continents &lt;- gapminder %&gt;% group_by(continent, year) %&gt;% summarize(mean_gdp = mean(gdpPercap), sd_gdp = sd(gdpPercap), mean_pop = mean(pop), sample_size = n())</li>
-</ul>
-<p>gdp_by_continents ``<code>- n() is a special function that gives the sample size for that grouping, very useful - Notice that we only see 10 rows.  Summarize actually has returned a &quot;special&quot; table-dataframe - In most cases it acts the same, but if we want to see the whole thing, we can pipe it to dataframe   -</code>gdp_by_continents %&gt;% data.frame()`</p>
+<li><p><span></span></p>
+<pre><code>africa_lifeExp &lt;- gapminder %&gt;%
+    filter(continent == &quot;Europe&quot;) %&gt;%
+    group_by(year) %&gt;%
+    summarize(avg_life = mean(lifeExp))
+
+africa_lifeExp</code></pre></li>
+</ul></li>
+<li>We can group multiple variables and summarize multiple things
 <ul>
-<li>What if we wanted to create a variable without condensing our data down? Need to do this a lot</li>
-<li><span></span> ``` billion_gdp_country_2007 &lt;- gapminder %&gt;% filter(year == 2007) %&gt;% mutate(billion_gdp = gdpPercap*pop/10^9) %&gt;% select(continent, country, billion_gdp)</li>
+<li><p><span></span></p>
+<pre><code>gdp_by_continents &lt;- gapminder %&gt;%
+    group_by(continent, year) %&gt;%
+    summarize(mean_gdp = mean(gdpPercap), 
+        sd_gdp = sd(gdpPercap), 
+        mean_pop = mean(pop), 
+        sample_size = n())
+
+gdp_by_continents</code></pre></li>
+<li>n() is a special function that gives the sample size for that grouping, very useful</li>
+<li>Notice that we only see 10 rows. Summarize actually has returned a &quot;special&quot; table-dataframe</li>
+<li>In most cases it acts the same, but if we want to see the whole thing, we can pipe it to dataframe
+<ul>
+<li><code>gdp_by_continents %&gt;% data.frame()</code></li>
+</ul></li>
+</ul></li>
+<li>What if we wanted to create a new column without condensing our data down? Use mutate()
+<ul>
+<li><p><span></span></p>
+<pre><code>billion_gdp_country_2007 &lt;- gapminder %&gt;%
+    filter(year == 2007) %&gt;%
+    mutate(billion_gdp = gdpPercap*pop/10^9) %&gt;%
+    select(continent, country, billion_gdp)
+
+head(billion_gdp_country_2007)</code></pre></li>
+</ul></li>
 </ul>
-<p>head(billion_gdp_country_2007)</p>
-<pre><code>
-
- 
-
-- &lt;span&gt;&lt;/span&gt;</code></pre>
-<pre><code>
-- &lt;span&gt;&lt;/span&gt;</code></pre>
-<p>```</p>
+<h3 id="tidyr">tidyr</h3>
+<ul>
+<li>Setup
+<ul>
+<li><code>install.packages(&quot;tidyr&quot;)</code></li>
+<li><code>library(tidyr)</code></li>
+</ul></li>
+<li>The same dataset can be represented in different ways</li>
+<li>Wide format:
+<ul>
+<li><p><span></span></p>
+<pre><code>Genus   Weight  Height
+Ursus   122     82</code></pre></li>
+</ul></li>
+<li>Long format:
+<ul>
+<li><p><span></span></p>
+<pre><code>Genus   Measurement     Value
+Ursus   Weight          122
+Ursus   Height          82</code></pre></li>
+</ul></li>
+<li>In long format, each column is a variable and each row is a single measurement or observation</li>
+<li>We tend to use wide format more because it's more concise, easy to ready, datasheety</li>
+<li>R, databases, and other programming languages usually prefer long format</li>
+</ul>
+<p><strong><em>---------- Socrative #??? ----------</em></strong> What format is the gapminder dataset we've been using in?</p>
+<ul>
+<li>We have 3 ID columns, and 3 observation columns (instead of 1)
+<ul>
+<li>Important to be able to convert, some R tools need specific format</li>
+</ul></li>
+<li><p><span></span></p>
+<pre><code>gap_wide &lt;- read.csv(&quot;data/gapminder_wide.csv&quot;, stringsAsFactors = FALSE)
+str(gap_wide)</code></pre></li>
+<li>So this is the wide format of our data</li>
+<li>Notice it's got lots of columns and only 142 rows, one for each country</li>
+<li>We're going to convert it to long format with gather()
+<ul>
+<li><p><span></span></p>
+<pre><code>gap_long &lt;- gap_wide %&gt;%
+     gather(obstype_year, obs_values, starts_with(&#39;pop&#39;),
+            starts_with(&#39;lifeExp&#39;), starts_with(&#39;gdpPercap&#39;))
+str(gap_long)
+head(gap_long)</code></pre></li>
+</ul></li>
+<li>Notice how we've mixed dplyr pipes with the gather() function from tidyr</li>
+<li>The first two arguments are new column names: The old column name goes in 1st &amp; value in 2nd</li>
+<li>Instead of using starts_with(), we could have just written out all the columns we wanted to gather</li>
+<li>We could also just exclude the columns we don't want to gather
+<ul>
+<li><p><span></span></p>
+<pre><code>gap_long &lt;- gap_wide %&gt;% 
+    gather(obstype_year,obs_values,-continent,-country)
+str(gap_long)</code></pre></li>
+</ul></li>
+<li>Our new column obstype_year actually has 2 pieces of information. We should separate them
+<ul>
+<li><p><span></span></p>
+<pre><code>gap_long &lt;- gap_long %&gt;% 
+     separate(obstype_year, into = c(&#39;obs_type&#39;, &#39;year&#39;), sep = &quot;_&quot;) %&gt;%
+     mutate(year = as.integer(year))</code></pre></li>
+</ul></li>
+</ul>
+<p><strong>Socrative: Using gap_long, calculate the mean life expectancy by continent</strong></p>
+<p>gap_long %&gt;% filter(obs_type == &quot;lifeExp&quot;) %&gt;% group_by(continent) %&gt;% summarize(lifeExp = mean(obs_values))</p>
+<ul>
+<li>Now that we have our long format, let's convert it to the intermediate format
+<ul>
+<li><p><span></span></p>
+<pre><code>gap_normal &lt;- gap_long %&gt;% 
+    spread(obs_type,obs_values)
+head(gap_normal)
+dim(gap_normal)
+dim(gapminder)</code></pre></li>
+</ul></li>
+<li>Notice how the contents of obs_type became the column names</li>
+<li>Looks like the same dataset, cool, we're back</li>
+<li>Columns are in a different order though, let's fix that
+<ul>
+<li><p><span></span></p>
+<pre><code>names(gap_normal)
+names(gapminder)
+gap_normal &lt;- gap_normal %&gt;%
+    select(country, year, pop, continent, lifeExp, gdpPercap)
+names(gap_normal)</code></pre></li>
+</ul></li>
+<li>Let's see if they're equal. Not so good, they're sorted differently
+<ul>
+<li><p><span></span></p>
+<pre><code>all.equal(gap_normal, gapminder)
+head(gap_normal)
+head(gapminder)
+</code></pre></li>
+</ul></li>
+<li>The new dataset is sorted first by continent, gapminder was by country
+<ul>
+<li><p><span></span></p>
+<pre><code>gap_normal &lt;- gap_normal %&gt;% 
+    arrange(country, continent, year)
+all.equal(gap_normal, gapminder)
+</code></pre></li>
+<li>Arrange is a dplyr function</li>
+<li><p>It's a good idea to do checks all the time (like all_equal)</p></li>
+</ul></li>
+<li>Resources:
+<ul>
+<li>Rstudio cheatsheets: <a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a></li>
+</ul></li>
+<li><p><span></span></p>
+<pre><code></code></pre>
+<ul>
+<li><p><span></span></p>
+<pre><code></code></pre></li>
+</ul></li>
+</ul>
 <h2 id="producing-reports-and-notebooks-with-knitr">5. Producing reports and notebooks with knitr</h2>
 <h2 id="writing-good-software">6. Writing good software</h2>
 <h4 id="subheading">Subheading</h4>
