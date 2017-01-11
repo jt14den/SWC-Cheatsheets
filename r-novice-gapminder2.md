@@ -6,50 +6,225 @@ subtitle: R for Reproducible Scientific Analysis Part 2
 ## Pre-Workshop Setup ##
 
 -   Load the gapminder dataset
+    -   Make a new R file
     -   `gapminder <- read.csv("data/gapminder-FiveYearData.csv")`
 -   Install packages
-    -   `install.packages(c("ggplot2", "cowplot", "tidyr", "dplyr"))`
-
--   <span></span>
-
-    ```
-
-    ```
-
     -   <span></span>
 
         ```
-
+        install.packages(c("ggplot2", "cowplot", "tidyr", "dplyr", 
+            "knitr", "rmarkdown", "formatR"))
         ```
 
 ### Open up Socrative again ###
--   You can import my quiz with 
+-   You can import my quiz with SOC-26147790
 -   Advise learners to go to <https://b.socrative.com/login/student/>
 -   Type in MICKLEY for the room name
 
 
+-   So far, we've just had R do exactly what we told it to do.  
+-   It becomes much more powerful if it can make its own decisions or do repetitive tasks
+-   We're going to learn conditional statements, functions, and loops that will do just that
+    -   These same concepts get used in most other computer languages => portable skills.
+    -   We already saw loops in shell, which actually has functions and conditionals too
+
+## 1. Conditional Statements
+
+-   We'll start with making choices using *conditional statements*
+    -   <span></span>
+
+        ```
+        number <- 37
+        if (number > 100) {
+            print("greater than 100")
+        } else {
+            print("less than 100")
+        }
+        print("Finished checking")
+        ```
+
+-   Walk through this example, showing the flow
+    -   Draw choice diagram
+-   Comparison operators
+    -   Greater than: `number > 100`
+    -   Less than: `number < 100`
+    -   Equal to: `number == 37`
+    -   Not equal to: `number != 37`
+    -   Also => and <= 
+
+- We don't need an else:
+    -   <span></span>
+
+        ```
+        if (number > 100) {
+            print("greater than 100")
+        }
+        ```
+
+- We could have more than one test, test the sign of the number
+    -   <span></span>
+
+        ```
+        number = -3
+        if (number > 0) {
+             print(1)
+        } else if (number < 0) {
+             print(-1)
+        } else {
+             print(0)
+        }
+        ```
+
+- We can combine tests with logical operators
+    -   <span></span>
+
+        ```
+        number1 = 15
+        number2 = 40
+
+        if (number1 >= 0 & number2 >= 0) {
+            print("Both numbers are positive")
+        } else {
+            print("At least one number is negative")
+        }
+
+        if (number1 >= 0 | number2 >= 0) {
+            print("At least one number is not negative")
+        } else {
+            print("Both numbers are negative")
+        }
+        ```
+
+***---------- Socrative #1 ----------***: Number between 45 and 50
+
+This is a tricky one, 3 correct answers
+
+## 2. Loops
+
+-   Just like the shell, R has for loops, which can do repetitive tasks
+-   But the syntax is slightly different
+    -   <span></span>
+
+        ```
+        numbers <- c(1:10)
+        print(numbers)
+        for (number in numbers) {
+             print(number)
+        }
+
+        for(i in 1:5){
+            print(numbers[i])
+        }
+        ```
+
+- Walk through this again
+    - i is an *increment variable*, keeps track of where we are
+    - `1:10` returns a sequence
+
+-   The loop or increment variable is just a variable.  
+-   Overwrites previous variable, and when the loop finishes, it's the last loop
+-   <span></span>
+
+    ```
+    letter <- "z"
+    print(letter)
+    for (letter in c("a", "b", "c")) {
+        print(letter)
+    }
+    print(letter)
+    ```
+
+***---------- Socrative #2 ----------***: For loop to calculate sum of vector
+
+-   <span></span>
+
+    ```
+    numbers <- c(4, 8, 15, 16, 23, 42)
+    running_sum = 0
+    for (number in numbers) {
+         running_sum = running_sum + number
+    }
+    print(running_sum)
+    ```
+
+- The loop variable can be useful to us
+    -   <span></span>
+
+        ```
+        for(i in 1:10){
+            print(gapminder$year[i])
+        }
+        ```
+
+    -   Instead of 10, I could use `nrow(gapminder)``
+
+
+### Nesting For loops
+
+- For loops can also be nested
+    -   <span></span>
+
+        ```
+        for(i in 1:3){
+            for(j in c('a', 'b', 'c')){
+                print(paste(i,j))
+            }
+        }
+        ```
+    -   Gives me every combination.  Notice the order of nesting matters
+
+
+### For Loop Challenge #1
+
+Write a script that loops through the first 10 rows of gapminder, tells us which years had a life expectancy of less than 35
+
+-   <span></span>
+
+    ```
+    for (i in 1:10) {
+         if (gapminder$lifeExp[i] < 33) {
+              print(gapminder$year[i])
+         }
+    }
+    ```
+
+- We could extend this to the whole dataset, and have it tell us the country too
+    -   <span></span>
+
+        ```
+        for (i in 1:nrow(gapminder)) {
+             if (gapminder$lifeExp[i] < 33) {
+                  print(paste(gapminder$country[i], gapminder$year[i]))
+             }
+        }
+        ```
+
+
+
+## 3. Creating and using functions
+
 **QUESTION: How many of you end up doing the same thing more than once while analyzing your data?**
 
-***---------- Socrative #1 ----------***
-
-## 1. Creating and using functions
 -   Functions package a bit of code we want to re-use so that we don't have to re-write it or remember how it works later
+-   Almost like little programs in the shell
 -   Often, the function will take some variables as arguments and return something back to us (but doesn't have to)
 -   We've actually been using them all along!
     -    `read.csv()` is a function.  We give it a filename and it gives us a dataframe
     -    Do any of you know what it actually does?
+    -    Show that we can actually see the code (wrapper for read.table())
 -   <span></span>
 
     ```
     fahr_to_kelvin <- function(temp)
-      kelvin <- ((temp - 32) * (5 / 9)) + 273.15
-      return(kelvin)
+        kelvin <- ((temp - 32) * (5 / 9)) + 273.15
+        return(kelvin)
     }
 
     # Without running previous code: 
     fahr_to_kelvin(32)
     ```
 
+- Function code must be run before it's called
 - Freezing point
     -    `fahr_to_kelvin(32)`
 - Boiling point
@@ -60,8 +235,8 @@ subtitle: R for Reproducible Scientific Analysis Part 2
     
         ```
         kelvin_to_celsius <- function(temp) {
-          celsius <- temp - 273.15
-          return(celsius)
+            celsius <- temp - 273.15
+            return(celsius)
         }
         
         kelvin_to_celsius(0)
@@ -71,8 +246,9 @@ subtitle: R for Reproducible Scientific Analysis Part 2
 -   Pass-by-Value: Functions don't change the variables we give them either (usually), we work on a copy.  Safer!
     -   `print(celsius)`
 
-***---------- Socrative #1 ----------***
+***---------- Socrative #3 ----------***: Testing variable scope
 
+Both B and D are correct.  
 
 -   Defensive programming: notice how we used a different name for the output of the function = better
 
@@ -81,9 +257,9 @@ subtitle: R for Reproducible Scientific Analysis Part 2
 
         ```
         fahr_to_celsius <- function(temp) {
-          temp_k <- fahr_to_kelvin(temp)
-          result <- kelvin_to_celsius(temp_k)
-          return(result)
+            temp_k <- fahr_to_kelvin(temp)
+            temp_c <- kelvin_to_celsius(temp_k)
+            return(temp_c)
         }
 
         # freezing point of water in Celsius
@@ -92,10 +268,78 @@ subtitle: R for Reproducible Scientific Analysis Part 2
 
 -   Another way to do this would be to nest the first two functions together (walk through this)
     -   `kelvin_to_celsius(fahr_to_kelvin(32.0))`
-   
-### Challenge
 
--   Write a function to convert celsius to fahrenheit
+   
+***---------- Socrative #4 ----------***: Write a C to F function
+
+-   <span></span>
+
+    ```
+    celsius_to_fahr <- function(temp){
+      fahr <- temp * 9 / 5 + 32
+      return(fahr)
+    }
+
+    celsius_to_fahr(100)
+    ```
+
+
+### Function Challenge #1
+Now write a function that takes two arguments: one the temp to be converted, and another that says whether to convert from fahrenheit to celsius or celsius to fahrenheit.  Using if...then, make the same function do both.
+
+- `tempconvert(temp = 14, to = "fahrenheit")`
+    -   <span></span>
+
+        ```
+        tempconvert <- function(temp, to) {
+             if (to == "fahrenheit") {
+                  converted = temp * 9 / 5 + 32
+             } else if (to == "celsius") {
+                  converted = (temp - 32) * (5 / 9)
+             }
+             return(converted)
+        }
+
+        tempconvert(100, "fahrenheit")
+        tempconvert(212, "celsius")
+        ```
+
+-   What happens if we capitalize celsius?: `tempconvert(212, "Celsius")`
+    -   Good idea to try to forsee ways that things might break
+    -   adding an "else" is a good idea:
+
+        -   <span></span>
+
+            ```
+            else {
+                converted = NA
+                print("Error: 'to' was not fahrenheit or celsius")
+            }
+            ```
+
+    -   Note that we need to re-run the function code for the changes to take effect!
+-   When you write a function like this, you often don't use it again until months later.  
+-   Or someone else needs to use it.  
+    -   So it's a good idea to add documentation!
+        1.  What does the function do?  
+        2.  What are it's arguments?
+        3.  What does it return?
+-   We can also add a default value for some of the arguments, so we don't need to include them unless we want to
+    -   <span></span>
+
+        ```
+        tempconvert <- function(temp, to = "celsius") {
+            # Converts a temperature from celsius to fahrenheit
+            #   or from fahrenheit to celsius.
+            # Takes a temperature and the desired unit as arguments
+            # Returns the converted temperature
+            # Example: tempconvert(212, "celsius") => 100
+
+        tempconvert(212)
+        ```
+
+### Function Challenge #2
+
 -   Write a function to calculate GDP from our dataset
     -   Function should take a dataset with pop and gdpPercap columns and return a vector of gdps
     -   <span></span>
@@ -110,87 +354,285 @@ subtitle: R for Reproducible Scientific Analysis Part 2
         ```
 
 
+## 4. Subsetting and reshaping data with dplyr and tidyr
 
+-   Now we're going to switch gears!
+-   We have a grasp of basic programming in R
+-   Most of our work here is 3 things: data wrangling, graphs, and analyses
+-   We'll cover the first two, since the same stuff applies to everyone
 
+-   The subsetting and data-wrangling tools bundled with R are not the best
+-   We're going to use dplyr and tidyr instead.
 
+### dplyr
 
-   
-### Centering data
-
--   In stats, especially regression, it's useful to center data
--   Say we regress population against year with our dataset.  
--   We'll get a y-intercept for 0 AD.  This is useless!  We don't care about that!
--   If we shifted our data so that a year of interest was the y-intercept, we'll get the mean population for that year.
-    -   Demonstrate on whiteboard
--   To center around 0, we just subtract the mean from all the data points.  eg: `c(1, 2, 3)` --> `c(-1, 0, 1)`
--   To center around a different number (say 1960), we subtract the mean, and then add that number
-   
-
-
-### Challenge
-
--   Write a function called center() to center data around a particular number
--   Should take two arguments, a vector called data, and a number to center around called desired
--   Return the centered vector
+-   Setup
+    -   `install.packages("dplyr")`
+    -   `library(dplyr)`
+  
+-   dplyr is especially nice because you can do most of what you need to with only a handful of functions, easy to remember
+    -   select(), filter(), group_by(), summarize(), mutate()
+-   Select lets you only use some columns.  You can also re-order them
     -   <span></span>
 
         ```
-        center <- function(data, desired) {
-            new_data <- (data - mean(data)) + desired
-            return(new_data)
-        }
+        head(gapminder)
+        year_country_gdp <- select(gapminder, year, country, gdpPercap)
+        head(year_country_gdp)
         ```
 
--   Test your function first on made-up data to make sure it works
+-   dplyr also can use an R version of pipes, like what we saw in the shell lesson
+    -   `year_country_gdp <- gapminder %>% select(year, country, gdpPercap)`
+    -   You don't have to bother giving it the data argument anymore.  Easier to read
+-   Select lets us subset columns, but what if we want to subset rows?  filter() does that
     -   <span></span>
 
         ```
-        test <- c(0, 0, 0, 0)
-        test
-        center(test, 3)
+        year_country_gdp_euro <- gapminder %>%
+            filter(continent=="Europe") %>%
+            select(year,country,gdpPercap)
         ```
 
--   It looks like it works, so let's try on our data and store as a separate column
-    -   `dat$year_centered <- center(dat$year, 1990)`
-    -   **TODO: check if this works!**
+    -   Walk through this example, showing the flow
 
--   When you write a function like this, you often don't use it again until months later.  Or someone else needs to use it.  
--   So it's a good idea to add documentation!
--   We can also add a default value for some of the arguments, so we don't need to include them unless we want to
+    -   <span></span>
+
+        ```
+        year_country_gdp_euro <- filter(select(gapminder, year, country, gdpPercap), 
+            continent=="Europe")
+        ```
+
+***---------- Socrative #5 ----------***: Filter using 2 filters and select 3 cols
+
 -   <span></span>
 
     ```
-    center <- function(data, desired = 0) {
-    # Centers data around zero or a specified value
-    # Takes a vector and the desired center as arguments
-    # Returns a new vector containing the original data 
-    # centered around the desired center
-    # Example: center(c(1, 2, 3), 0) => c(-1, 0, 1)
-    new_data <- (data - mean(data)) + desired
-    return(new_data)
-    }
-      
-    center(c(1,2,3,4,5,6))
+    Africa_2007_lifeExp <- gapminder %>%
+        filter(continent == "Africa", year == 2007) %>%
+        select(year, country, lifeExp)
+
+    str(Africa_2007_lifeExp)
     ```
 
--   Specifically, we want to say: 
-    1.  What does the function do?  
-    2.  What are it's arguments?
-    3.  What does it return?
--   Note that we need to re-run the function code for the changes to take effect!
+    -   Note that the order is really important!  Since select removes continent, it has to come second
+    -   We could have used two filter commands instead
+
+-   Summarize lets us condense data down
+    -   `mean_gdp <- gapminder %>% summarize(meanGDP = mean(gdpPercap))`
+-   Not very useful by itself, we could have used this instead
+    -   `mean(gapminder$gdpPercap)`
+-   But if we combine it with the group_by() function, we can get the mean gdp for each continent
+    -   <span></span>
+
+        ```
+        gdp_by_continents <- gapminder %>%
+            group_by(continent) %>%
+            summarize(mean_gdp = mean(gdpPercap))
+
+        gdp_by_continents
+        ```
+
+-   Here we're grouping by continent, which means we calculate a **separate** mean for each one
 
 
+***---------- Socrative #6 ----------***: Avg lifeExp by year for Africa
+
+-   <span></span>
+
+    ```
+    africa_lifeExp <- gapminder %>%
+        filter(continent == "Africa") %>%
+        group_by(year) %>%
+        summarize(avg_life = mean(lifeExp))
+         
+    africa_lifeExp
+    ```
+
+-   What if we wanted to create a new column without condensing our data down?  Use mutate()
+    -   <span></span>
+        ```
+        billion_gdp_country_2007 <- gapminder %>%
+            filter(year == 2007) %>%
+            mutate(billion_gdp = gdpPercap*pop/10^9) %>%
+            select(continent, country, billion_gdp)
+
+        head(billion_gdp_country_2007)
+        ```
+
+-   We can group multiple variables and summarize multiple things
+    -   <span></span>
+        ```
+        gdp_by_continents <- gapminder %>%
+            group_by(continent, year) %>%
+            summarize(mean_gdp = mean(gdpPercap), 
+                sd_gdp = sd(gdpPercap), 
+                mean_pop = mean(pop), 
+                sample_size = n())
+
+        gdp_by_continents
+        ```
+
+    -   n() is a special function that gives the sample size for that grouping, very useful
+    -   Notice that we only see 10 rows.  Summarize actually has returned a "special" table-dataframe
+    -   In most cases it acts the same, but if we want to see the whole thing, we can pipe it to dataframe
+        -   `gdp_by_continents %>% data.frame()`
 
 
+### tidyr
 
-    
-    
+-   Setup
+    -   `install.packages("tidyr")`
+    -   `library(tidyr)`
 
-## 2. Loops and conditional statements
+-   The same dataset can be represented in different ways
+-   Wide format: 
+    -   <span></span>
+
+        ```
+        Genus   Weight  Height
+        Ursus   122     82
+        ```
+
+-   Long format: 
+    -   <span></span>
+
+        ```
+        Genus   Measurement     Value
+        Ursus   Weight          122
+        Ursus   Height          82
+        ```
+
+-   In long format, each column is a variable and each row is a single measurement or observation
+-   We tend to use wide format more because it's more concise, easy to ready, datasheety
+-   R, databases, and other programming languages usually prefer long format
+
+***---------- Socrative #7 ----------***: What format is the gapminder dataset
+
+Answer: intermediate
+
+-   We have 3 ID columns, and 3 observation columns (instead of 1)
+    -   Important to be able to convert, some R tools need specific format
+
+-   <span></span>
+
+    ```
+    gap_wide <- read.csv("data/gapminder_wide.csv", stringsAsFactors = FALSE)
+    str(gap_wide)
+    ```
+
+    -   So this is the wide format of our data
+    -   Notice it's got lots of columns and only 142 rows, one for each country
+-   We're going to convert it to long format with gather()
+    -   <span></span>
+
+        ```
+        gap_long <- gap_wide %>%
+             gather(obstype_year, obs_values, starts_with('pop'),
+                    starts_with('lifeExp'), starts_with('gdpPercap'))
+        str(gap_long)
+        head(gap_long)
+        ```
+
+-   Notice how we've mixed dplyr pipes with the gather() function from tidyr
+-   The first two arguments are new column names: The old column name goes in 1st & value in 2nd
+-   Instead of using starts_with(), we could have just written out all the columns we wanted to gather
+-   We could also just exclude the columns we don't want to gather
+    -   <span></span>
+
+        ```
+        gap_long <- gap_wide %>% 
+            gather(obstype_year, obs_values, -continent, -country)
+        str(gap_long)
+        ```
+
+- Our new column obstype_year actually has 2 pieces of information.  We should separate them
+    -   <span></span>
+
+        ```
+        gap_long <- gap_long %>% 
+             separate(obstype_year, into = c('obs_type', 'year'), sep = "_") %>%
+             mutate(year = as.integer(year))
+        ```
+
+### TidyR Challenge #1: Using gap_long, calculate the mean life expectancy by continent
+
+-   <span></span>
+
+    ```
+    gap_long %>%
+        filter(obs_type == "lifeExp") %>%
+        group_by(continent) %>%
+        summarize(lifeExp = mean(obs_values))
+    ```
 
 
+-   Now that we have our long format, let's convert it to the intermediate format
+    -   <span></span>
 
-## 3. Plotting and creating publication-quality graphics
+        ```
+        gap_normal <- gap_long %>% 
+            spread(obs_type,obs_values)
+        head(gap_normal)
+        dim(gap_normal)
+        dim(gapminder)
+        ```
+
+-   Notice how the contents of obs_type became the column names
+-   Looks like the same dataset, cool, we're back
+-   Columns are in a different order though, let's fix that
+    -   <span></span>
+
+        ```
+        names(gap_normal)
+        names(gapminder)
+        gap_normal <- gap_normal %>%
+            select(country, year, pop, continent, lifeExp, gdpPercap)
+        names(gap_normal)
+        ```
+
+-   Let's see if they're equal.  Not so good, they're sorted differently
+    -   <span></span>
+
+        ```
+        all.equal(gap_normal, gapminder)
+        head(gap_normal)
+        head(gapminder)
+        ```
+
+-   The new dataset is sorted first by continent, gapminder was by country
+    -   <span></span>
+
+        ```
+        gap_normal <- gap_normal %>% 
+            arrange(country, continent, year)
+        all.equal(gap_normal, gapminder)
+        ```
+
+    -   Arrange is a dplyr function
+    -   It's a good idea to do checks all the time (like all_equal)
+
+-   Ok, now let's go back to wide
+-   Remember, we used gather() to put all the columns together, and then separate() to split the year from the variable
+-   So we just have to do the opposite in reverse order
+    -   <span></span>
+
+        ```
+        gap_wide_new <- gap_long %>% 
+            unite(var_names, obs_type, year, sep = "_") %>%
+            spread(var_names, obs_values)
+        str(gap_wide_new)
+        all.equal(gap_wide, gap_wide_new)
+        ```
+
+### Resources:
+
+-   Rstudio cheatsheets: [https://www.rstudio.com/resources/cheatsheets/](https://www.rstudio.com/resources/cheatsheets/)
+-   Package documentation: [https://rdrr.io/cran/dplyr/](https://rdrr.io/cran/dplyr/), [https://rdrr.io/cran/tidyr/](https://rdrr.io/cran/tidyr/)
+-   R Cookbook: [http://www.cookbook-r.com/Manipulating_data/](http://www.cookbook-r.com/Manipulating_data/)
+-   Data Wrangling Webinar: [https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/](https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/)
+
+
+## 5. Plotting and creating publication-quality graphics
 
 **Question: How many of you have made a plot in R?  How many of you have used ggplot?**
 
@@ -205,9 +647,8 @@ subtitle: R for Reproducible Scientific Analysis Part 2
     -   <span></span>
 
         ```
-        library("ggplot2")
         ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
-          geom_point()
+            geom_point()
         ```
 
 -   First we load ggplot2
@@ -217,10 +658,9 @@ subtitle: R for Reproducible Scientific Analysis Part 2
     -   `ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp))`
     -   So finally, we add a points (scatterplot) layer called a geometry
   
-***---------- Socrative #??? ----------***
+***---------- Socrative #8 ----------***: Modify a ggplot graph
 
--   Modify the graph to show how life expectancy has changed over time
-    -   `ggplot(data = gapminder, aes(x = year, y = lifeExp)) + geom_point()`
+-   `ggplot(data = gapminder, aes(x=year, y=lifeExp)) + geom_point()`
 
 -   Using a scatterplot probably isn't a good way to show change over time.
     -   <span></span>
@@ -298,7 +738,16 @@ subtitle: R for Reproducible Scientific Analysis Part 2
             geom_point() + scale_x_log10() + geom_smooth(method="lm", size=1.5)
         ```
 
-***---------- Socrative #??? ----------***
+***---------- Socrative #9 ----------***: Color by continent & add separate trends
+
+-   <span></span>
+
+    ```
+    ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+        geom_point(size = 1.5) +
+        scale_x_log10() +
+        geom_smooth(method="lm")
+    ```
 
 -   Many peope are colorblind.  In addition to color, it's a good idea to also use shape
     -   <span></span>
@@ -332,45 +781,55 @@ subtitle: R for Reproducible Scientific Analysis Part 2
         -   `ggsave(file = "life_expectancy.png")`
         -   `ggsave(file = "life_expectancy.pdf")`
 
-***---------- Socrative #??? ----------***
+***---------- Socrative #10 ----------***: Optional ggsave & ggplot variables
+- ggsave will overwrite the graph
   
--   Facets (if time permits)
-    -   <span></span>
-    
-        ```
-        starts.with <- substr(gapminder$country, start = 1, stop = 1)
-        az.countries <- gapminder[starts.with %in% c("A", "Z"), ]
-        ggplot(data = az.countries, aes(x = year, y = lifeExp, color=continent)) +
+### Facets (if time permits)
+
+-   <span></span>
+
+    ```
+    L.countries <- gapminder %>% 
+        filter(country %in% c("Lebanon", "Lesotho", "Liberia", "Libya"))
+
+    L.countries
+
+    ggplot(L.countries, aes(x = year, y = lifeExp, color = country)) + 
         geom_line() + facet_wrap( ~ country)
-        ```
-
-    -   <span></span>
-    
-        ```
-        L.countries <- gapminder %>% 
-            filter(country %in% c("Lebanon", "Lesotho", "Liberia", "Libya"))
-
-        L.countries
-
-        ggplot(L.countries, aes(x = year, y = lifeExp, color = country)) + 
-            geom_line() + facet_wrap( ~ country)
-        ```
+    ```
   
 -   Draws a panel for each unique value in that column
 
+### GGplot2 Challenge #1: write a function that takes vector of countries & creates faceted graph
+
+-   <span></span>
+
+    ```
+    lifeExp_country <- function(data, countries) {
+         country_subset <- data %>%
+              filter(country %in% countries)
+         ggplot(country_subset, aes(x = year, y = lifeExp, color = country)) + 
+              geom_line() + facet_wrap( ~ country)
+    }
+
+    lifeExp_country(gapminder, c("Ethiopia", "Australia", "Canada"))
+    ```
+
 -   Cover cowplot: 
-    -   `library("cowplot")`
+    -   `library(cowplot)`
     -   Nicer quality than default ggplot, it's a theme
     -   Also provides a way to merge two plots into one, eg A & B figures, and annotations
--   Resources:
-    -   R Graph catalog: [http://shiny.stat.ubc.ca/r-graph-catalog/](http://shiny.stat.ubc.ca/r-graph-catalog/)
-    -   GGPlot2 online help: [http://docs.ggplot2.org/]()
-    -   R Graph Cookbook: [http://www.cookbook-r.com/Graphs/](http://www.cookbook-r.com/Graphs/)
-    -   ggplot2 essentials: [http://www.sthda.com/english/wiki/ggplot2-essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)
-    -   Rstudio cheatsheets: [https://www.rstudio.com/resources/cheatsheets/](https://www.rstudio.com/resources/cheatsheets/)
-    -   Cowplot: [https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html)
 
-### Challenge: 
+### Resources
+
+-   R Graph catalog: [http://shiny.stat.ubc.ca/r-graph-catalog/](http://shiny.stat.ubc.ca/r-graph-catalog/)
+-   GGPlot2 online help: [http://docs.ggplot2.org/]()
+-   R Graph Cookbook: [http://www.cookbook-r.com/Graphs/](http://www.cookbook-r.com/Graphs/)
+-   ggplot2 essentials: [http://www.sthda.com/english/wiki/ggplot2-essentials](http://www.sthda.com/english/wiki/ggplot2-essentials)
+-   Rstudio cheatsheets: [https://www.rstudio.com/resources/cheatsheets/](https://www.rstudio.com/resources/cheatsheets/)
+-   Cowplot: [https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html)
+
+### GGplot2 Challenge #2: 
 
 -   Create a boxplot showing the spread of life expectancy for each continent
     -   <span></span>
@@ -381,290 +840,59 @@ subtitle: R for Reproducible Scientific Analysis Part 2
            geom_jitter(alpha = 0.5, color = "tomato")
         ```
 
-
-
-
-## 4. Subsetting and reshaping data with dplyr and tidyr
-
--   Like, graphing, the subsetting and data-wrangling tools bundled with R are not the best
--   We're going to use dplyr and tidyr instead.
-
-### dplyr
-
--   Setup
-    -   `install.packages("dplyr")`
-    -   `library(dplyr)`
-  
--   dplyr is especially nice because you can do most of what you need to with only a handful of functions, easy to remember
-    -   select(), filter(), group_by(), summarize(), mutate()
--   Select lets you only use some columns.  You can also re-order them
-    -   <span></span>
-
-        ```
-        head(gapminder)
-        year_country_gdp <- select(gapminder, year, country, gdpPercap)
-        head(year_country_gdp)
-        ```
-
--   dplyr also can use an R version of pipes, like what we saw in the shell lesson
-    -   `year_country_gdp <- gapminder %>% select(year, country, gdpPercap)`
-    -   You don't have to bother giving it the data argument anymore.  Easier to read
--   Select lets us subset columns, but what if we want to subset rows?  filter() does that
-    -   <span></span>
-
-        ```
-        year_country_gdp_euro <- gapminder %>%
-            filter(continent=="Europe") %>%
-            select(year,country,gdpPercap)
-        ```
-
-    -   Walk through this example, showing the flow
-
-    -   <span></span>
-
-        ```
-        year_country_gdp_euro <- filter(select(gapminder, year,country,gdpPercap), 
-            continent=="Europe")
-        ```
-
-***---------- Socrative #??? ----------***
-
--   Socrative answer: 
-    -   <span></span>
-
-        ```
-        Africa_2007_lifeExp <- gapminder %>%
-            filter(continent == "Africa", year == 2007) %>%
-            select(year, country, lifeExp)
-
-        str(Africa_2007_lifeExp)
-        ```
-
-    -   Note that the order is really important!  Since select removes continent, it has to come second
-    -   We could have used two filter commands instead
-
--   Summarize lets us condense data down
--   `mean_gdp <- gapminder %>% summarize(meanGDP = mean(gdpPercap))`
--   Not very useful by itself, we could have used this instead
-    -   `mean(gapminder$gdpPercap)`
--   But if we combine it with the group_by() function, we can get the mean gdp for each continent
-    -   <span></span>
-
-        ```
-        gdp_by_continents <- gapminder %>%
-            group_by(continent) %>%
-            summarize(mean_gdp = mean(gdpPercap))
-
-        gdp_by_continents
-        ```
-
--   Here we're grouping by continent, which means we calculate a **separate** mean for each one
-
-### Challenge socrative:
--   Let's compile the average life expectancy across all African countries by year.  In how many years did it decrease?
-
-    -   <span></span>
-
-        ```
-        africa_lifeExp <- gapminder %>%
-            filter(continent == "Europe") %>%
-            group_by(year) %>%
-            summarize(avg_life = mean(lifeExp))
-             
-        africa_lifeExp
-        ```
-
--   We can group multiple variables and summarize multiple things
-    -   <span></span>
-        ```
-        gdp_by_continents <- gapminder %>%
-            group_by(continent, year) %>%
-            summarize(mean_gdp = mean(gdpPercap), 
-                sd_gdp = sd(gdpPercap), 
-                mean_pop = mean(pop), 
-                sample_size = n())
-
-        gdp_by_continents
-        ```
-
-    -   n() is a special function that gives the sample size for that grouping, very useful
-    -   Notice that we only see 10 rows.  Summarize actually has returned a "special" table-dataframe
-    -   In most cases it acts the same, but if we want to see the whole thing, we can pipe it to dataframe
-        -   `gdp_by_continents %>% data.frame()`
-
-
--   What if we wanted to create a new column without condensing our data down?  Use mutate()
-    -   <span></span>
-        ```
-        billion_gdp_country_2007 <- gapminder %>%
-            filter(year == 2007) %>%
-            mutate(billion_gdp = gdpPercap*pop/10^9) %>%
-            select(continent, country, billion_gdp)
-
-        head(billion_gdp_country_2007)
-        ```
-
-### tidyr
-
--   Setup
-    -   `install.packages("tidyr")`
-    -   `library(tidyr)`
-
--   The same dataset can be represented in different ways
--   Wide format: 
-    -   <span></span>
-
-        ```
-        Genus   Weight  Height
-        Ursus   122     82
-        ```
-
--   Long format: 
-    -   <span></span>
-
-        ```
-        Genus   Measurement     Value
-        Ursus   Weight          122
-        Ursus   Height          82
-        ```
-
--   In long format, each column is a variable and each row is a single measurement or observation
--   We tend to use wide format more because it's more concise, easy to ready, datasheety
--   R, databases, and other programming languages usually prefer long format
-
-***---------- Socrative #??? ----------***
-What format is the gapminder dataset we've been using in?
-
--   We have 3 ID columns, and 3 observation columns (instead of 1)
-    -   Important to be able to convert, some R tools need specific format
-
-
--   <span></span>
-
-    ```
-    gap_wide <- read.csv("data/gapminder_wide.csv", stringsAsFactors = FALSE)
-    str(gap_wide)
-    ```
-
--   So this is the wide format of our data
--   Notice it's got lots of columns and only 142 rows, one for each country
--   We're going to convert it to long format with gather()
-    -   <span></span>
-
-        ```
-        gap_long <- gap_wide %>%
-             gather(obstype_year, obs_values, starts_with('pop'),
-                    starts_with('lifeExp'), starts_with('gdpPercap'))
-        str(gap_long)
-        head(gap_long)
-        ```
-
--   Notice how we've mixed dplyr pipes with the gather() function from tidyr
--   The first two arguments are new column names: The old column name goes in 1st & value in 2nd
--   Instead of using starts_with(), we could have just written out all the columns we wanted to gather
--   We could also just exclude the columns we don't want to gather
-    -   <span></span>
-
-        ```
-        gap_long <- gap_wide %>% 
-            gather(obstype_year,obs_values,-continent,-country)
-        str(gap_long)
-        ```
-
-- Our new column obstype_year actually has 2 pieces of information.  We should separate them
-    -   <span></span>
-
-        ```
-        gap_long <- gap_long %>% 
-             separate(obstype_year, into = c('obs_type', 'year'), sep = "_") %>%
-             mutate(year = as.integer(year))
-        ```
-
-
-
-**Socrative: Using gap_long, calculate the mean life expectancy by continent**
-
-gap_long %>%
-     filter(obs_type == "lifeExp") %>%
-     group_by(continent) %>%
-     summarize(lifeExp = mean(obs_values))
-
--   Now that we have our long format, let's convert it to the intermediate format
-    -   <span></span>
-
-        ```
-        gap_normal <- gap_long %>% 
-            spread(obs_type,obs_values)
-        head(gap_normal)
-        dim(gap_normal)
-        dim(gapminder)
-        ```
--   Notice how the contents of obs_type became the column names
--   Looks like the same dataset, cool, we're back
--   Columns are in a different order though, let's fix that
-    -   <span></span>
-
-        ```
-        names(gap_normal)
-        names(gapminder)
-        gap_normal <- gap_normal %>%
-            select(country, year, pop, continent, lifeExp, gdpPercap)
-        names(gap_normal)
-        ```
-
--   Let's see if they're equal.  Not so good, they're sorted differently
-    -   <span></span>
-
-        ```
-        all.equal(gap_normal, gapminder)
-        head(gap_normal)
-        head(gapminder)
-
-        ```
-
--   The new dataset is sorted first by continent, gapminder was by country
-    -   <span></span>
-
-        ```
-        gap_normal <- gap_normal %>% 
-            arrange(country, continent, year)
-        all.equal(gap_normal, gapminder)
-
-        ```
-        
-    -   Arrange is a dplyr function
-    -   It's a good idea to do checks all the time (like all_equal)
-
-
-
-
-
-
-
--   Resources:
-    -   Rstudio cheatsheets: [https://www.rstudio.com/resources/cheatsheets/](https://www.rstudio.com/resources/cheatsheets/)
-
-
-
-
--   <span></span>
-
-    ```
-
-    ```
-
-    -   <span></span>
-
-        ```
-
-        ```
-
-
-
-## 5. Producing reports and notebooks with knitr
-
-
-## 6. Writing good software
-
-
-#### Subheading 
+## 6. Producing reports and notebooks with knitr
+
+**Question: How many of you could just send your code to your advisor or collaborator?**
+
+-   We often need to put this stuff in a presentable format: word, powerpoint, email, etc.
+-   Then we need to change a graph, and update our presentation
+-   We can do this all in one step, with less work by having R handle it.  It's also easier to reproduce.
+-   We'll do this with an R notebook, which will give us a single html file with all the code, data, graphs, and our notes.  We can upload this online, show it as a presentation, or send it to someone.  
+-   Basically a fancy lab notebook!
+
+-   Create a new R notebook and save it.  
+    -   Run the graph code
+    -   Add a new chunk with `head(cars)` and run it
+    -   Show how to switch between inline and console, explain inline usefulness
+    -   Click preview to see the html
+    -   Show where the file is saved
+-   Notice how we got some nice formatted text.  This is using something called markdown
+    -   [http://rmarkdown.rstudio.com](http://rmarkdown.rstudio.com)
+    -   Demo headings, bullets, numbered lists, bold, italic, and links
+
+### R Notebook Challenge #1: 
+Modify your R notebook to load the data from gapminder, show the first 10 lines, and display a graph.  Give each R code section a heading and short summary.
+
+
+-   You could also knit to a word file instead.  Or pdf, though this requires some extra setup
+-   I won't show you how to do this, but you can also publish stuff to the internet, and run code from other languages, eg shell and python.  
+
+
+
+## 7. Writing good software
+
+-   It's really easy to be in a hurry and just quickly write the code for a graph or an analysis with no commentary on how the code works or the results you got!
+    -   This will come back to bite you!
+    -   You'll end up re-spending hours trying remember how something works.  
+
+-   Readable code is super important!
+    -   We often collaborate
+    -   We often do analyses and then come back a year later (when writing thesis)
+-   Rules of thumb
+    -   Indent code inside loops, functions, and if statements
+    -   Use good variable & function names and don't overwrite variables
+    -   Use lots of comments to explain what lines of code do
+    -   There's an R style guide: [http://adv-r.had.co.nz/Style.html](http://adv-r.had.co.nz/Style.html)
+        -   Preferences > Code > Diagnostics, gives you tiny warnings to envorce
+-   Break down problems into bite-sized pieces and keep things modular
+    -   e.g. using functions, or even separate files.  
+    -   I like to have an R script to get my data from csv ready for analysis
+        -   Then I can just pull this in to different analyses I do.
+-   Don't repeat yourself!  
+    -   Re-use code, build functions, use loops
+-   Always be thinking of ways your code might break
+    -   Anticipate those failures and leave messages to yourself with if statements
+    -   Test your functions over different inputs to make sure they always work.
+
+-   I like to print out `sessionInfo()` in my R Notebooks so I know what package versions I used
+    -   Mention `packrat` 
