@@ -156,7 +156,7 @@ This is a tricky one, 3 correct answers
         }
         ```
 
-    -   Instead of 10, I could use `nrow(gapminder)``
+    -   Instead of 10, I could use `nrow(gapminder)`
 
 
 ### Nesting For loops

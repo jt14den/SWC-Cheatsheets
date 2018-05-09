@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Data Cleaning and Databases</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="notes.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+</head>
+<body>
+<header>
+<h1 class="title">Data Cleaning and Databases</h1>
+<p class="subtitle">OpenRefine and SQL</p>
+</header>
+<h2 id="pre-workshop-setup">Pre-Workshop Setup</h2>
+<ul>
+<li>Start OpenRefine
+<ul>
+<li>Windows: Go to folder you downloaded it to and click on openrefine.exe</li>
+<li>Linux: In terminal, go to folder you downloaded it to and type ./refine</li>
+<li>Mac: Click on OpenRefine app in Applications folder</li>
+</ul></li>
+<li>Make sure openrefine interface is open in browser. If not go to http://127.0.0.1:3333</li>
+<li>Download data files from the course website and save to your desktop.</li>
+</ul>
+<h3 id="open-up-socrative-again">Open up Socrative again</h3>
+<ul>
+<li>You can import my quiz with <strong><Socrative code></strong></li>
+<li>Advise learners to go to <a href="https://b.socrative.com/login/student/" class="uri">https://b.socrative.com/login/student/</a></li>
+<li>Type in UCONNSWC for the room name</li>
+</ul>
+<p><strong>QUESTION: How many of you have had to spend time cleaning up a dataset?</strong></p>
+<p>One of the good things about databases is that they are picky about data being in consistent formats. This means that data has to be clean to work well with databases.</p>
+<p>OpenRefine is a cleaning tool, originally made by Google. There are other ways to clean data (by hand, Excel, R) but we think this is one of the most efficient.</p>
+<p>1.5 hours - break - 1.25 hrs</p>
+<h2 id="openrefine-30-minutes">1. OpenRefine (30 minutes)</h2>
+<h3 id="importing-data-3-minutes">Importing Data (3 minutes)</h3>
+<ul>
+<li>Go to <code>Create Project &gt; Choose Files</code>
+<ul>
+<li>Pick the burlap-trap.csv file you downloaded, and click Next</li>
+</ul></li>
+<li>Give your project a name</li>
+<li>Check to make sure columns look right.
+<ul>
+<li>Get an idea of problems: missing data, data not filled in, note column</li>
+</ul></li>
+<li>OpenRefine can work with lots of different types of data: Excel, TSV, etc.</li>
+<li>Switch to rows mode, and show 50 rows at a time. (Records groups rows with the same data in the first row)</li>
+</ul>
+<h3 id="text-facets-8-minutes">Text Facets (8 minutes)</h3>
+<ul>
+<li>Groups rows with the same value for that column</li>
+<li>Lets you filter and edit many rows at once.</li>
+<li><code>Facet &gt; Text Facet for Tree Species</code>
+<ul>
+<li>Bulk Editing: <code>Edit White PIne</code></li>
+<li>Subsetting: <code>Include White oak</code></li>
+<li>Edit individual cell (mouseover)</li>
+<li>Include multiple tree species (Maples)</li>
+<li><code>Invert selection</code> (all except Maples)</li>
+</ul></li>
+<li>Flagging: Flag “Red oak (?)” <code>Edit Rows &gt; Flag Rows</code></li>
+</ul>
+<h4 id="faceting-challenge-1">Faceting Challenge #1</h4>
+<ul>
+<li>Make a text facet for the Direction column and clean it up. Check for equal sample sizes.</li>
+</ul>
+<h3 id="undoredo-1-minute">Undo/Redo (1 minute)</h3>
+<ul>
+<li>The history of everything you do gets saved.</li>
+<li>You can undo things with <code>Undo/Redo</code>, and you can also save that history to play back (<code>Extract</code>). You could also export the history and track with Git.</li>
+<li>Lets undo the changes we made to the Direction column</li>
+</ul>
+<h3 id="transforming-columns-5-minutes">Transforming Columns (5 minutes)</h3>
+<ul>
+<li>Instead of editing subsets, we can make changes to a whole column</li>
+<li>All of the problems in Direction column were capitalization and whitespace.
+<ul>
+<li><code>Edit Cells &gt; Common Transforms &gt; Trim whitespace</code></li>
+<li><code>Edit Cells &gt; Common Transforms &gt; Titlecase</code></li>
+</ul></li>
+<li>Now, lets address the blanks in the data: <code>Edit Cells &gt; Fill Down</code></li>
+<li>Splitting Columns: <code>Site &gt; Edit Column &gt; Split into several columns</code></li>
+</ul>
+<h4 id="transforming-challenge-trim-whitespace-from-all-columns-and-fill-down-date-site-and-vegeplot">Transforming Challenge: Trim whitespace from all columns, and fill down date, Site, and Vegeplot</h4>
+<h3 id="numeric-facets-5-minutes">Numeric Facets (5 minutes)</h3>
+<ul>
+<li>Before doing numeric facets, we need to make a column numeric: <code>Edit Cells &gt; Transform &gt; To Number</code></li>
+<li>Let’s make a numeric facet of # egg masses
+<ul>
+<li>Let’s look at the non-numeric data and fix it</li>
+<li>Let’s look at the blank data and flag it</li>
+<li>We can also look for numeric outliers</li>
+</ul></li>
+</ul>
+<p><strong><em>———- Socrative #1 ———-</em></strong> - Use a Numeric Facet to clean up the data in the DBH column. This is the diameter of the trees.<br />
+- Are there any outliers that might represent mistakes? - True (<em>correct</em>) - False <strong><em>———- Socrative #1 ———-</em></strong></p>
+<h3 id="stacking-facets-5-minutes">Stacking Facets (5 minutes)</h3>
+<ul>
+<li>So far, we’ve only been working with one facet at a time. You can also stack facets</li>
+<li>Let’s say that on May 23rd, a student confused Beech Trees for Red Oaks
+<ul>
+<li>Facet by Date, then by Tree species</li>
+<li>Display, then edit the Beech Trees</li>
+</ul></li>
+</ul>
+<p><strong><em>———- Socrative #2 ———-</em></strong> - How many Black Oak trees are at site BS_GCL that are over 40 cm DBH? - 5 (black oaks @ site) - 2 (<em>correct</em>) - 27 (total black oaks) - 10 (black oaks over 40 cm) <strong><em>———- Socrative #1 ———-</em></strong></p>
+<h3 id="exporting-1-minute">Exporting (1 minute)</h3>
+<ul>
+<li>Click on export to save a csv of your cleaned data.</li>
+<li>You could also export the entire project to send to someone else.</li>
+</ul>
+<h3 id="help-1-minute">Help (1 minute)</h3>
+<ul>
+<li>Notice the <code>Help</code> button. This takes you to a wiki. There is even a simple programming language GREL</li>
+</ul>
+<h2 id="databases">Databases</h2>
+<ul>
+<li>Databases are similar to Excel in many ways, but built for searching.</li>
+<li>Workbook = database, worksheet = table, column = field, and row = row.</li>
+</ul>
+<h4 id="why-use-a-database-instead-of-excel">Why use a database instead of Excel?</h4>
+<ul>
+<li>Designed for large datasets (potentially millions of rows).</li>
+<li>Enforces data types: one column, one kind of data</li>
+<li>Avoid duplicating data, e.g. species names: makes it easier to change/maintain, less space</li>
+<li>Easier to search for subsets of data</li>
+</ul>
+<h2 id="selecting-data">2. Selecting Data</h2>
+<h2 id="section">3.</h2>
+<h2 id="module-1">1. Module 1</h2>
+<h4 id="subheading">Subheading</h4>
+<ul>
+<li>Showing a code command
+<ul>
+<li><code>plot(0)</code></li>
+</ul></li>
+</ul>
+<h2 id="module-2">2. Module 2</h2>
+<p><strong><em>———- Socrative #1 ———-</em></strong></p>
+</body>
+</html>
