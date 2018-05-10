@@ -264,7 +264,7 @@ SELECT * FROM Visited WHERE dated > '1900-01-01' ORDER BY dated ASC; (*works, bu
       ON Site.name = Visited.site;
       ```
 
-- We can do more than one JOIN at once
+- We can do more than one JOIN at once to get the data we want
   -   <span></span>
 
       ```
@@ -274,6 +274,8 @@ SELECT * FROM Visited WHERE dated > '1900-01-01' ORDER BY dated ASC; (*works, bu
       AND Visited.id = Survey.taken
       AND Visited.dated IS NOT NULL;
       ```
+
+- And now we can export the output of that SQL command to CSV (button)
 
 - The reason we can do this is because this database was carefully set up
   - In the Sites and Person table, each record has a unique ID, called a Primary Key
@@ -311,26 +313,86 @@ WHERE Survey.quant = "sal";
     - But if a date was wrong, we'd be changing it multiple times
       - The bigger the dataset, the worse the problem
 
-## 8. Creating Databases ( minutes)
+## 8. Creating Databases (15 minutes)
+- Let's recreate the Site table
 
-- Create Table
-- Drop Table
-- Data Types
-- Foreign Keys
+### DROP TABLE
+- First, we drop the old table
+  - `DROP TABLE Site;`
+    - BE CAREFUL WITH THIS! You can lose data!
 
-## 9. Modifying Data ( minutes)
+### CREATE TABLE
+- `CREATE TABLE Site (name text, lat real, long real);`
+- Now we have the table back, but it is empty
 
-- UPDATE
-- INSERT
-- DELETE
+### Data Types
+- Note that after the field names there's an additional qualifier (e.g. text)
+- This is the data type
+- SQLite only has a few: text, real (for decimals), integer, blob (binary data like an image)
+  - Many other databases have additional types for true/false, date, time, and more number/text types
+
+### Insert Data
+- We can add data back by writing INSERT INTO queries
+  -   <span></span>
+
+      ```
+      INSERT INTO Site VALUES('DR-1', -49.85, -128.57);
+      INSERT INTO Site VALUES('DR-3', -47.15, -126.72);
+      INSERT INTO Site VALUES('MSK-4', -48.87, -123.40);
+      ```
 
 
+***---------- Socrative #7 ----------***: Make family table with unique ID, names, and age
+
+Create a table named Family.  Make fields for a unique identifier,  first and last names, and age. Add a record for yourself, and one for a family member.  
+
+
+CREATE TABLE Family (id integer, firstname text, lastname text, age integer);
+INSERT INTO Family VALUES(1, 'James', 'Mickley', 34);
+INSERT INTO Family VALUES(2, 'Peter', 'Mickley', 28);
+
+
+### Exporting a Database 
+- We can save a database as an SQL file, which can be shared and imported in another database
+  - Also works well with Git
+- `File > Export > SQL File`
+- Let's take a look
+  - Notice the `IF NOT EXISTS`, This is a precaution to prevent overwriting tables that are already there
+
+### Importing a CSV
+- We could also import a CSV File, such as our burlap trap data
+  - `File > Import > CSV`
+- This works, but the data types are conservative: all text, no NULLS
+
+
+## 9. Modifying Data (10 minutes)
+- In addition to inserting data, we can also modify or remove data that is already there
+
+### UPDATE
+- We can modify using the UPDATE command
+- Let's say we found that our MSK-4 site had the wrong lat/long, off by one degree
+  - `UPDATE Site SET lat = -47.87, long = -122.4 WHERE name = 'MSK-4';`
+
+***---------- Socrative #8 ----------***: Make family table with unique ID, names, and age
+
+We want to change the first salinity value in the Survey table to be 0.5. What happens when we run the following query?
+
+UPDATE Survey SET reading = 0.5 WHERE quant = 'sal';
+
+It works just as we expected and changes the first salinity value to 0.5
+We get an error
+It changes all the salinity values to 0.5
+
+
+### DELETE
+- 
 
 ## Calculating New Values (if time)
   - Fix Roerich salinity readings (collected as percentages)
     - `SELECT taken, reading / 100 FROM Survey WHERE person='roe' AND quant='sal';`
   - Use UNION to combine with everyone else's
     - `SELECT taken, reading FROM Survey WHERE person != 'roe' AND quant = 'sal' UNION SELECT taken , reading / 100 FROM Survey WHERE person='roe' AND quant='sal';`
+
 
 ## 10. Programming with Databases in R (30 minutes)
 - We can actually run SQL queries in R
