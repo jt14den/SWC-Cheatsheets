@@ -13,6 +13,10 @@ subtitle: OpenRefine and SQL
 - In your browser (non IE), go to http://localhost:3333
 - Download data files from the course website and save to your desktop.
 - Make sure someone is recording commands in the Etherpad (no log)
+- Setup for DB BRowser
+  - 1024 x 768 resolution
+  - Data browser font size to 14
+  - SQL editor and log font size to 16
 
 ### Open up Socrative again ###
 - You can import my quiz with **<Socrative code>**
@@ -144,17 +148,18 @@ OpenRefine is a cleaning tool, originally made by Google.  There are other ways 
     - The semicolon marks the end of our query
     - SQL is case-insensitive.  We could write `select PERSONAL, family From Person;`
     - Convention is to keep SQL commands in all caps, to differentiate, easier to read
-  - Rows and columns in a database aren't stored in any particular order, so we can control that
-    - Example, swap columns `SELECT family, personal FROM Person;`
-  - As a shortcut, we can use * as a wildcard for "all columns"
+  - Records and fields in a database aren't stored in any particular order, so we can control that
+    - Example, swap fields `SELECT family, personal FROM Person;`
+  - As a shortcut, we can use * as a wildcard for "all fields"
     - `SELECT * FROM Person;`
-  - We could even select a column multiple times:
+  - We could even select a field multiple times:
     - `SELECT id, id FROM Person;`
 
 ***---------- Socrative #3 ----------***: person, quant, reading from Survey
 
-- Write a query that displays the person, quant, and reading columns from the Survey table
-- SELECT person, quant, reading FROM Survey;
+Write a query that displays the person, quant, and reading fields from the Survey table
+
+SELECT person, quant, reading FROM Survey;
 
 
 ## 4. Sorting Data (3 minutes)
@@ -167,7 +172,7 @@ OpenRefine is a cleaning tool, originally made by Google.  There are other ways 
     - Only because that's the order the data were imported in
     - Any modifications could easily affect that order
   - We can make things clearer with `ASC`
-- We can order by multiple columns
+- We can order by multiple fields
   - `SELECT person, quant, reading FROM Survey ORDER BY person ASC, reading DESC;`
 
 
@@ -176,7 +181,7 @@ OpenRefine is a cleaning tool, originally made by Google.  There are other ways 
 - We do this by adding a WHERE clause to our SELECT query
   - `SELECT * FROM Visited;`
   - `SELECT * FROM Visited WHERE site = 'DR-1';`
-    - Now, the database is checking which rows match the WHERE clause, and then checking which columns we want
+    - Now, the database is checking which records match the WHERE clause, and then checking which fields we want
 - We can use multiple filters in the WHERE clause: DR-1 before 1930
   - `SELECT * FROM Visited WHERE site = 'DR-1' AND dated < '1930-01-01';`
     - **Sidenote:** This query only works because YYYY-MM-DD HH:MM:SS dates allows sorting.  MySQL and other databases have data types specifically for dates to help with this.
@@ -205,11 +210,11 @@ SELECT * FROM Survey WHERE quant='sal' OR (reading > 1.0 AND reading < 0.0);
     - The percent symbol is a wildcard, matches any characters.  Use anywhere in a string.
 - Or,we could use DISTINCT to show unique values
   - `SELECT DISTINCT person, quant FROM Survey WHERE person = 'lake' OR person = 'roe';`
-    - Note: only unique for those chosen columns, not entire rows.
+    - Note: only unique for those chosen fields, not entire records.
 
 #### 63 minutes #####
 
-## 6. Missing Data (8 minutes)
+## 6. Missing Data (8 minutes) SKIP/Abbreviate if after 2 PM
 - With real-world data, it's common to have missing data
 - Let's take a look at the Visited table
   - `SELECT * FROM Visited;`
@@ -233,12 +238,12 @@ SELECT * FROM Survey WHERE quant='sal' OR (reading > 1.0 AND reading < 0.0);
     - Note: `!=` means "not equal to"
   - `SELECT * FROM Survey WHERE quant='sal' AND (person != 'lake' OR person IS NULL);`
     - We need an explicit check
-- In some other kinds of databases, you can specify a default value other than NULL for a column
+- In some other kinds of databases, you can specify a default value other than NULL for a field
   - What might be useful in an R context?
 
 ***---------- Socrative #5 ----------***: Visted, sorted by date, excluding NULL
 
-Write a query that sorts the records in Visited by date, excluding entries for which the date is not known\
+Write a query that sorts the records in Visited by date, excluding entries for which the date is not known
 
 SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated; (*works, but less clear*)
 SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated ASC; (*correct, preferred*)
@@ -247,7 +252,7 @@ SELECT * FROM Visited WHERE dated > '1900-01-01' ORDER BY dated ASC; (*works, bu
 
 
 ## 7. Combining Data with JOIN (12 minutes)
-- We need to do an analysis and need the data columns `latitude, longitude, date, quantity, and reading`
+- We need to do an analysis and need the data fields `latitude, longitude, date, quantity, and reading`
   - But this data is in multiple tables (lat/long in Site, dates in Visited, and Readings in Survey)
     - Show figure
     - We did it this way to make it easier to manage (eg. change a site's lat/long only once)
@@ -255,7 +260,7 @@ SELECT * FROM Visited WHERE dated > '1900-01-01' ORDER BY dated ASC; (*works, bu
   - `SELECT * FROM Site JOIN Visited ON Site.name = Visited.site;`
     - The ON part tells SQL to match the name field in the sites table with the site field in the Visited table
     - Note that we are now using `Table.field`.  Tables can have fields with the same name, so this distinguishes
-- We can now select the columns we actually need and format the SQL nicely
+- We can now select the fields we actually need and format the SQL nicely
   -   <span></span>
 
       ```
@@ -279,13 +284,13 @@ SELECT * FROM Visited WHERE dated > '1900-01-01' ORDER BY dated ASC; (*works, bu
 
 - The reason we can do this is because this database was carefully set up
   - In the Sites and Person table, each record has a unique ID, called a Primary Key
-    - For example, the Person table has an ID column with no duplicates
+    - For example, the Person table has an ID field with no duplicates
   - In a table such as Survey, and Visited which refer to data in other tables, we use the same IDs
     - In this case they are called Foreign Keys: they refer to data in other tables.
   - What we end up doing then is matching a foreign key to a primary key
-- Good database design gives every table a column to act as a primary key
+- Good database design gives every table a field to act as a primary key
   - Ideally this should NOT be data, in case data needs to be changed. 
-  - Just have a column numbering the records works well
+  - Just have a field numbering the records works well
     - **Why might the last name used in the Person table be a bad Primary Key?**
 
 ***---------- Socrative #6 ----------***: Site name and salinity readings
@@ -346,11 +351,12 @@ WHERE Survey.quant = "sal";
 
 Create a table named Family.  Make fields for a unique identifier,  first and last names, and age. Add a record for yourself, and one for a family member.  
 
-
+-- Create the table.  id is my unique identifier (a number).  age is also a number.  The names will be text fields.
 CREATE TABLE Family (id integer, firstname text, lastname text, age integer);
+
+-- Insert two records
 INSERT INTO Family VALUES(1, 'James', 'Mickley', 34);
 INSERT INTO Family VALUES(2, 'Peter', 'Mickley', 28);
-
 
 ### Exporting a Database 
 - We can save a database as an SQL file, which can be shared and imported in another database
@@ -373,7 +379,7 @@ INSERT INTO Family VALUES(2, 'Peter', 'Mickley', 28);
 - Let's say we found that our MSK-4 site had the wrong lat/long, off by one degree
   - `UPDATE Site SET lat = -47.87, long = -122.4 WHERE name = 'MSK-4';`
 
-***---------- Socrative #8 ----------***: Make family table with unique ID, names, and age
+***---------- Socrative #8 ----------***: **OPTIONAL**
 
 We want to change the first salinity value in the Survey table to be 0.5. What happens when we run the following query?
 
@@ -384,7 +390,7 @@ We get an error
 It changes all the salinity values to 0.5
 
 
-***---------- Socrative #9 ----------***: 
+***---------- Socrative #9 ----------***: **OPTIONAL**
 
 Write a SQL query to replace all the NULL cells in Survey.person with the string 'unknown'
 
@@ -392,7 +398,7 @@ UPDATE Survey SET person = 'unknown' WHERE person IS NULL;
 
 
 ### DELETE
-- To delete rows, we use DELETE FROM.  We can delete Frank Danforth from the Person table, he has no data
+- To delete records, we use DELETE FROM.  We can delete Frank Danforth from the Person table, he has no data
   - `DELETE FROM Person WHERE id = 'danforth';`
 - What problems might we have if we try to delete Anderson Lake instead?
   - Our Survey table would still contain records of measurements he'd taken, but a JOIN wouldn't work anymore because lake doesn't exist
@@ -401,6 +407,7 @@ UPDATE Survey SET person = 'unknown' WHERE person IS NULL;
       - A few options
         - Delete all the lake data records first (cascading delete)
         - Prevent the deletion of a record that is referenced by other tables (restrict)
+        - Just delete the record in Person, which will probably break things (no action)
         - Other databases like MySQL can have these set up to happen automatically.
 
 ## 10. Calculating New Values (if time)
@@ -410,27 +417,82 @@ UPDATE Survey SET person = 'unknown' WHERE person IS NULL;
     - `SELECT taken, reading FROM Survey WHERE person != 'roe' AND quant = 'sal' UNION SELECT taken , reading / 100 FROM Survey WHERE person='roe' AND quant='sal';`
 
 
-## 10. Programming with Databases in R (30 minutes)
+## 11. Programming with Databases in R (30 minutes)
 - We can actually run SQL queries in R
 
 ### Setup
 - Let's copy the survey.db database to our R Project folder & open our project
-- Make a new R script Database.R (note: dropbox link)
+- Make a new R script Database.R (**note**: dropbox link)
 - We need to install and load some libraries
   - `install.packages("RSQLite")`
   - `library(RSQLite) library(dplyr)`
 
 ### Connecting & Simple Functions
 - In order to use R functions with a database, we need to make a connection and save it
-  - con <- dbConnect(SQLite(), "survey.db")
+  - `conn <- dbConnect(drv = SQLite(), dbname = "data/survey.db")`
+    - Note: other databases (MySQL) often require a username and password as well
   - Now, the connection info is stored in the variable con
 - We can get some simple information
-  - List tables: `dbListTables(con)`
-  - Show fields in a table: `dbListFields(con, "Site")`
-
+  - List tables: `dbListTables(conn)`
+  - Show fields in a table: `dbListFields(conn, "Site")`
 
 ### Executing Queries in R
-- use dbGetQuery()
+- What we really want to do is query our database and get the resulting data into R
+  - `coords <- dbGetQuery(conn, "SELECT lat, long FROM Site;")`
+  - `coords`
+
+***---------- Socrative #10 ----------***: 
+
+Write some R code to execute one of our JOIN queries from earlier, and return the results in R
+
+joined_data <- dbGetQuery(conn, 
+  "SELECT Site.lat, Site.long, Visited.dated
+  FROM Site JOIN Visited
+  ON Site.name = Visited.site;")
+
+
+- An alternative to get an entire table
+  - `person <- dbReadTable(conn, "Person")`
 
 ### Using Databases with dplyr
-- use dplyr
+- Instead of writing queries, we can use dplyr functions to query and filter a database
+  - We use a function called tbl()
+    - `tbl(conn, "Survey")`
+  - We can pipe the results to select and filter
+    - Note: Show output before using collect, to compare
+      - Explain lazy queries   
+    -   <span></span>
+
+        ```
+        tbl(conn, "Survey") %>%
+          select(person, quant, reading) %>%
+          filter(quant == "sal") %>%
+          collect()
+        ```
+    - We could then graph this data:
+    -   <span></span>
+
+        ```
+        tbl(conn, "Survey") %>%
+          select(person, quant, reading) %>%
+          filter(quant == "sal") %>%
+          collect() %>% 
+          sal %>% ggplot(aes(x = person, y = reading)) + 
+            geom_boxplot()
+        ```
+
+### Inserting Data
+- Inserting data: We could add a site using dbSendQuery()
+  - `status <- dbSendQuery(conn, "INSERT INTO Site Values('PK-2', -45, -125);")`
+    - This doesn't return any result, just some status stuff
+    - `status`
+    - `dbClearResult(status)`
+  - And check the result
+    - `dbGetQuery(conn, "SELECT * FROM Site;")`
+- Or we could just store a whole table into the database
+  - `dbWriteTable(conn, name = "iris", value = iris, row.names = FALSE)`
+  - `dbGetQuery(conn, "SELECT * FROM iris;") %>% head()`
+
+### Disconnect the database
+- We need to release the database when we're done
+  - `dbDisconnect(conn)`

@@ -35,6 +35,12 @@
 <li>In your browser (non IE), go to http://localhost:3333</li>
 <li>Download data files from the course website and save to your desktop.</li>
 <li>Make sure someone is recording commands in the Etherpad (no log)</li>
+<li>Setup for DB BRowser
+<ul>
+<li>1024 x 768 resolution</li>
+<li>Data browser font size to 14</li>
+<li>SQL editor and log font size to 16</li>
+</ul></li>
 </ul>
 <h3 id="open-up-socrative-again">Open up Socrative again</h3>
 <ul>
@@ -199,25 +205,23 @@
 <li>SQL is case-insensitive. We could write <code>select PERSONAL, family From Person;</code></li>
 <li>Convention is to keep SQL commands in all caps, to differentiate, easier to read</li>
 </ul></li>
-<li>Rows and columns in a database aren’t stored in any particular order, so we can control that
+<li>Records and fields in a database aren’t stored in any particular order, so we can control that
 <ul>
-<li>Example, swap columns <code>SELECT family, personal FROM Person;</code></li>
+<li>Example, swap fields <code>SELECT family, personal FROM Person;</code></li>
 </ul></li>
-<li>As a shortcut, we can use * as a wildcard for “all columns”
+<li>As a shortcut, we can use * as a wildcard for “all fields”
 <ul>
 <li><code>SELECT * FROM Person;</code></li>
 </ul></li>
-<li>We could even select a column multiple times:
+<li>We could even select a field multiple times:
 <ul>
 <li><code>SELECT id, id FROM Person;</code></li>
 </ul></li>
 </ul></li>
 </ul>
 <p><strong><em>———- Socrative #3 ———-</em></strong>: person, quant, reading from Survey</p>
-<ul>
-<li>Write a query that displays the person, quant, and reading columns from the Survey table</li>
-<li>SELECT person, quant, reading FROM Survey;</li>
-</ul>
+<p>Write a query that displays the person, quant, and reading fields from the Survey table</p>
+<p>SELECT person, quant, reading FROM Survey;</p>
 <h2 id="sorting-data-3-minutes">4. Sorting Data (3 minutes)</h2>
 <ul>
 <li>It’s often useful to sort the output of our query</li>
@@ -235,7 +239,7 @@
 </ul></li>
 <li>We can make things clearer with <code>ASC</code></li>
 </ul></li>
-<li>We can order by multiple columns
+<li>We can order by multiple fields
 <ul>
 <li><code>SELECT person, quant, reading FROM Survey ORDER BY person ASC, reading DESC;</code></li>
 </ul></li>
@@ -248,7 +252,7 @@
 <li><code>SELECT * FROM Visited;</code></li>
 <li><code>SELECT * FROM Visited WHERE site = 'DR-1';</code>
 <ul>
-<li>Now, the database is checking which rows match the WHERE clause, and then checking which columns we want</li>
+<li>Now, the database is checking which records match the WHERE clause, and then checking which fields we want</li>
 </ul></li>
 </ul></li>
 <li>We can use multiple filters in the WHERE clause: DR-1 before 1930
@@ -294,12 +298,12 @@
 <ul>
 <li><code>SELECT DISTINCT person, quant FROM Survey WHERE person = 'lake' OR person = 'roe';</code>
 <ul>
-<li>Note: only unique for those chosen columns, not entire rows.</li>
+<li>Note: only unique for those chosen fields, not entire records.</li>
 </ul></li>
 </ul></li>
 </ul>
 <h4 id="minutes-1">63 minutes</h4>
-<h2 id="missing-data-8-minutes">6. Missing Data (8 minutes)</h2>
+<h2 id="missing-data-8-minutes-skipabbreviate-if-after-2-pm">6. Missing Data (8 minutes) SKIP/Abbreviate if after 2 PM</h2>
 <ul>
 <li>With real-world data, it’s common to have missing data</li>
 <li>Let’s take a look at the Visited table
@@ -348,18 +352,17 @@
 <li>We need an explicit check</li>
 </ul></li>
 </ul></li>
-<li>In some other kinds of databases, you can specify a default value other than NULL for a column
+<li>In some other kinds of databases, you can specify a default value other than NULL for a field
 <ul>
 <li>What might be useful in an R context?</li>
 </ul></li>
 </ul>
 <p><strong><em>———- Socrative #5 ———-</em></strong>: Visted, sorted by date, excluding NULL</p>
-<p>Write a query that sorts the records in Visited by date, excluding entries for which the date is not known<br />
-</p>
+<p>Write a query that sorts the records in Visited by date, excluding entries for which the date is not known</p>
 <p>SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated; (<em>works, but less clear</em>) SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated ASC; (<em>correct, preferred</em>) SELECT * FROM Visited WHERE dated IS NULL ORDER BY dated ASC; SELECT * FROM Visited WHERE dated &gt; ‘1900-01-01’ ORDER BY dated ASC; (<em>works, but less clear</em>)</p>
 <h2 id="combining-data-with-join-12-minutes">7. Combining Data with JOIN (12 minutes)</h2>
 <ul>
-<li>We need to do an analysis and need the data columns <code>latitude, longitude, date, quantity, and reading</code>
+<li>We need to do an analysis and need the data fields <code>latitude, longitude, date, quantity, and reading</code>
 <ul>
 <li>But this data is in multiple tables (lat/long in Site, dates in Visited, and Readings in Survey)
 <ul>
@@ -375,7 +378,7 @@
 <li>Note that we are now using <code>Table.field</code>. Tables can have fields with the same name, so this distinguishes</li>
 </ul></li>
 </ul></li>
-<li>We can now select the columns we actually need and format the SQL nicely
+<li>We can now select the fields we actually need and format the SQL nicely
 <ul>
 <li><p><span></span></p>
 <pre><code>SELECT Site.lat, Site.long, Visited.dated
@@ -396,7 +399,7 @@ AND Visited.dated IS NOT NULL;</code></pre></li>
 <ul>
 <li>In the Sites and Person table, each record has a unique ID, called a Primary Key
 <ul>
-<li>For example, the Person table has an ID column with no duplicates</li>
+<li>For example, the Person table has an ID field with no duplicates</li>
 </ul></li>
 <li>In a table such as Survey, and Visited which refer to data in other tables, we use the same IDs
 <ul>
@@ -404,10 +407,10 @@ AND Visited.dated IS NOT NULL;</code></pre></li>
 </ul></li>
 <li>What we end up doing then is matching a foreign key to a primary key</li>
 </ul></li>
-<li>Good database design gives every table a column to act as a primary key
+<li>Good database design gives every table a field to act as a primary key
 <ul>
 <li>Ideally this should NOT be data, in case data needs to be changed.</li>
-<li>Just have a column numbering the records works well
+<li>Just have a field numbering the records works well
 <ul>
 <li><strong>Why might the last name used in the Person table be a bad Primary Key?</strong></li>
 </ul></li>
@@ -479,7 +482,8 @@ INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
 </ul>
 <p><strong><em>———- Socrative #7 ———-</em></strong>: Make family table with unique ID, names, and age</p>
 <p>Create a table named Family. Make fields for a unique identifier, first and last names, and age. Add a record for yourself, and one for a family member.</p>
-<p>CREATE TABLE Family (id integer, firstname text, lastname text, age integer); INSERT INTO Family VALUES(1, ‘James’, ‘Mickley’, 34); INSERT INTO Family VALUES(2, ‘Peter’, ‘Mickley’, 28);</p>
+<p>– Create the table. id is my unique identifier (a number). age is also a number. The names will be text fields. CREATE TABLE Family (id integer, firstname text, lastname text, age integer);</p>
+<p>– Insert two records INSERT INTO Family VALUES(1, ‘James’, ‘Mickley’, 34); INSERT INTO Family VALUES(2, ‘Peter’, ‘Mickley’, 28);</p>
 <h3 id="exporting-a-database">Exporting a Database</h3>
 <ul>
 <li>We can save a database as an SQL file, which can be shared and imported in another database
@@ -512,16 +516,16 @@ INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
 <li><code>UPDATE Site SET lat = -47.87, long = -122.4 WHERE name = 'MSK-4';</code></li>
 </ul></li>
 </ul>
-<p><strong><em>———- Socrative #8 ———-</em></strong>: Make family table with unique ID, names, and age</p>
+<p><strong><em>———- Socrative #8 ———-</em></strong>: <strong>OPTIONAL</strong></p>
 <p>We want to change the first salinity value in the Survey table to be 0.5. What happens when we run the following query?</p>
 <p>UPDATE Survey SET reading = 0.5 WHERE quant = ‘sal’;</p>
 <p>It works just as we expected and changes the first salinity value to 0.5 We get an error It changes all the salinity values to 0.5</p>
-<p><strong><em>———- Socrative #9 ———-</em></strong>:</p>
+<p><strong><em>———- Socrative #9 ———-</em></strong>: <strong>OPTIONAL</strong></p>
 <p>Write a SQL query to replace all the NULL cells in Survey.person with the string ‘unknown’</p>
 <p>UPDATE Survey SET person = ‘unknown’ WHERE person IS NULL;</p>
 <h3 id="delete">DELETE</h3>
 <ul>
-<li>To delete rows, we use DELETE FROM. We can delete Frank Danforth from the Person table, he has no data
+<li>To delete records, we use DELETE FROM. We can delete Frank Danforth from the Person table, he has no data
 <ul>
 <li><code>DELETE FROM Person WHERE id = 'danforth';</code></li>
 </ul></li>
@@ -536,6 +540,7 @@ INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
 <ul>
 <li>Delete all the lake data records first (cascading delete)</li>
 <li>Prevent the deletion of a record that is referenced by other tables (restrict)</li>
+<li>Just delete the record in Person, which will probably break things (no action)</li>
 <li>Other databases like MySQL can have these set up to happen automatically.</li>
 </ul></li>
 </ul></li>
@@ -553,14 +558,14 @@ INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
 <li><code>SELECT taken, reading FROM Survey WHERE person != 'roe' AND quant = 'sal' UNION SELECT taken , reading / 100 FROM Survey WHERE person='roe' AND quant='sal';</code></li>
 </ul></li>
 </ul>
-<h2 id="programming-with-databases-in-r-30-minutes">10. Programming with Databases in R (30 minutes)</h2>
+<h2 id="programming-with-databases-in-r-30-minutes">11. Programming with Databases in R (30 minutes)</h2>
 <ul>
 <li>We can actually run SQL queries in R</li>
 </ul>
 <h3 id="setup">Setup</h3>
 <ul>
 <li>Let’s copy the survey.db database to our R Project folder &amp; open our project</li>
-<li>Make a new R script Database.R (note: dropbox link)</li>
+<li>Make a new R script Database.R (<strong>note</strong>: dropbox link)</li>
 <li>We need to install and load some libraries
 <ul>
 <li><code>install.packages(&quot;RSQLite&quot;)</code></li>
@@ -571,22 +576,93 @@ INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
 <ul>
 <li>In order to use R functions with a database, we need to make a connection and save it
 <ul>
-<li>con &lt;- dbConnect(SQLite(), “survey.db”)</li>
+<li><code>conn &lt;- dbConnect(drv = SQLite(), dbname = &quot;data/survey.db&quot;)</code>
+<ul>
+<li>Note: other databases (MySQL) often require a username and password as well</li>
+</ul></li>
 <li>Now, the connection info is stored in the variable con</li>
 </ul></li>
 <li>We can get some simple information
 <ul>
-<li>List tables: <code>dbListTables(con)</code></li>
-<li>Show fields in a table: <code>dbListFields(con, &quot;Site&quot;)</code></li>
+<li>List tables: <code>dbListTables(conn)</code></li>
+<li>Show fields in a table: <code>dbListFields(conn, &quot;Site&quot;)</code></li>
 </ul></li>
 </ul>
 <h3 id="executing-queries-in-r">Executing Queries in R</h3>
 <ul>
-<li>use dbGetQuery()</li>
+<li>What we really want to do is query our database and get the resulting data into R
+<ul>
+<li><code>coords &lt;- dbGetQuery(conn, &quot;SELECT lat, long FROM Site;&quot;)</code></li>
+<li><code>coords</code></li>
+</ul></li>
+</ul>
+<p><strong><em>———- Socrative #10 ———-</em></strong>:</p>
+<p>Write some R code to execute one of our JOIN queries from earlier, and return the results in R</p>
+<p>joined_data &lt;- dbGetQuery(conn, “SELECT Site.lat, Site.long, Visited.dated FROM Site JOIN Visited ON Site.name = Visited.site;”)</p>
+<ul>
+<li>An alternative to get an entire table
+<ul>
+<li><code>person &lt;- dbReadTable(conn, &quot;Person&quot;)</code></li>
+</ul></li>
 </ul>
 <h3 id="using-databases-with-dplyr">Using Databases with dplyr</h3>
 <ul>
-<li>use dplyr</li>
+<li>Instead of writing queries, we can use dplyr functions to query and filter a database
+<ul>
+<li>We use a function called tbl()
+<ul>
+<li><code>tbl(conn, &quot;Survey&quot;)</code></li>
+</ul></li>
+<li>We can pipe the results to select and filter
+<ul>
+<li>Note: Show output before using collect, to compare
+<ul>
+<li>Explain lazy queries<br />
+</li>
+</ul></li>
+<li><p><span></span></p>
+<pre><code>tbl(conn, &quot;Survey&quot;) %&gt;%
+  select(person, quant, reading) %&gt;%
+  filter(quant == &quot;sal&quot;) %&gt;%
+  collect()</code></pre></li>
+<li>We could then graph this data:</li>
+<li><p><span></span></p>
+<pre><code>tbl(conn, &quot;Survey&quot;) %&gt;%
+  select(person, quant, reading) %&gt;%
+  filter(quant == &quot;sal&quot;) %&gt;%
+  collect() %&gt;% 
+  sal %&gt;% ggplot(aes(x = person, y = reading)) + 
+    geom_boxplot()</code></pre></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="inserting-data">Inserting Data</h3>
+<ul>
+<li>Inserting data: We could add a site using dbSendQuery()
+<ul>
+<li><code>status &lt;- dbSendQuery(conn, &quot;INSERT INTO Site Values('PK-2', -45, -125);&quot;)</code>
+<ul>
+<li>This doesn’t return any result, just some status stuff</li>
+<li><code>status</code></li>
+<li><code>dbClearResult(status)</code></li>
+</ul></li>
+<li>And check the result
+<ul>
+<li><code>dbGetQuery(conn, &quot;SELECT * FROM Site;&quot;)</code></li>
+</ul></li>
+</ul></li>
+<li>Or we could just store a whole table into the database
+<ul>
+<li><code>dbWriteTable(conn, name = &quot;iris&quot;, value = iris, row.names = FALSE)</code></li>
+<li><code>dbGetQuery(conn, &quot;SELECT * FROM iris;&quot;) %&gt;% head()</code></li>
+</ul></li>
+</ul>
+<h3 id="disconnect-the-database">Disconnect the database</h3>
+<ul>
+<li>We need to release the database when we’re done
+<ul>
+<li><code>dbDisconnect(conn)</code></li>
+</ul></li>
 </ul>
 </body>
 </html>
