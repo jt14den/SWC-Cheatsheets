@@ -384,10 +384,26 @@ We get an error
 It changes all the salinity values to 0.5
 
 
-### DELETE
-- 
+***---------- Socrative #9 ----------***: 
 
-## Calculating New Values (if time)
+Write a SQL query to replace all the NULL cells in Survey.person with the string 'unknown'
+
+UPDATE Survey SET person = 'unknown' WHERE person IS NULL;
+
+
+### DELETE
+- To delete rows, we use DELETE FROM.  We can delete Frank Danforth from the Person table, he has no data
+  - `DELETE FROM Person WHERE id = 'danforth';`
+- What problems might we have if we try to delete Anderson Lake instead?
+  - Our Survey table would still contain records of measurements he'd taken, but a JOIN wouldn't work anymore because lake doesn't exist
+    - That's a big problem with relational databases! It's called referential integrity
+      - Before we delete something, we need to ensure that all references between tables can be resolved
+      - A few options
+        - Delete all the lake data records first (cascading delete)
+        - Prevent the deletion of a record that is referenced by other tables (restrict)
+        - Other databases like MySQL can have these set up to happen automatically.
+
+## 10. Calculating New Values (if time)
   - Fix Roerich salinity readings (collected as percentages)
     - `SELECT taken, reading / 100 FROM Survey WHERE person='roe' AND quant='sal';`
   - Use UNION to combine with everyone else's
@@ -396,11 +412,15 @@ It changes all the salinity values to 0.5
 
 ## 10. Programming with Databases in R (30 minutes)
 - We can actually run SQL queries in R
+
+### Setup
 - Let's copy the survey.db database to our R Project folder & open our project
 - Make a new R script Database.R (note: dropbox link)
 - We need to install and load some libraries
   - `install.packages("RSQLite")`
   - `library(RSQLite) library(dplyr)`
+
+### Connecting & Simple Functions
 - In order to use R functions with a database, we need to make a connection and save it
   - con <- dbConnect(SQLite(), "survey.db")
   - Now, the connection info is stored in the variable con
@@ -409,20 +429,8 @@ It changes all the salinity values to 0.5
   - Show fields in a table: `dbListFields(con, "Site")`
 
 
-
+### Executing Queries in R
 - use dbGetQuery()
+
+### Using Databases with dplyr
 - use dplyr
-
-
-
-## 1. Module 1
-#### Subheading 
-
-- Showing a code command
-  - `plot(0)`
-
-## 2. Module 2
-
-
-
-***---------- Socrative #1 ----------***
