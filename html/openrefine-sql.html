@@ -382,7 +382,7 @@
 FROM Site JOIN Visited
 ON Site.name = Visited.site;</code></pre></li>
 </ul></li>
-<li>We can do more than one JOIN at once
+<li>We can do more than one JOIN at once to get the data we want
 <ul>
 <li><p><span></span></p>
 <pre><code>SELECT Site.lat, Site.long, Visited.dated, Survey.quant, Survey.reading
@@ -391,6 +391,7 @@ ON Site.name = Visited.site
 AND Visited.id = Survey.taken
 AND Visited.dated IS NOT NULL;</code></pre></li>
 </ul></li>
+<li><p>And now we can export the output of that SQL command to CSV (button)</p></li>
 <li>The reason we can do this is because this database was carefully set up
 <ul>
 <li>In the Sites and Person table, each record has a unique ID, called a Primary Key
@@ -438,20 +439,110 @@ AND Visited.dated IS NOT NULL;</code></pre></li>
 </ul></li>
 </ul></li>
 </ul>
-<h2 id="creating-databases-minutes">8. Creating Databases ( minutes)</h2>
+<h2 id="creating-databases-15-minutes">8. Creating Databases (15 minutes)</h2>
 <ul>
-<li>Create Table</li>
-<li>Drop Table</li>
-<li>Data Types</li>
-<li>Foreign Keys</li>
+<li>Let’s recreate the Site table</li>
 </ul>
-<h2 id="modifying-data-minutes">9. Modifying Data ( minutes)</h2>
+<h3 id="drop-table">DROP TABLE</h3>
 <ul>
-<li>UPDATE</li>
-<li>INSERT</li>
-<li>DELETE</li>
+<li>First, we drop the old table
+<ul>
+<li><code>DROP TABLE Site;</code>
+<ul>
+<li>BE CAREFUL WITH THIS! You can lose data!</li>
+</ul></li>
+</ul></li>
 </ul>
-<h2 id="calculating-new-values-if-time">Calculating New Values (if time)</h2>
+<h3 id="create-table">CREATE TABLE</h3>
+<ul>
+<li><code>CREATE TABLE Site (name text, lat real, long real);</code></li>
+<li>Now we have the table back, but it is empty</li>
+</ul>
+<h3 id="data-types">Data Types</h3>
+<ul>
+<li>Note that after the field names there’s an additional qualifier (e.g. text)</li>
+<li>This is the data type</li>
+<li>SQLite only has a few: text, real (for decimals), integer, blob (binary data like an image)
+<ul>
+<li>Many other databases have additional types for true/false, date, time, and more number/text types</li>
+</ul></li>
+</ul>
+<h3 id="insert-data">Insert Data</h3>
+<ul>
+<li>We can add data back by writing INSERT INTO queries
+<ul>
+<li><p><span></span></p>
+<pre><code>INSERT INTO Site VALUES(&#39;DR-1&#39;, -49.85, -128.57);
+INSERT INTO Site VALUES(&#39;DR-3&#39;, -47.15, -126.72);
+INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
+</ul></li>
+</ul>
+<p><strong><em>———- Socrative #7 ———-</em></strong>: Make family table with unique ID, names, and age</p>
+<p>Create a table named Family. Make fields for a unique identifier, first and last names, and age. Add a record for yourself, and one for a family member.</p>
+<p>CREATE TABLE Family (id integer, firstname text, lastname text, age integer); INSERT INTO Family VALUES(1, ‘James’, ‘Mickley’, 34); INSERT INTO Family VALUES(2, ‘Peter’, ‘Mickley’, 28);</p>
+<h3 id="exporting-a-database">Exporting a Database</h3>
+<ul>
+<li>We can save a database as an SQL file, which can be shared and imported in another database
+<ul>
+<li>Also works well with Git</li>
+</ul></li>
+<li><code>File &gt; Export &gt; SQL File</code></li>
+<li>Let’s take a look
+<ul>
+<li>Notice the <code>IF NOT EXISTS</code>, This is a precaution to prevent overwriting tables that are already there</li>
+</ul></li>
+</ul>
+<h3 id="importing-a-csv">Importing a CSV</h3>
+<ul>
+<li>We could also import a CSV File, such as our burlap trap data
+<ul>
+<li><code>File &gt; Import &gt; CSV</code></li>
+</ul></li>
+<li>This works, but the data types are conservative: all text, no NULLS</li>
+</ul>
+<h2 id="modifying-data-10-minutes">9. Modifying Data (10 minutes)</h2>
+<ul>
+<li>In addition to inserting data, we can also modify or remove data that is already there</li>
+</ul>
+<h3 id="update">UPDATE</h3>
+<ul>
+<li>We can modify using the UPDATE command</li>
+<li>Let’s say we found that our MSK-4 site had the wrong lat/long, off by one degree
+<ul>
+<li><code>UPDATE Site SET lat = -47.87, long = -122.4 WHERE name = 'MSK-4';</code></li>
+</ul></li>
+</ul>
+<p><strong><em>———- Socrative #8 ———-</em></strong>: Make family table with unique ID, names, and age</p>
+<p>We want to change the first salinity value in the Survey table to be 0.5. What happens when we run the following query?</p>
+<p>UPDATE Survey SET reading = 0.5 WHERE quant = ‘sal’;</p>
+<p>It works just as we expected and changes the first salinity value to 0.5 We get an error It changes all the salinity values to 0.5</p>
+<p><strong><em>———- Socrative #9 ———-</em></strong>:</p>
+<p>Write a SQL query to replace all the NULL cells in Survey.person with the string ‘unknown’</p>
+<p>UPDATE Survey SET person = ‘unknown’ WHERE person IS NULL;</p>
+<h3 id="delete">DELETE</h3>
+<ul>
+<li>To delete rows, we use DELETE FROM. We can delete Frank Danforth from the Person table, he has no data
+<ul>
+<li><code>DELETE FROM Person WHERE id = 'danforth';</code></li>
+</ul></li>
+<li>What problems might we have if we try to delete Anderson Lake instead?
+<ul>
+<li>Our Survey table would still contain records of measurements he’d taken, but a JOIN wouldn’t work anymore because lake doesn’t exist
+<ul>
+<li>That’s a big problem with relational databases! It’s called referential integrity
+<ul>
+<li>Before we delete something, we need to ensure that all references between tables can be resolved</li>
+<li>A few options
+<ul>
+<li>Delete all the lake data records first (cascading delete)</li>
+<li>Prevent the deletion of a record that is referenced by other tables (restrict)</li>
+<li>Other databases like MySQL can have these set up to happen automatically.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="calculating-new-values-if-time">10. Calculating New Values (if time)</h2>
 <ul>
 <li>Fix Roerich salinity readings (collected as percentages)
 <ul>
@@ -465,6 +556,9 @@ AND Visited.dated IS NOT NULL;</code></pre></li>
 <h2 id="programming-with-databases-in-r-30-minutes">10. Programming with Databases in R (30 minutes)</h2>
 <ul>
 <li>We can actually run SQL queries in R</li>
+</ul>
+<h3 id="setup">Setup</h3>
+<ul>
 <li>Let’s copy the survey.db database to our R Project folder &amp; open our project</li>
 <li>Make a new R script Database.R (note: dropbox link)</li>
 <li>We need to install and load some libraries
@@ -472,6 +566,9 @@ AND Visited.dated IS NOT NULL;</code></pre></li>
 <li><code>install.packages(&quot;RSQLite&quot;)</code></li>
 <li><code>library(RSQLite) library(dplyr)</code></li>
 </ul></li>
+</ul>
+<h3 id="connecting-simple-functions">Connecting &amp; Simple Functions</h3>
+<ul>
 <li>In order to use R functions with a database, we need to make a connection and save it
 <ul>
 <li>con &lt;- dbConnect(SQLite(), “survey.db”)</li>
@@ -482,18 +579,14 @@ AND Visited.dated IS NOT NULL;</code></pre></li>
 <li>List tables: <code>dbListTables(con)</code></li>
 <li>Show fields in a table: <code>dbListFields(con, &quot;Site&quot;)</code></li>
 </ul></li>
+</ul>
+<h3 id="executing-queries-in-r">Executing Queries in R</h3>
+<ul>
 <li>use dbGetQuery()</li>
+</ul>
+<h3 id="using-databases-with-dplyr">Using Databases with dplyr</h3>
+<ul>
 <li>use dplyr</li>
 </ul>
-<h2 id="module-1">1. Module 1</h2>
-<h4 id="subheading">Subheading</h4>
-<ul>
-<li>Showing a code command
-<ul>
-<li><code>plot(0)</code></li>
-</ul></li>
-</ul>
-<h2 id="module-2">2. Module 2</h2>
-<p><strong><em>———- Socrative #1 ———-</em></strong></p>
 </body>
 </html>
