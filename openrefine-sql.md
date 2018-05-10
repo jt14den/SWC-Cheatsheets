@@ -6,10 +6,13 @@ subtitle: OpenRefine and SQL
 ## Pre-Workshop Setup ##
 - Start OpenRefine
 	- Windows: Go to folder you downloaded it to and click on openrefine.exe
+    - If OpenRefine doesn't run, install JDK & JRE, add JAVA_HOME and JDK_HOME to environment.
 	- Linux: In terminal, go to folder you downloaded it to and type ./refine
 	- Mac: Click on OpenRefine app in Applications folder
-- Make sure openrefine interface is open in browser.  If not go to http://127.0.0.1:3333
+    - Need to allow OpenRefine to run by "Allow Everything" in Settings > Security
+- In your browser (non IE), go to http://localhost:3333
 - Download data files from the course website and save to your desktop.
+- Make sure someone is recording commands in the Etherpad (no log)
 
 ### Open up Socrative again ###
 - You can import my quiz with **<Socrative code>**
@@ -33,17 +36,16 @@ OpenRefine is a cleaning tool, originally made by Google.  There are other ways 
 - Check to make sure columns look right.
 	- Get an idea of problems: missing data, data not filled in, note column
 - OpenRefine can work with lots of different types of data: Excel, TSV, etc.
-- Switch to rows mode, and show 50 rows at a time. (Records groups rows with the same data in the first row)
-
+- `Switch to rows mode`, and show 50 rows at a time. (Records groups rows with the same data in the first row)
 
 ### Text Facets (8 minutes)
   - Groups rows with the same value for that column
-  - Lets you filter and edit many rows at once.
+  - Lets you filter your data and edit many rows at once.
   - `Facet > Text Facet for Tree Species`
   	- Bulk Editing: `Edit White PIne`
   	- Subsetting: `Include White oak`
-  	- Edit individual cell (mouseover)
-  	- Include multiple tree species (Maples)
+  	- `Edit cell` (mouseover)
+  	- `Include` multiple tree species (Maples)
   	- `Invert selection` (all except Maples)
   - Flagging: Flag "Red oak (?)" `Edit Rows > Flag Rows`
 
@@ -53,7 +55,7 @@ OpenRefine is a cleaning tool, originally made by Google.  There are other ways 
 ### Undo/Redo (1 minute)
 - The history of everything you do gets saved.
 - You can undo things with `Undo/Redo`, and you can also save that history to play back (`Extract`).  You could also export the history and track with Git.
-- Lets undo the changes we made to the Direction column
+- Lets `undo the changes` we made to the Direction column
 
 ### Transforming Columns (5 minutes)
 - Instead of editing subsets, we can make changes to a whole column
@@ -63,57 +65,291 @@ OpenRefine is a cleaning tool, originally made by Google.  There are other ways 
 - Now, lets address the blanks in the data: `Edit Cells > Fill Down`
 - Splitting Columns: `Site > Edit Column > Split into several columns`
 
-#### Transforming Challenge: Trim whitespace from all columns, and fill down date, Site, and Vegeplot
+#### Transforming Challenge: 
+- Trim whitespace from all columns, and fill down date, Site, and Vegeplot
 
 ### Numeric Facets (5 minutes)
-- Before doing numeric facets, we need to make a column numeric: `Edit Cells > Transform > To Number`
-- Let's make a numeric facet of # egg masses
+- Before doing numeric facets, we need to make a column numeric: 
+  - `Edit Cells > Transform > To Number`
+- Let's make a `numeric facet of # egg masses`
   - Let's look at the non-numeric data and fix it
   - Let's look at the blank data and flag it
   - We can also look for numeric outliers
 
-***---------- Socrative #1 ----------***
+***---------- Socrative #1 ----------***: Clean up DBH, any outliers?
+
 - Use a Numeric Facet to clean up the data in the DBH column.  This is the diameter of the trees.  
 - Are there any outliers that might represent mistakes?
-	- True (*correct*)
-	- False 
-***---------- Socrative #1 ----------***
+  - True (*correct*)
+  - False 
 
 ### Stacking Facets (5 minutes)
 - So far, we've only been working with one facet at a time.  You can also stack facets
 - Let's say that on May 23rd, a student confused Beech Trees for Red Oaks
-	- Facet by Date, then by Tree species
-	- Display, then edit the Beech Trees
+	- `Facet by Date, then by Tree Species`
+	- Include, then edit the Beech Tree
 
-***---------- Socrative #2 ----------***
+***---------- Socrative #2 ----------***: # Black Oaks > 40 cm DBH @ BS_GCL
+
 - How many Black Oak trees are at site BS_GCL that are over 40 cm DBH?
-	- 5 (black oaks @ site)
-	- 2 (*correct*)
-	- 27 (total black oaks)
-	- 10 (black oaks over 40 cm)
-***---------- Socrative #1 ----------***
+  - 5 (black oaks @ site)
+  - 2 (*correct*)
+  - 27 (total black oaks)
+  - 10 (black oaks over 40 cm)
 
 ### Exporting (1 minute)
-- Click on export to save a csv of your cleaned data.
+- Click on `Export` to save a CSV of your cleaned data.
 - You could also export the entire project to send to someone else.
 
 ### Help (1 minute)
 - Notice the `Help` button.  This takes you to a wiki.  There is even a simple programming language GREL
+- Also some great tutorial videos (Delete all facets and there is a link)
 
-## Databases
-- Databases are similar to Excel in many ways, but built for searching.
-- Workbook = database, worksheet = table, column = field, and row = row.
+#### 30 minutes #####
+
+----------------------------------------
+
+
+## 2. Intro To Relational Databases (5 minutes)
+- Databases are similar to Excel in many ways, but built for searching
+- The relational aspect means that columns in separate tables can be linked (more later)
 	
-#### Why use a database instead of Excel?
-- Designed for large datasets (potentially millions of rows).
-- Enforces data types: one column, one kind of data
+### Why use a database instead of Excel?
+- Designed for large datasets (potentially millions of rows), still fast
+- Improves quality control, by enforcing data types: one column, one kind of data
 - Avoid duplicating data, e.g. species names: makes it easier to change/maintain, less space
 - Easier to search for subsets of data
+- Less likely to accidentally modify data
 
-## 2. Selecting Data
+### Lots of Different types of databases
+- MS Access, Filemaker Pro, MySQL, etc.
+- We'll be using SQLite, but the concepts are mostly the same.
+  - They all use SQL = Structured Query Language
+
+### Exploring in DB Browser (2 minutes)
+- `Open DB Browser`
+- Click `Open Database` and find our survey.db file
+- Workbook = database, worksheet = table, column = field, and row = record
+- Expand the person table and show the fields: field name and data type
+  - Click on Browse Data tab to see the table, very similar to Excel
+  - Browse the other tables to see what we have.
+  - Notice there are some values missing (shown with NULL)
 
 
-## 3. 
+## 3. Selecting Data with SELECT (8 minutes)
+- Lets write an SQL query (search term) to display the scientists' names
+  - Click on `Execute SQL`
+  - We can make comments using `--`
+  - Type `SELECT personal, family FROM Person;` and click the Run button to run the selected line
+    - The semicolon marks the end of our query
+    - SQL is case-insensitive.  We could write `select PERSONAL, family From Person;`
+    - Convention is to keep SQL commands in all caps, to differentiate, easier to read
+  - Rows and columns in a database aren't stored in any particular order, so we can control that
+    - Example, swap columns `SELECT family, personal FROM Person;`
+  - As a shortcut, we can use * as a wildcard for "all columns"
+    - `SELECT * FROM Person;`
+  - We could even select a column multiple times:
+    - `SELECT id, id FROM Person;`
+
+***---------- Socrative #3 ----------***: person, quant, reading from Survey
+
+- Write a query that displays the person, quant, and reading columns from the Survey table
+- SELECT person, quant, reading FROM Survey;
+
+
+## 4. Sorting Data (3 minutes)
+- It's often useful to sort the output of our query
+- We can do this with `ORDER BY`
+  - `SELECT * FROM Person ORDER BY id;`
+    - This sorts in Ascending order by default.  We could do descending
+  - `SELECT * FROM Person ORDER BY id DESC;`
+  - NOTE: It may look like records are in a certain order without sorting
+    - Only because that's the order the data were imported in
+    - Any modifications could easily affect that order
+  - We can make things clearer with `ASC`
+- We can order by multiple columns
+  - `SELECT person, quant, reading FROM Survey ORDER BY person ASC, reading DESC;`
+
+
+## 5. Filtering with WHERE (15 minutes)
+- A very useful database feature is the ability to quickly filter data, even with large datasets
+- We do this by adding a WHERE clause to our SELECT query
+  - `SELECT * FROM Visited;`
+  - `SELECT * FROM Visited WHERE site = 'DR-1';`
+    - Now, the database is checking which rows match the WHERE clause, and then checking which columns we want
+- We can use multiple filters in the WHERE clause: DR-1 before 1930
+  - `SELECT * FROM Visited WHERE site = 'DR-1' AND dated < '1930-01-01';`
+    - **Sidenote:** This query only works because YYYY-MM-DD HH:MM:SS dates allows sorting.  MySQL and other databases have data types specifically for dates to help with this.
+- Find out what measurements were taken by either Lake or Roerich using OR
+  - `SELECT * FROM Survey WHERE person = 'lake' OR person = 'roe';`
+- Alternatively, we can use IN, to see if a value is in a specific list
+  - `SELECT * FROM Survey WHERE person IN ('lake', 'roe');`
+- We can combine AND and OR, but need to be careful
+  - `SELECT * FROM Survey WHERE quant = 'sal' AND person = 'lake' OR person = 'roe';`
+    - Gives us salinity by lake and everything by Roerich
+  - Use parentheses to enforce order of operations
+    - SELECT * FROM Survey WHERE quant='sal' AND (person='lake' OR person='roe');
+
+***---------- Socrative #4 ----------***: normalized salinity outliers ouside of [0.0, 1.0]
+
+Normalized salinity readings are supposed to be between 0.0 and 1.0.  Which query will select all records from Survey with salinity values that are not normalized?
+
+SELECT * FROM Survey WHERE quant='sal' AND reading > 1.0 OR reading < 0.0;
+SELECT * FROM Survey WHERE quant='sal' AND (reading > 1.0 AND reading < 0.0);
+SELECT * FROM Survey WHERE quant='sal' AND (reading > 1.0 OR reading < 0.0); (*correct*)
+SELECT * FROM Survey WHERE quant='sal' OR (reading > 1.0 AND reading < 0.0);
+
+- We can also find partial matches with LIKE
+  - `SELECT * FROM Visited WHERE site LIKE 'DR%' ORDER BY site ASC;`
+    - Gives us all the sites that start with DR
+    - The percent symbol is a wildcard, matches any characters.  Use anywhere in a string.
+- Or,we could use DISTINCT to show unique values
+  - `SELECT DISTINCT person, quant FROM Survey WHERE person = 'lake' OR person = 'roe';`
+    - Note: only unique for those chosen columns, not entire rows.
+
+#### 63 minutes #####
+
+## 6. Missing Data (8 minutes)
+- With real-world data, it's common to have missing data
+- Let's take a look at the Visited table
+  - `SELECT * FROM Visited;`
+  - There's a row without a date, where it says NULL
+    - NULL means "nothing here".  It's not zero or false, or an empty string.
+- NULL doesn't behave like other values
+  - Select records before 1930 again: 
+    - `SELECT * FROM Visited WHERE dated < '1930-01-01';`
+  - And after 1930:
+    - `SELECT * FROM Visited WHERE dated >= '1930-01-01';`
+  - Neither gives us the NULL row.
+    - A comparison operator like > with a NULL value is neither true nor false
+      - Just "we don't know"
+  - Even checking if it equals NULL doesn't work, looks for a string "NULL" (which isn't NULL)
+    - `SELECT * FROM Visited WHERE dated = NULL;`
+  - We need to use a special test
+    - `SELECT * FROM Visited WHERE dated IS NULL;`
+    - or inverse `SELECT * FROM Visited WHERE dated IS NOT NULL;`
+- This can cause headaches.  Example: salinity measurements not by Lake:
+  - `SELECT * FROM Survey WHERE quant = 'sal' AND person != 'lake';` doesn't work
+    - Note: `!=` means "not equal to"
+  - `SELECT * FROM Survey WHERE quant='sal' AND (person != 'lake' OR person IS NULL);`
+    - We need an explicit check
+- In some other kinds of databases, you can specify a default value other than NULL for a column
+  - What might be useful in an R context?
+
+***---------- Socrative #5 ----------***: Visted, sorted by date, excluding NULL
+
+Write a query that sorts the records in Visited by date, excluding entries for which the date is not known\
+
+SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated; (*works, but less clear*)
+SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated ASC; (*correct, preferred*)
+SELECT * FROM Visited WHERE dated IS NULL ORDER BY dated ASC;
+SELECT * FROM Visited WHERE dated > '1900-01-01' ORDER BY dated ASC; (*works, but less clear*)
+
+
+## 7. Combining Data with JOIN (12 minutes)
+- We need to do an analysis and need the data columns `latitude, longitude, date, quantity, and reading`
+  - But this data is in multiple tables (lat/long in Site, dates in Visited, and Readings in Survey)
+    - Show figure
+    - We did it this way to make it easier to manage (eg. change a site's lat/long only once)
+- We can combine data from multiple tables with JOIN
+  - `SELECT * FROM Site JOIN Visited ON Site.name = Visited.site;`
+    - The ON part tells SQL to match the name field in the sites table with the site field in the Visited table
+    - Note that we are now using `Table.field`.  Tables can have fields with the same name, so this distinguishes
+- We can now select the columns we actually need and format the SQL nicely
+  -   <span></span>
+
+      ```
+      SELECT Site.lat, Site.long, Visited.dated
+      FROM Site JOIN Visited
+      ON Site.name = Visited.site;
+      ```
+
+- We can do more than one JOIN at once
+  -   <span></span>
+
+      ```
+      SELECT Site.lat, Site.long, Visited.dated, Survey.quant, Survey.reading
+      FROM Site JOIN Visited JOIN Survey
+      ON Site.name = Visited.site
+      AND Visited.id = Survey.taken
+      AND Visited.dated IS NOT NULL;
+      ```
+
+- The reason we can do this is because this database was carefully set up
+  - In the Sites and Person table, each record has a unique ID, called a Primary Key
+    - For example, the Person table has an ID column with no duplicates
+  - In a table such as Survey, and Visited which refer to data in other tables, we use the same IDs
+    - In this case they are called Foreign Keys: they refer to data in other tables.
+  - What we end up doing then is matching a foreign key to a primary key
+- Good database design gives every table a column to act as a primary key
+  - Ideally this should NOT be data, in case data needs to be changed. 
+  - Just have a column numbering the records works well
+    - **Why might the last name used in the Person table be a bad Primary Key?**
+
+***---------- Socrative #6 ----------***: Site name and salinity readings
+
+Write a query that lists all the salinity readings along with the site names they were collected at
+
+SELECT Site.name, Survey.reading 
+FROM Site JOIN Visited JOIN Survey 
+ON Site.name = Visited.site
+AND Visited.id = Survey.taken
+WHERE Survey.quant = "sal";
+
+
+#### 90 minutes: BREAK #####
+
+
+## 8. Data Hygiene (4 minutes)
+- **Rule 1:** Fields shouldn't have multiple pieces of data**
+  - If we stored the full name in a field, it would be hard to pull out all the Franks
+- **Rule 2: Every record should have a unique primary key**
+  - A unique number with no meaining is good
+  - If you remember back to our OpenRefine dataset, our lab is using the 3-letter site code
+- **Rule 3: No redundant information** 
+  - If we run our join query, we could have stored data in a table this way.
+    - But if a date was wrong, we'd be changing it multiple times
+      - The bigger the dataset, the worse the problem
+
+## 8. Creating Databases ( minutes)
+
+- Create Table
+- Drop Table
+- Data Types
+- Foreign Keys
+
+## 9. Modifying Data ( minutes)
+
+- UPDATE
+- INSERT
+- DELETE
+
+
+
+## Calculating New Values (if time)
+  - Fix Roerich salinity readings (collected as percentages)
+    - `SELECT taken, reading / 100 FROM Survey WHERE person='roe' AND quant='sal';`
+  - Use UNION to combine with everyone else's
+    - `SELECT taken, reading FROM Survey WHERE person != 'roe' AND quant = 'sal' UNION SELECT taken , reading / 100 FROM Survey WHERE person='roe' AND quant='sal';`
+
+## 10. Programming with Databases in R (30 minutes)
+- We can actually run SQL queries in R
+- Let's copy the survey.db database to our R Project folder & open our project
+- Make a new R script Database.R (note: dropbox link)
+- We need to install and load some libraries
+  - `install.packages("RSQLite")`
+  - `library(RSQLite) library(dplyr)`
+- In order to use R functions with a database, we need to make a connection and save it
+  - con <- dbConnect(SQLite(), "survey.db")
+  - Now, the connection info is stored in the variable con
+- We can get some simple information
+  - List tables: `dbListTables(con)`
+  - Show fields in a table: `dbListFields(con, "Site")`
+
+
+
+- use dbGetQuery()
+- use dplyr
 
 
 
