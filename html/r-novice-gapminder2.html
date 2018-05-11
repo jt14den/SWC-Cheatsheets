@@ -360,10 +360,6 @@ calcGDP &lt;- function(dat) {
 <li><code>install.packages(c(&quot;tidyr&quot;, &quot;dplyr&quot;, &quot;knitr&quot;, &quot;rmarkdown&quot;, &quot;formatR&quot;))</code></li>
 <li><code>library(dplyr)</code></li>
 </ul></li>
-<li>dplyr is especially nice because you can do most of what you need to with only a handful of functions, easy to remember
-<ul>
-<li>select(), filter(), group_by(), summarize(), mutate()</li>
-</ul></li>
 <li>Select lets you only use some columns. You can also re-order them
 <ul>
 <li><p><span></span></p>
@@ -552,7 +548,8 @@ str(gap_long)</code></pre></li>
      mutate(year = as.integer(year))</code></pre></li>
 </ul></li>
 </ul>
-<h3 id="tidyr-challenge-1-using-gap_long-summarize-the-mean-life-expectancy-by-continent">TidyR Challenge #1: Using gap_long, summarize the mean life expectancy by continent</h3>
+<p><strong><em>———- Socrative # ———-</em></strong>: Use dplyr on the long dataset</p>
+<p>Using gap_long, summarize the mean life expectancy by continent</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>gap_long %&gt;%
@@ -606,8 +603,7 @@ head(gap)</code></pre></li>
 <pre><code>gap_wide_new &lt;- gap_long %&gt;% 
     unite(var_names, obs_type, year, sep = &quot;_&quot;) %&gt;%
     spread(var_names, obs_values)
-str(gap_wide_new)
-all.equal(gap_wide, gap_wide_new)</code></pre></li>
+str(gap_wide_new)</code></pre></li>
 </ul></li>
 <li>Just like dplyr, tidyr is nice because it’s only a few functions
 <ul>

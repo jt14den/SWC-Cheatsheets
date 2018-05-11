@@ -370,9 +370,6 @@ Now write a function that takes two arguments: one the temp to be converted, and
 -   Install packages
     -   `install.packages(c("tidyr", "dplyr", "knitr", "rmarkdown", "formatR"))`
     -   `library(dplyr)`
-  
--   dplyr is especially nice because you can do most of what you need to with only a handful of functions, easy to remember
-    -   select(), filter(), group_by(), summarize(), mutate()
 -   Select lets you only use some columns.  You can also re-order them
     -   <span></span>
 
@@ -585,7 +582,10 @@ Answer: intermediate
              mutate(year = as.integer(year))
         ```
 
-### TidyR Challenge #1: Using gap_long, summarize the mean life expectancy by continent
+
+***---------- Socrative # ----------***: Use dplyr on the long dataset
+
+Using gap_long, summarize the mean life expectancy by continent
 
 -   <span></span>
 
@@ -655,7 +655,6 @@ Answer: intermediate
             unite(var_names, obs_type, year, sep = "_") %>%
             spread(var_names, obs_values)
         str(gap_wide_new)
-        all.equal(gap_wide, gap_wide_new)
         ```
 
 - Just like dplyr, tidyr is nice because it's only a few functions
