@@ -159,7 +159,7 @@ OpenRefine is a cleaning tool, originally made by Google.  There are other ways 
 
 Write a query that displays the person, quant, and reading fields from the Survey table
 
-SELECT person, quant, reading FROM Survey;
+- `SELECT person, quant, reading FROM Survey;`
 
 
 ## 4. Sorting Data (3 minutes)
@@ -193,16 +193,16 @@ SELECT person, quant, reading FROM Survey;
   - `SELECT * FROM Survey WHERE quant = 'sal' AND person = 'lake' OR person = 'roe';`
     - Gives us salinity by lake and everything by Roerich
   - Use parentheses to enforce order of operations
-    - SELECT * FROM Survey WHERE quant='sal' AND (person='lake' OR person='roe');
+    - `SELECT * FROM Survey WHERE quant='sal' AND (person='lake' OR person='roe');`
 
 ***---------- Socrative #4 ----------***: normalized salinity outliers ouside of [0.0, 1.0]
 
 Normalized salinity readings are supposed to be between 0.0 and 1.0.  Which query will select all records from Survey with salinity values that are not normalized?
 
-SELECT * FROM Survey WHERE quant='sal' AND reading > 1.0 OR reading < 0.0;
-SELECT * FROM Survey WHERE quant='sal' AND (reading > 1.0 AND reading < 0.0);
-SELECT * FROM Survey WHERE quant='sal' AND (reading > 1.0 OR reading < 0.0); (*correct*)
-SELECT * FROM Survey WHERE quant='sal' OR (reading > 1.0 AND reading < 0.0);
+- `SELECT * FROM Survey WHERE quant='sal' AND reading > 1.0 OR reading < 0.0;`
+- `SELECT * FROM Survey WHERE quant='sal' AND (reading > 1.0 AND reading < 0.0);`
+- `SELECT * FROM Survey WHERE quant='sal' AND (reading > 1.0 OR reading < 0.0);` (*correct*)
+- `SELECT * FROM Survey WHERE quant='sal' OR (reading > 1.0 AND reading < 0.0);`
 
 - We can also find partial matches with LIKE
   - `SELECT * FROM Visited WHERE site LIKE 'DR%' ORDER BY site ASC;`
@@ -245,10 +245,10 @@ SELECT * FROM Survey WHERE quant='sal' OR (reading > 1.0 AND reading < 0.0);
 
 Write a query that sorts the records in Visited by date, excluding entries for which the date is not known
 
-SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated; (*works, but less clear*)
-SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated ASC; (*correct, preferred*)
-SELECT * FROM Visited WHERE dated IS NULL ORDER BY dated ASC;
-SELECT * FROM Visited WHERE dated > '1900-01-01' ORDER BY dated ASC; (*works, but less clear*)
+- `SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated;` (*works, but less clear*)
+- `SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated ASC;` (*correct, preferred*)
+- `SELECT * FROM Visited WHERE dated IS NULL ORDER BY dated ASC;`
+- `SELECT * FROM Visited WHERE dated > '1900-01-01' ORDER BY dated ASC;` (*works, but less clear*)
 
 
 ## 7. Combining Data with JOIN (12 minutes)
@@ -297,11 +297,15 @@ SELECT * FROM Visited WHERE dated > '1900-01-01' ORDER BY dated ASC; (*works, bu
 
 Write a query that lists all the salinity readings along with the site names they were collected at
 
-SELECT Site.name, Survey.reading 
-FROM Site JOIN Visited JOIN Survey 
-ON Site.name = Visited.site
-AND Visited.id = Survey.taken
-WHERE Survey.quant = "sal";
+-   <span></span>
+
+    ```
+    SELECT Site.name, Survey.reading 
+    FROM Site JOIN Visited JOIN Survey 
+    ON Site.name = Visited.site
+    AND Visited.id = Survey.taken
+    WHERE Survey.quant = "sal";
+    ```
 
 
 #### 90 minutes: BREAK #####
@@ -351,12 +355,18 @@ WHERE Survey.quant = "sal";
 
 Create a table named Family.  Make fields for a unique identifier,  first and last names, and age. Add a record for yourself, and one for a family member.  
 
--- Create the table.  id is my unique identifier (a number).  age is also a number.  The names will be text fields.
-CREATE TABLE Family (id integer, firstname text, lastname text, age integer);
+-   <span></span>
 
--- Insert two records
-INSERT INTO Family VALUES(1, 'James', 'Mickley', 34);
-INSERT INTO Family VALUES(2, 'Peter', 'Mickley', 28);
+    ```
+    -- Create the table.  id is my unique identifier (a number).  
+    -- age is also a number.  The names will be text fields.
+    CREATE TABLE Family (id integer, firstname text, lastname text, age integer);
+
+    -- Insert two records
+    INSERT INTO Family VALUES(1, 'James', 'Mickley', 34);
+    INSERT INTO Family VALUES(2, 'Peter', 'Mickley', 28);
+    ```
+
 
 ### Exporting a Database 
 - We can save a database as an SQL file, which can be shared and imported in another database
@@ -383,7 +393,7 @@ INSERT INTO Family VALUES(2, 'Peter', 'Mickley', 28);
 
 We want to change the first salinity value in the Survey table to be 0.5. What happens when we run the following query?
 
-UPDATE Survey SET reading = 0.5 WHERE quant = 'sal';
+- `UPDATE Survey SET reading = 0.5 WHERE quant = 'sal';`
 
 It works just as we expected and changes the first salinity value to 0.5
 We get an error
@@ -394,7 +404,7 @@ It changes all the salinity values to 0.5
 
 Write a SQL query to replace all the NULL cells in Survey.person with the string 'unknown'
 
-UPDATE Survey SET person = 'unknown' WHERE person IS NULL;
+- `UPDATE Survey SET person = 'unknown' WHERE person IS NULL;`
 
 
 ### DELETE
@@ -445,11 +455,14 @@ UPDATE Survey SET person = 'unknown' WHERE person IS NULL;
 
 Write some R code to execute one of our JOIN queries from earlier, and return the results in R
 
-joined_data <- dbGetQuery(conn, 
-  "SELECT Site.lat, Site.long, Visited.dated
-  FROM Site JOIN Visited
-  ON Site.name = Visited.site;")
+-   <span></span>
 
+    ```
+    joined_data <- dbGetQuery(conn, 
+      "SELECT Site.lat, Site.long, Visited.dated
+      FROM Site JOIN Visited
+      ON Site.name = Visited.site;")
+    ```
 
 - An alternative to get an entire table
   - `person <- dbReadTable(conn, "Person")`
@@ -469,6 +482,7 @@ joined_data <- dbGetQuery(conn,
           filter(quant == "sal") %>%
           collect()
         ```
+
     - We could then graph this data:
     -   <span></span>
 
@@ -477,7 +491,7 @@ joined_data <- dbGetQuery(conn,
           select(person, quant, reading) %>%
           filter(quant == "sal") %>%
           collect() %>% 
-          sal %>% ggplot(aes(x = person, y = reading)) + 
+          ggplot(aes(x = person, y = reading)) + 
             geom_boxplot()
         ```
 

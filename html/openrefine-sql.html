@@ -221,7 +221,9 @@
 </ul>
 <p><strong><em>———- Socrative #3 ———-</em></strong>: person, quant, reading from Survey</p>
 <p>Write a query that displays the person, quant, and reading fields from the Survey table</p>
-<p>SELECT person, quant, reading FROM Survey;</p>
+<ul>
+<li><code>SELECT person, quant, reading FROM Survey;</code></li>
+</ul>
 <h2 id="sorting-data-3-minutes">4. Sorting Data (3 minutes)</h2>
 <ul>
 <li>It’s often useful to sort the output of our query</li>
@@ -278,14 +280,17 @@
 </ul></li>
 <li>Use parentheses to enforce order of operations
 <ul>
-<li>SELECT * FROM Survey WHERE quant=‘sal’ AND (person=‘lake’ OR person=‘roe’);</li>
+<li><code>SELECT * FROM Survey WHERE quant='sal' AND (person='lake' OR person='roe');</code></li>
 </ul></li>
 </ul></li>
 </ul>
 <p><strong><em>———- Socrative #4 ———-</em></strong>: normalized salinity outliers ouside of [0.0, 1.0]</p>
 <p>Normalized salinity readings are supposed to be between 0.0 and 1.0. Which query will select all records from Survey with salinity values that are not normalized?</p>
-<p>SELECT * FROM Survey WHERE quant=‘sal’ AND reading &gt; 1.0 OR reading &lt; 0.0; SELECT * FROM Survey WHERE quant=‘sal’ AND (reading &gt; 1.0 AND reading &lt; 0.0); SELECT * FROM Survey WHERE quant=‘sal’ AND (reading &gt; 1.0 OR reading &lt; 0.0); (<em>correct</em>) SELECT * FROM Survey WHERE quant=‘sal’ OR (reading &gt; 1.0 AND reading &lt; 0.0);</p>
 <ul>
+<li><code>SELECT * FROM Survey WHERE quant='sal' AND reading &gt; 1.0 OR reading &lt; 0.0;</code></li>
+<li><code>SELECT * FROM Survey WHERE quant='sal' AND (reading &gt; 1.0 AND reading &lt; 0.0);</code></li>
+<li><code>SELECT * FROM Survey WHERE quant='sal' AND (reading &gt; 1.0 OR reading &lt; 0.0);</code> (<em>correct</em>)</li>
+<li><p><code>SELECT * FROM Survey WHERE quant='sal' OR (reading &gt; 1.0 AND reading &lt; 0.0);</code></p></li>
 <li>We can also find partial matches with LIKE
 <ul>
 <li><code>SELECT * FROM Visited WHERE site LIKE 'DR%' ORDER BY site ASC;</code>
@@ -359,7 +364,12 @@
 </ul>
 <p><strong><em>———- Socrative #5 ———-</em></strong>: Visted, sorted by date, excluding NULL</p>
 <p>Write a query that sorts the records in Visited by date, excluding entries for which the date is not known</p>
-<p>SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated; (<em>works, but less clear</em>) SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated ASC; (<em>correct, preferred</em>) SELECT * FROM Visited WHERE dated IS NULL ORDER BY dated ASC; SELECT * FROM Visited WHERE dated &gt; ‘1900-01-01’ ORDER BY dated ASC; (<em>works, but less clear</em>)</p>
+<ul>
+<li><code>SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated;</code> (<em>works, but less clear</em>)</li>
+<li><code>SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated ASC;</code> (<em>correct, preferred</em>)</li>
+<li><code>SELECT * FROM Visited WHERE dated IS NULL ORDER BY dated ASC;</code></li>
+<li><code>SELECT * FROM Visited WHERE dated &gt; '1900-01-01' ORDER BY dated ASC;</code> (<em>works, but less clear</em>)</li>
+</ul>
 <h2 id="combining-data-with-join-12-minutes">7. Combining Data with JOIN (12 minutes)</h2>
 <ul>
 <li>We need to do an analysis and need the data fields <code>latitude, longitude, date, quantity, and reading</code>
@@ -418,7 +428,14 @@ AND Visited.dated IS NOT NULL;</code></pre></li>
 </ul>
 <p><strong><em>———- Socrative #6 ———-</em></strong>: Site name and salinity readings</p>
 <p>Write a query that lists all the salinity readings along with the site names they were collected at</p>
-<p>SELECT Site.name, Survey.reading FROM Site JOIN Visited JOIN Survey ON Site.name = Visited.site AND Visited.id = Survey.taken WHERE Survey.quant = “sal”;</p>
+<ul>
+<li><p><span></span></p>
+<pre><code>SELECT Site.name, Survey.reading 
+FROM Site JOIN Visited JOIN Survey 
+ON Site.name = Visited.site
+AND Visited.id = Survey.taken
+WHERE Survey.quant = &quot;sal&quot;;</code></pre></li>
+</ul>
 <h4 id="minutes-break">90 minutes: BREAK</h4>
 <h2 id="data-hygiene-4-minutes">8. Data Hygiene (4 minutes)</h2>
 <ul>
@@ -482,8 +499,16 @@ INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
 </ul>
 <p><strong><em>———- Socrative #7 ———-</em></strong>: Make family table with unique ID, names, and age</p>
 <p>Create a table named Family. Make fields for a unique identifier, first and last names, and age. Add a record for yourself, and one for a family member.</p>
-<p>– Create the table. id is my unique identifier (a number). age is also a number. The names will be text fields. CREATE TABLE Family (id integer, firstname text, lastname text, age integer);</p>
-<p>– Insert two records INSERT INTO Family VALUES(1, ‘James’, ‘Mickley’, 34); INSERT INTO Family VALUES(2, ‘Peter’, ‘Mickley’, 28);</p>
+<ul>
+<li><p><span></span></p>
+<pre><code>-- Create the table.  id is my unique identifier (a number).  
+-- age is also a number.  The names will be text fields.
+CREATE TABLE Family (id integer, firstname text, lastname text, age integer);
+
+-- Insert two records
+INSERT INTO Family VALUES(1, &#39;James&#39;, &#39;Mickley&#39;, 34);
+INSERT INTO Family VALUES(2, &#39;Peter&#39;, &#39;Mickley&#39;, 28);</code></pre></li>
+</ul>
 <h3 id="exporting-a-database">Exporting a Database</h3>
 <ul>
 <li>We can save a database as an SQL file, which can be shared and imported in another database
@@ -518,11 +543,15 @@ INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
 </ul>
 <p><strong><em>———- Socrative #8 ———-</em></strong>: <strong>OPTIONAL</strong></p>
 <p>We want to change the first salinity value in the Survey table to be 0.5. What happens when we run the following query?</p>
-<p>UPDATE Survey SET reading = 0.5 WHERE quant = ‘sal’;</p>
+<ul>
+<li><code>UPDATE Survey SET reading = 0.5 WHERE quant = 'sal';</code></li>
+</ul>
 <p>It works just as we expected and changes the first salinity value to 0.5 We get an error It changes all the salinity values to 0.5</p>
 <p><strong><em>———- Socrative #9 ———-</em></strong>: <strong>OPTIONAL</strong></p>
 <p>Write a SQL query to replace all the NULL cells in Survey.person with the string ‘unknown’</p>
-<p>UPDATE Survey SET person = ‘unknown’ WHERE person IS NULL;</p>
+<ul>
+<li><code>UPDATE Survey SET person = 'unknown' WHERE person IS NULL;</code></li>
+</ul>
 <h3 id="delete">DELETE</h3>
 <ul>
 <li>To delete records, we use DELETE FROM. We can delete Frank Danforth from the Person table, he has no data
@@ -598,8 +627,12 @@ INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
 </ul>
 <p><strong><em>———- Socrative #10 ———-</em></strong>:</p>
 <p>Write some R code to execute one of our JOIN queries from earlier, and return the results in R</p>
-<p>joined_data &lt;- dbGetQuery(conn, “SELECT Site.lat, Site.long, Visited.dated FROM Site JOIN Visited ON Site.name = Visited.site;”)</p>
 <ul>
+<li><p><span></span></p>
+<pre><code>joined_data &lt;- dbGetQuery(conn, 
+  &quot;SELECT Site.lat, Site.long, Visited.dated
+  FROM Site JOIN Visited
+  ON Site.name = Visited.site;&quot;)</code></pre></li>
 <li>An alternative to get an entire table
 <ul>
 <li><code>person &lt;- dbReadTable(conn, &quot;Person&quot;)</code></li>
@@ -631,7 +664,7 @@ INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
   select(person, quant, reading) %&gt;%
   filter(quant == &quot;sal&quot;) %&gt;%
   collect() %&gt;% 
-  sal %&gt;% ggplot(aes(x = person, y = reading)) + 
+  ggplot(aes(x = person, y = reading)) + 
     geom_boxplot()</code></pre></li>
 </ul></li>
 </ul></li>
