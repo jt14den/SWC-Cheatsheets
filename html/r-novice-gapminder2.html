@@ -27,7 +27,7 @@
 <li>Load the gapminder dataset
 <ul>
 <li>Make a new R file</li>
-<li><code>gapminder &lt;- read.csv(&quot;data/gapminder-FiveYearData.csv&quot;)</code></li>
+<li><code>gap &lt;- read.csv(&quot;data/gapminder-FiveYearData.csv&quot;)</code></li>
 </ul></li>
 <li>Install packages
 <ul>
@@ -160,9 +160,9 @@ print(running_sum)</code></pre></li>
 <ul>
 <li><p><span></span></p>
 <pre><code>for(i in 1:10){
-    print(gapminder$year[i])
+    print(gap$year[i])
 }</code></pre></li>
-<li><p>Instead of 10, I could use <code>nrow(gapminder)</code></p></li>
+<li><p>Instead of 10, I could use <code>nrow(gap)</code></p></li>
 </ul></li>
 </ul>
 <h3 id="nesting-for-loops">Nesting For loops</h3>
@@ -179,20 +179,20 @@ print(running_sum)</code></pre></li>
 </ul></li>
 </ul>
 <h3 id="for-loop-challenge-1">For Loop Challenge #1</h3>
-<p>Write a script that loops through the first 10 rows of gapminder, tells us which years had a life expectancy of less than 35</p>
+<p>Write a script that loops through the first 10 rows of gap, tells us which years had a life expectancy of less than 35</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>for (i in 1:10) {
-     if (gapminder$lifeExp[i] &lt; 33) {
-          print(gapminder$year[i])
+     if (gap$lifeExp[i] &lt; 33) {
+          print(gap$year[i])
      }
 }</code></pre></li>
 <li>We could extend this to the whole dataset, and have it tell us the country too
 <ul>
 <li><p><span></span></p>
-<pre><code>for (i in 1:nrow(gapminder)) {
-     if (gapminder$lifeExp[i] &lt; 33) {
-          print(paste(gapminder$country[i], gapminder$year[i]))
+<pre><code>for (i in 1:nrow(gap)) {
+     if (gap$lifeExp[i] &lt; 33) {
+          print(paste(gap$country[i], gap$year[i]))
      }
 }</code></pre></li>
 </ul></li>
@@ -354,9 +354,10 @@ calcGDP &lt;- function(dat) {
 </ul>
 <h3 id="dplyr">dplyr</h3>
 <ul>
-<li>Setup
+<li>Setup</li>
+<li>Install packages
 <ul>
-<li><code>install.packages(&quot;dplyr&quot;)</code></li>
+<li><code>install.packages(c(&quot;tidyr&quot;, &quot;dplyr&quot;, &quot;knitr&quot;, &quot;rmarkdown&quot;, &quot;formatR&quot;))</code></li>
 <li><code>library(dplyr)</code></li>
 </ul></li>
 <li>dplyr is especially nice because you can do most of what you need to with only a handful of functions, easy to remember
@@ -366,93 +367,118 @@ calcGDP &lt;- function(dat) {
 <li>Select lets you only use some columns. You can also re-order them
 <ul>
 <li><p><span></span></p>
-<pre><code>head(gapminder)
-year_country_gdp &lt;- select(gapminder, year, country, gdpPercap)
+<pre><code>head(gap)
+yr_country_gdp &lt;- select(gap, year, country, gdpPercap)
 head(year_country_gdp)</code></pre></li>
 </ul></li>
 <li>dplyr also can use an R version of pipes, like what we saw in the shell lesson
 <ul>
-<li><code>year_country_gdp &lt;- gapminder %&gt;% select(year, country, gdpPercap)</code></li>
+<li><code>yr_country_gdp &lt;- gap %&gt;% select(year, country, gdpPercap)</code></li>
 <li>You don’t have to bother giving it the data argument anymore. Easier to read</li>
 </ul></li>
 <li>Select lets us subset columns, but what if we want to subset rows? filter() does that
 <ul>
 <li><p><span></span></p>
-<pre><code>year_country_gdp_euro &lt;- gapminder %&gt;%
+<pre><code>yr_country_gdp_eu &lt;- gap %&gt;%
     filter(continent==&quot;Europe&quot;) %&gt;%
     select(year,country,gdpPercap)</code></pre></li>
 <li><p>Walk through this example, showing the flow</p></li>
 <li><p><span></span></p>
-<pre><code>year_country_gdp_euro &lt;- filter(select(gapminder, year, country, gdpPercap), 
+<pre><code>yr_country_gdp_eu &lt;- filter(select(gap, year, country, gdpPercap), 
     continent==&quot;Europe&quot;)</code></pre></li>
 </ul></li>
 </ul>
 <p><strong><em>———- Socrative #5 ———-</em></strong>: Filter using 2 filters and select 3 cols</p>
+<p>Write a command with pipes that filters the gapminder dataset to only include data from 2007 in Africa, and then select the year, country, and lifeExp columns.</p>
+<p>How many rows are left in the resulting dataset? If you’re not sure how to find the number of rows, discuss with your neighbors.</p>
 <ul>
 <li><p><span></span></p>
-<pre><code>Africa_2007_lifeExp &lt;- gapminder %&gt;%
-    filter(continent == &quot;Africa&quot;, year == 2007) %&gt;%
+<pre><code>africa_07_lifeExp %
+    filter(continent == &quot;Africa&quot;) %&gt;% 
+    filter(year == 2007) %&gt;%
     select(year, country, lifeExp)
 
-str(Africa_2007_lifeExp)</code></pre>
+nrow(africa_07_lifeExp)
+
+africa_07_lifeExp %
+    filter(continent == &quot;Africa&quot;, year == 2007) %&gt;% 
+    select(year, country, lifeExp)
+
+str(africa_07_lifeExp)</code></pre>
 <ul>
 <li>Note that the order is really important! Since select removes continent, it has to come second</li>
 <li>We could have used two filter commands instead</li>
 </ul></li>
 <li>Summarize lets us condense data down
 <ul>
-<li><code>mean_gdp &lt;- gapminder %&gt;% summarize(meanGDP = mean(gdpPercap))</code></li>
+<li><code>mean_gdp &lt;- gap %&gt;% summarize(meanGDP = mean(gdpPercap))</code></li>
 </ul></li>
 <li>Not very useful by itself, we could have used this instead
 <ul>
-<li><code>mean(gapminder$gdpPercap)</code></li>
+<li><code>mean(gap$gdpPercap)</code></li>
 </ul></li>
 <li>But if we combine it with the group_by() function, we can get the mean gdp for each continent
 <ul>
 <li><p><span></span></p>
-<pre><code>gdp_by_continents &lt;- gapminder %&gt;%
+<pre><code>gdp_by_cont &lt;- gap %&gt;%
     group_by(continent) %&gt;%
     summarize(mean_gdp = mean(gdpPercap))
 
-gdp_by_continents</code></pre></li>
+gdp_by_cont</code></pre></li>
 </ul></li>
 <li><p>Here we’re grouping by continent, which means we calculate a <strong>separate</strong> mean for each one</p></li>
 </ul>
 <p><strong><em>———- Socrative #6 ———-</em></strong>: Avg lifeExp by year for Africa</p>
+<p>Let’s compute the average life expectancy across all African countries by year. In how many years did average African life expectancy decrease?</p>
 <ul>
 <li><p><span></span></p>
-<pre><code>africa_lifeExp &lt;- gapminder %&gt;%
+<pre><code>africa_lifeExp_yr &lt;- gap %&gt;%
     filter(continent == &quot;Africa&quot;) %&gt;%
     group_by(year) %&gt;%
     summarize(avg_life = mean(lifeExp))
 
-africa_lifeExp</code></pre></li>
-<li>What if we wanted to create a new column without condensing our data down? Use mutate()
+africa_lifeExp_yr</code></pre></li>
+<li>What if we wanted to create a new column for gdp per billion people w/o condensing our data down? Use mutate()
 <ul>
 <li><p><span></span></p>
-<pre><code>billion_gdp_country_2007 &lt;- gapminder %&gt;%
+<pre><code>bill_gdp_country_07 &lt;- gap %&gt;%
     filter(year == 2007) %&gt;%
-    mutate(billion_gdp = gdpPercap*pop/10^9) %&gt;%
+    mutate(billion_gdp = gdpPercap * pop / 10^9) %&gt;%
     select(continent, country, billion_gdp)
 
-head(billion_gdp_country_2007)</code></pre></li>
+head(bill_gdp_country_07)</code></pre></li>
 </ul></li>
 <li>We can group multiple variables and summarize multiple things
 <ul>
 <li><p><span></span></p>
-<pre><code>gdp_by_continents &lt;- gapminder %&gt;%
+<pre><code>gdp_by_cont &lt;- gap %&gt;%
     group_by(continent, year) %&gt;%
     summarize(mean_gdp = mean(gdpPercap), 
         sd_gdp = sd(gdpPercap), 
         mean_pop = mean(pop), 
-        sample_size = n())
+        sample_size = n(),
+        se_gdp = sd_gdp / sqrt(sample_size))
 
-gdp_by_continents</code></pre></li>
+gdp_by_cont</code></pre></li>
 <li>n() is a special function that gives the sample size for that grouping, very useful</li>
 <li>Notice that we only see 10 rows. Summarize actually has returned a “special” table-dataframe</li>
-<li>In most cases it acts the same, but if we want to see the whole thing, we can pipe it to dataframe
+<li>In most cases it acts the same, but if we want to see the whole thing, we can pipe it to data.frame()
 <ul>
 <li><code>gdp_by_continents %&gt;% data.frame()</code></li>
+</ul></li>
+</ul></li>
+<li>We can combine dplyr and ggplot2
+<ul>
+<li><p><span></span></p>
+<pre><code>gap %&gt;% filter(continent == &quot;Asia&quot;) %&gt;%
+    ggplot(aes(x = gdpPercap, y = lifeExp)) + 
+        geom_point()</code></pre></li>
+</ul></li>
+<li>One of the reasons we like dplyr so much, is there’s not a lot to remember.
+<ul>
+<li>Most of your work can be done with the 5 functions we just learned
+<ul>
+<li><code>select(), filter(), group_by(), summarize(), and mutate()</code></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -467,24 +493,28 @@ gdp_by_continents</code></pre></li>
 <li>Wide format:
 <ul>
 <li><p><span></span></p>
-<pre><code>Genus   Weight  Height
-Ursus   122     82</code></pre></li>
+<pre><code>Genus   Weight  Length
+Ursus   122     82
+Felis   5       14</code></pre></li>
 </ul></li>
 <li>Long format:
 <ul>
 <li><p><span></span></p>
 <pre><code>Genus   Measurement     Value
 Ursus   Weight          122
-Ursus   Height          82</code></pre></li>
+Ursus   Length          82
+Felis   Weight          5
+Felis   Length          14</code></pre></li>
 </ul></li>
 <li>In long format, each column is a variable and each row is a single measurement or observation</li>
 <li>We tend to use wide format more because it’s more concise, easy to ready, datasheety</li>
 <li>R, databases, and other programming languages usually prefer long format</li>
 </ul>
-<p><strong><em>———- Socrative #7 ———-</em></strong>: What format is the gapminder dataset</p>
+<p><strong><em>———- Socrative #7 ———-</em></strong>: What format is the gap dataset</p>
 <p>Answer: intermediate</p>
 <ul>
-<li>We have 3 ID columns, and 3 observation columns (instead of 1)
+<li>We could have a column for each year * pop/lifeExp/gdpPerCap</li>
+<li>We have 3 ID columns (country, continent, year), and 3 observation columns (gdpPercap, lifeExp, pop) (instead of 1)
 <ul>
 <li>Important to be able to convert, some R tools need specific format</li>
 </ul></li>
@@ -522,7 +552,7 @@ str(gap_long)</code></pre></li>
      mutate(year = as.integer(year))</code></pre></li>
 </ul></li>
 </ul>
-<h3 id="tidyr-challenge-1-using-gap_long-calculate-the-mean-life-expectancy-by-continent">TidyR Challenge #1: Using gap_long, calculate the mean life expectancy by continent</h3>
+<h3 id="tidyr-challenge-1-using-gap_long-summarize-the-mean-life-expectancy-by-continent">TidyR Challenge #1: Using gap_long, summarize the mean life expectancy by continent</h3>
 <ul>
 <li><p><span></span></p>
 <pre><code>gap_long %&gt;%
@@ -533,10 +563,10 @@ str(gap_long)</code></pre></li>
 <ul>
 <li><p><span></span></p>
 <pre><code>gap_normal &lt;- gap_long %&gt;% 
-    spread(obs_type,obs_values)
+    spread(obs_type, obs_values)
 head(gap_normal)
 dim(gap_normal)
-dim(gapminder)</code></pre></li>
+dim(gap)</code></pre></li>
 </ul></li>
 <li>Notice how the contents of obs_type became the column names</li>
 <li>Looks like the same dataset, cool, we’re back</li>
@@ -544,7 +574,7 @@ dim(gapminder)</code></pre></li>
 <ul>
 <li><p><span></span></p>
 <pre><code>names(gap_normal)
-names(gapminder)
+names(gap)
 gap_normal &lt;- gap_normal %&gt;%
     select(country, year, pop, continent, lifeExp, gdpPercap)
 names(gap_normal)</code></pre></li>
@@ -552,16 +582,19 @@ names(gap_normal)</code></pre></li>
 <li>Let’s see if they’re equal. Not so good, they’re sorted differently
 <ul>
 <li><p><span></span></p>
-<pre><code>all.equal(gap_normal, gapminder)
+<pre><code>all_equal(gap_normal, gap)
 head(gap_normal)
-head(gapminder)</code></pre></li>
+head(gap)</code></pre></li>
 </ul></li>
-<li>The new dataset is sorted first by continent, gapminder was by country
+<li>The new dataset is sorted first by continent, gap was by country
 <ul>
 <li><p><span></span></p>
 <pre><code>gap_normal &lt;- gap_normal %&gt;% 
     arrange(country, continent, year)
-all.equal(gap_normal, gapminder)</code></pre></li>
+
+all.equal(gap_normal, gap)
+head(gap_normal)
+head(gap)</code></pre></li>
 <li>Arrange is a dplyr function</li>
 <li><p>It’s a good idea to do checks all the time (like all_equal)</p></li>
 </ul></li>
@@ -575,6 +608,13 @@ all.equal(gap_normal, gapminder)</code></pre></li>
     spread(var_names, obs_values)
 str(gap_wide_new)
 all.equal(gap_wide, gap_wide_new)</code></pre></li>
+</ul></li>
+<li>Just like dplyr, tidyr is nice because it’s only a few functions
+<ul>
+<li>We can go from wide to long and back, and combine or split columns with 4 functions
+<ul>
+<li><code>gather(), spread(), separate(), unite()</code></li>
+</ul></li>
 </ul></li>
 </ul>
 <h3 id="resources">Resources:</h3>
@@ -602,7 +642,7 @@ all.equal(gap_wide, gap_wide_new)</code></pre></li>
 <li>Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
     geom_point()</code></pre></li>
 </ul></li>
 <li>First we load ggplot2</li>
@@ -610,17 +650,17 @@ all.equal(gap_wide, gap_wide_new)</code></pre></li>
 <ul>
 <li>ggplot is smart enough to look for those columns in the data we gave it, no need to subset</li>
 <li>If we stop here we don’t get a graph</li>
-<li><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp))</code></li>
+<li><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp))</code></li>
 <li>So finally, we add a points (scatterplot) layer called a geometry</li>
 </ul></li>
 </ul>
 <p><strong><em>———- Socrative #8 ———-</em></strong>: Modify a ggplot graph</p>
 <ul>
-<li><p><code>ggplot(data = gapminder, aes(x=year, y=lifeExp)) + geom_point()</code></p></li>
+<li><p><code>ggplot(data = gap, aes(x=year, y=lifeExp)) + geom_point()</code></p></li>
 <li>Using a scatterplot probably isn’t a good way to show change over time.
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = year, y = lifeExp, 
+<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, 
     by = country, color = continent)) +
     geom_line()</code></pre></li>
 </ul></li>
@@ -629,7 +669,7 @@ all.equal(gap_wide, gap_wide_new)</code></pre></li>
 <li><strong>Question: What if we wanted the points on the graph too? </strong>
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = year, y = lifeExp, 
+<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, 
     by = country, color = continent)) +
     geom_line() + 
     geom_point()</code></pre></li>
@@ -637,7 +677,7 @@ all.equal(gap_wide, gap_wide_new)</code></pre></li>
 <li>Layers get drawn on top of each other
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country)) +
+<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) + 
     geom_point()</code></pre></li>
 </ul></li>
@@ -645,20 +685,20 @@ all.equal(gap_wide, gap_wide_new)</code></pre></li>
 <li>If we want to set everything on a geometry to the same color, we set it outside the aesthetic function
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = year, y = lifeExp, by = country)) +
+<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) + 
     geom_point(color = &quot;blue&quot;)</code></pre></li>
 </ul></li>
 <li>Let’s go back to our first example, but color the points by continent
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
     geom_point()</code></pre></li>
 </ul></li>
 <li>Hard to see relationship with all those outliers, so let’s use a log scale
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
     geom_point(alpha = 0.5) + 
     scale_x_log10()</code></pre></li>
 </ul></li>
@@ -667,27 +707,27 @@ all.equal(gap_wide, gap_wide_new)</code></pre></li>
 <li>We can fit a simple linear regression line (linear model) using a geom_smooth geometry
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
     geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;)</code></pre></li>
 </ul></li>
 <li>It even gives us a confidence interval! We can make the line thicker using size
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
     geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;, size=1.5)</code></pre></li>
 </ul></li>
 </ul>
 <p><strong><em>———- Socrative #9 ———-</em></strong>: Color by continent &amp; add separate trends</p>
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
     geom_point(size = 1.5) +
     scale_x_log10() +
     geom_smooth(method=&quot;lm&quot;)</code></pre></li>
 <li>Many peope are colorblind. In addition to color, it’s a good idea to also use shape
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
     geom_point(size = 2, aes(shape = continent)) + 
     scale_x_log10() + 
     geom_smooth(method=&quot;lm&quot;)</code></pre></li>
@@ -695,7 +735,7 @@ all.equal(gap_wide, gap_wide_new)</code></pre></li>
 <li>Let’s clean it up for publication. We’ll add nicer axis labels, a title, and change the y-axis and theme
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
     geom_point(size = 2, aes(shape = continent)) + 
     scale_x_log10() + 
     geom_smooth(method=&quot;lm&quot;) + 
@@ -722,7 +762,7 @@ all.equal(gap_wide, gap_wide_new)</code></pre></li>
 <h3 id="facets-if-time-permits">Facets (if time permits)</h3>
 <ul>
 <li><p><span></span></p>
-<pre><code>L.countries &lt;- gapminder %&gt;% 
+<pre><code>L.countries &lt;- gap %&gt;% 
     filter(country %in% c(&quot;Lebanon&quot;, &quot;Lesotho&quot;, &quot;Liberia&quot;, &quot;Libya&quot;))
 
 L.countries
@@ -741,7 +781,7 @@ ggplot(L.countries, aes(x = year, y = lifeExp, color = country)) +
           geom_line() + facet_wrap( ~ country)
 }
 
-lifeExp_country(gapminder, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;Canada&quot;))</code></pre></li>
+lifeExp_country(gap, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;Canada&quot;))</code></pre></li>
 <li>Cover cowplot:
 <ul>
 <li><code>library(cowplot)</code></li>
@@ -763,7 +803,7 @@ lifeExp_country(gapminder, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;
 <li>Create a boxplot showing the spread of life expectancy for each continent
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gapminder, aes(x = continent, y = lifeExp)) + 
+<pre><code>ggplot(data = gap, aes(x = continent, y = lifeExp)) + 
    geom_boxplot() + 
    geom_jitter(alpha = 0.5, color = &quot;tomato&quot;)</code></pre></li>
 </ul></li>
@@ -780,7 +820,7 @@ lifeExp_country(gapminder, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;
 <li>Create a new R notebook and save it.
 <ul>
 <li>Run the graph code</li>
-<li>Add a new chunk with <code>head(cars)</code> and run it</li>
+<li>Add a new chunk with <code>head(cars, 30)</code> and run it</li>
 <li>Show how to switch between inline and console, explain inline usefulness</li>
 <li>Click preview to see the html</li>
 <li>Show where the file is saved</li>
@@ -791,8 +831,31 @@ lifeExp_country(gapminder, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;
 <li>Demo headings, bullets, numbered lists, bold, italic, and links</li>
 </ul></li>
 </ul>
-<h3 id="r-notebook-challenge-1">R Notebook Challenge #1:</h3>
-<p>Modify your R notebook to load the data from gapminder, show the first 10 lines, and display a graph. Give each R code section a heading and short summary.</p>
+<p><strong><em>———- Socrative ———-</em></strong>: R Notebook Challenge</p>
+<p>Modify your R notebook to load the data from gap, show the first 10 lines, and display a graph.<br />
+Give each R code section a heading and short summary.</p>
+<pre><code>-   &lt;span&gt;&lt;/span&gt;
+
+    ```
+    ## Reading &amp; Displaying Data
+
+    This chunk reads in the gap dataset and shows the first 10 lines
+
+    ``{r}
+    gap &lt;- read.csv(&quot;data/gapminder-FiveYearData.csv&quot;)
+    head(gap, 10)
+    ``
+
+    ## Graph Gap Dataset
+
+    This chunk shows a graph
+
+    ``{r}
+    library(ggplot2)
+    ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) + 
+      geom_point()
+    ``
+    ```</code></pre>
 <ul>
 <li>You could also knit to a word file instead. Or pdf, though this requires some extra setup</li>
 <li>I won’t show you how to do this, but you can also publish stuff to the internet, and run code from other languages, eg shell and python.</li>
@@ -814,9 +877,9 @@ lifeExp_country(gapminder, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;
 <li>Indent code inside loops, functions, and if statements</li>
 <li>Use good variable &amp; function names and don’t overwrite variables</li>
 <li>Use lots of comments to explain what lines of code do</li>
-<li>There’s an R style guide: <a href="http://adv-r.had.co.nz/Style.html" class="uri">http://adv-r.had.co.nz/Style.html</a>
+<li>There’s an R style guide: <a href="http://style.tidyverse.org" class="uri">http://style.tidyverse.org</a>
 <ul>
-<li>Preferences &gt; Code &gt; Diagnostics, gives you tiny warnings to envorce</li>
+<li>Preferences &gt; Code &gt; Diagnostics, gives you tiny warnings to enforce</li>
 </ul></li>
 </ul></li>
 <li>Break down problems into bite-sized pieces and keep things modular
