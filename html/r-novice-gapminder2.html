@@ -50,7 +50,51 @@
 <li>We already saw loops in shell, which actually has functions and conditionals too</li>
 </ul></li>
 </ul>
-<h2 id="conditional-statements">1. Conditional Statements</h2>
+<h2 id="a.-vectorization-15-minutes">1a. Vectorization (15 minutes)</h2>
+<ul>
+<li>One reason why R is used so much for data analysis is that it has a neat feature</li>
+<li>Most functions are “vectorized”, meaning they’ll operate on a whole list of numbers at once</li>
+<li>Here x is a vector of four numbers
+<ul>
+<li><p><span></span></p>
+<pre><code>x &lt;- 1:4
+x
+x * 2</code></pre></li>
+</ul></li>
+<li>What happens if we add two vectors together</li>
+<li>Explain on the board what is going on
+<ul>
+<li><p><span></span></p>
+<pre><code>y &lt;- 6:9
+x + y</code></pre></li>
+</ul></li>
+<li>This also works for comparison operators, logical operators, or functions
+<ul>
+<li><p><span></span></p>
+<pre><code>x &gt; 2
+
+a &lt;- x &lt; 2
+b &lt;- x &gt; 3
+
+a | b
+
+log(x)</code></pre></li>
+</ul></li>
+<li><strong>Note:</strong>
+<ul>
+<li>The <code>*</code> operator etc gives you element-wise multiplication</li>
+<li><p>For matrix multiplication you need to use %*%</p></li>
+<li><p><span></span></p>
+<pre><code>m &lt;- matrix(1:12, nrow=3, ncol=4)
+m * -1
+
+m * m
+
+m %*% matrix(1, nrow=4, ncol=1)
+</code></pre></li>
+</ul></li>
+</ul>
+<h2 id="conditional-statements-25-minutes">1. Conditional Statements (25 minutes)</h2>
 <ul>
 <li>We’ll start with making choices using <em>conditional statements</em>
 <ul>
@@ -115,7 +159,7 @@ if (number1 &gt;= 0 | number2 &gt;= 0) {
 </ul>
 <p><strong><em>———- Socrative #1 ———-</em></strong>: Number between 45 and 50</p>
 <p>This is a tricky one, 3 correct answers</p>
-<h2 id="loops">2. Loops</h2>
+<h2 id="loops-30-minutes">2. Loops (30 minutes)</h2>
 <ul>
 <li>Just like the shell, R has for loops, which can do repetitive tasks</li>
 <li>But the syntax is slightly different
@@ -170,20 +214,23 @@ print(running_sum)</code></pre></li>
 <li>For loops can also be nested
 <ul>
 <li><p><span></span></p>
-<pre><code>for(i in 1:3){
+<pre><code># First for loop
+for(i in 1:3){
+
+    # Second for loop
     for(j in c(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;)){
-        print(paste(i,j))
-    }
-}</code></pre></li>
+        print(paste(i, j))
+    } # End of second
+
+} # End of first</code></pre></li>
 <li><p>Gives me every combination. Notice the order of nesting matters</p></li>
 </ul></li>
 </ul>
-<h3 id="for-loop-challenge-1">For Loop Challenge #1</h3>
-<p>Write a script that loops through the first 10 rows of gap, tells us which years had a life expectancy of less than 35</p>
+<p><strong><em>———- Socrative #3 ———-</em></strong>: For loop to find years with life expectancy &lt; 35</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>for (i in 1:10) {
-     if (gap$lifeExp[i] &lt; 33) {
+     if (gap$lifeExp[i] &lt; 35) {
           print(gap$year[i])
      }
 }</code></pre></li>
@@ -191,13 +238,36 @@ print(running_sum)</code></pre></li>
 <ul>
 <li><p><span></span></p>
 <pre><code>for (i in 1:nrow(gap)) {
-     if (gap$lifeExp[i] &lt; 33) {
+     if (gap$lifeExp[i] &lt; 35) {
           print(paste(gap$country[i], gap$year[i]))
      }
 }</code></pre></li>
 </ul></li>
 </ul>
-<h2 id="creating-and-using-functions">3. Creating and using functions</h2>
+<h3 id="while-loops-5-minutes-optional">While Loops (5 minutes, optional)</h3>
+<ul>
+<li>Sometimes we need to just keep doing something until a certain condition is met</li>
+<li><p>Break R with a While loop, stop the script</p>
+<ul>
+<li><p><span></span></p>
+<pre><code>z &lt;- 1
+while (z &gt; 0.1) {
+    print(z)
+}</code></pre></li>
+</ul></li>
+<li>Let’s fix it by updating z, so it has a chance to quit
+<ul>
+<li><code>runif()</code> is used to pick a random number between zero and 1</li>
+<li><p><span></span></p>
+<pre><code>runif(1)
+z &lt;- 1
+while (z &gt; 0.1) {
+    z &lt;- runif(1)
+    print(z)
+}</code></pre></li>
+</ul></li>
+</ul>
+<h2 id="creating-and-using-functions-30-minutes">3. Creating and using functions (30 minutes)</h2>
 <p><strong>QUESTION: How many of you end up doing the same thing more than once while analyzing your data?</strong></p>
 <ul>
 <li>Functions package a bit of code we want to re-use so that we don’t have to re-write it or remember how it works later</li>
@@ -210,7 +280,7 @@ print(running_sum)</code></pre></li>
 <li>Show that we can actually see the code (wrapper for read.table())</li>
 </ul></li>
 <li><p><span></span></p>
-<pre><code>fahr_to_kelvin &lt;- function(temp)
+<pre><code>fahr_to_kelvin &lt;- function(temp) {
     kelvin &lt;- ((temp - 32) * (5 / 9)) + 273.15
     return(kelvin)
 }
@@ -273,7 +343,7 @@ fahr_to_celsius(32.0)</code></pre></li>
 
 celsius_to_fahr(100)</code></pre></li>
 </ul>
-<h3 id="function-challenge-1">Function Challenge #1</h3>
+<h3 id="function-challenge">Function Challenge</h3>
 <p>Now write a function that takes two arguments: one the temp to be converted, and another that says whether to convert from fahrenheit to celsius or celsius to fahrenheit. Using if…then, make the same function do both.</p>
 <ul>
 <li><code>tempconvert(temp = 14, to = &quot;fahrenheit&quot;)</code>
@@ -329,8 +399,9 @@ tempconvert(212, &quot;celsius&quot;)</code></pre></li>
 tempconvert(212)</code></pre></li>
 </ul></li>
 </ul>
-<h3 id="function-challenge-2">Function Challenge #2</h3>
+<h3 id="advanced-functions">Advanced Functions</h3>
 <ul>
+<li>Make a function that calculates gdp of a nation from gapminder</li>
 <li>Write a function to calculate GDP from our dataset
 <ul>
 <li>Function should take a dataset with pop and gdpPercap columns and return a vector of gdps</li>
@@ -340,7 +411,36 @@ tempconvert(212)</code></pre></li>
 calcGDP &lt;- function(dat) {
   gdp &lt;- dat$pop * dat$gdpPercap
   return(gdp)
-}</code></pre></li>
+}
+
+calcGDP(head(gapminder))</code></pre></li>
+</ul></li>
+<li>A more useful version edits the dataset
+<ul>
+<li><p><span></span></p>
+<pre><code>calcGDP &lt;- function(dat, year=NULL, country=NULL) {
+  if(!is.null(year)) {
+    dat &lt;- dat[dat$year %in% year, ]
+  }
+  if (!is.null(country)) {
+    dat &lt;- dat[dat$country %in% country,]
+  }
+  gdp &lt;- dat$pop * dat$gdpPercap
+  new &lt;- cbind(dat, gdp=gdp)
+  return(new)
+}
+
+head(calcGDP(gapminder, year=2007))
+
+calcGDP(gapminder, country=&quot;Australia&quot;)
+</code></pre></li>
+</ul></li>
+<li>Lots going on here
+<ul>
+<li>Optional arguments</li>
+<li>Checking arguments and defensive programming</li>
+<li>Subsetting the dataset</li>
+<li>Adding a column with cbind</li>
 </ul></li>
 </ul>
 <h2 id="subsetting-and-reshaping-data-with-dplyr-and-tidyr">4. Subsetting and reshaping data with dplyr and tidyr</h2>

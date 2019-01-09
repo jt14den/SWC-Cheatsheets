@@ -28,7 +28,60 @@ subtitle: R for Reproducible Scientific Analysis Part 2
     -   These same concepts get used in most other computer languages => portable skills.
     -   We already saw loops in shell, which actually has functions and conditionals too
 
-## 1. Conditional Statements
+## 1a. Vectorization (15 minutes)
+
+- One reason why R is used so much for data analysis is that it has a neat feature
+- Most functions are "vectorized", meaning they'll operate on a whole list of numbers at once
+- Here x is a vector of four numbers
+    -   <span></span>
+
+        ```
+        x <- 1:4
+        x
+        x * 2
+        ```
+
+- What happens if we add two vectors together
+- Explain on the board what is going on
+    -   <span></span>
+
+        ```
+        y <- 6:9
+        x + y
+        ```
+
+- This also works for comparison operators, logical operators, or functions
+    -   <span></span>
+
+        ```
+        x > 2
+
+        a <- x < 2
+		b <- x > 3
+
+		a | b
+
+		log(x)
+        ```
+
+- **Note:**
+	- The `*` operator etc gives you element-wise multiplication
+	- For matrix multiplication you need to use %\*%
+
+    -   <span></span>
+
+        ```
+		m <- matrix(1:12, nrow=3, ncol=4)
+		m * -1
+
+		m * m
+
+		m %*% matrix(1, nrow=4, ncol=1)
+
+        ```
+
+
+## 1. Conditional Statements (25 minutes)
 
 -   We'll start with making choices using *conditional statements*
     -   <span></span>
@@ -99,7 +152,7 @@ subtitle: R for Reproducible Scientific Analysis Part 2
 
 This is a tricky one, 3 correct answers
 
-## 2. Loops
+## 2. Loops (30 minutes)
 
 -   Just like the shell, R has for loops, which can do repetitive tasks
 -   But the syntax is slightly different
@@ -165,24 +218,26 @@ This is a tricky one, 3 correct answers
     -   <span></span>
 
         ```
+        # First for loop
         for(i in 1:3){
+
+        	# Second for loop
             for(j in c('a', 'b', 'c')){
-                print(paste(i,j))
-            }
-        }
+                print(paste(i, j))
+            } # End of second
+
+        } # End of first
         ```
     -   Gives me every combination.  Notice the order of nesting matters
 
 
-### For Loop Challenge #1
-
-Write a script that loops through the first 10 rows of gap, tells us which years had a life expectancy of less than 35
+***---------- Socrative #3 ----------***: For loop to find years with life expectancy < 35
 
 -   <span></span>
 
     ```
     for (i in 1:10) {
-         if (gap$lifeExp[i] < 33) {
+         if (gap$lifeExp[i] < 35) {
               print(gap$year[i])
          }
     }
@@ -193,15 +248,42 @@ Write a script that loops through the first 10 rows of gap, tells us which years
 
         ```
         for (i in 1:nrow(gap)) {
-             if (gap$lifeExp[i] < 33) {
+             if (gap$lifeExp[i] < 35) {
                   print(paste(gap$country[i], gap$year[i]))
              }
         }
         ```
 
+### While Loops (5 minutes, optional)
+
+- Sometimes we need to just keep doing something until a certain condition is met
+- Break R with a While loop, stop the script
+
+    -   <span></span>
+
+        ```
+		z <- 1
+		while (z > 0.1) {
+		    print(z)
+		}
+        ```
+
+- Let's fix it by updating z, so it has a chance to quit
+	- `runif()` is used to pick a random number between zero and 1
+    -   <span></span>
+
+        ```
+        runif(1)
+		z <- 1
+		while (z > 0.1) {
+			z <- runif(1)
+		    print(z)
+		}
+        ```
 
 
-## 3. Creating and using functions
+
+## 3. Creating and using functions (30 minutes)
 
 **QUESTION: How many of you end up doing the same thing more than once while analyzing your data?**
 
@@ -215,7 +297,7 @@ Write a script that loops through the first 10 rows of gap, tells us which years
 -   <span></span>
 
     ```
-    fahr_to_kelvin <- function(temp)
+    fahr_to_kelvin <- function(temp) {
         kelvin <- ((temp - 32) * (5 / 9)) + 273.15
         return(kelvin)
     }
@@ -284,7 +366,7 @@ Both B and D are correct.
     ```
 
 
-### Function Challenge #1
+### Function Challenge
 Now write a function that takes two arguments: one the temp to be converted, and another that says whether to convert from fahrenheit to celsius or celsius to fahrenheit.  Using if...then, make the same function do both.
 
 - `tempconvert(temp = 14, to = "fahrenheit")`
@@ -338,20 +420,52 @@ Now write a function that takes two arguments: one the temp to be converted, and
         tempconvert(212)
         ```
 
-### Function Challenge #2
 
+### Advanced Functions
+
+- Make a function that calculates gdp of a nation from gapminder
 -   Write a function to calculate GDP from our dataset
     -   Function should take a dataset with pop and gdpPercap columns and return a vector of gdps
     -   <span></span>
 
         ```
-        # Takes a dataset and multiplies the population column
-        # with the GDP per capita column.
-        calcGDP <- function(dat) {
-          gdp <- dat$pop * dat$gdpPercap
-          return(gdp)
-        }
+		# Takes a dataset and multiplies the population column
+		# with the GDP per capita column.
+		calcGDP <- function(dat) {
+		  gdp <- dat$pop * dat$gdpPercap
+		  return(gdp)
+		}
+
+		calcGDP(head(gapminder))
         ```
+
+- A more useful version edits the dataset
+    -   <span></span>
+
+        ```
+		calcGDP <- function(dat, year=NULL, country=NULL) {
+		  if(!is.null(year)) {
+		    dat <- dat[dat$year %in% year, ]
+		  }
+		  if (!is.null(country)) {
+		    dat <- dat[dat$country %in% country,]
+		  }
+		  gdp <- dat$pop * dat$gdpPercap
+		  new <- cbind(dat, gdp=gdp)
+		  return(new)
+		}
+
+		head(calcGDP(gapminder, year=2007))
+
+		calcGDP(gapminder, country="Australia")
+
+        ```
+
+- Lots going on here
+	- Optional arguments
+	- Checking arguments and defensive programming
+	- Subsetting the dataset
+	- Adding a column with cbind
 
 
 ## 4. Subsetting and reshaping data with dplyr and tidyr
