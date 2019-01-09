@@ -424,7 +424,6 @@ Now write a function that takes two arguments: one the temp to be converted, and
 ### Advanced Functions
 
 - Make a function that calculates gdp of a nation from gapminder
--   Write a function to calculate GDP from our dataset
     -   Function should take a dataset with pop and gdpPercap columns and return a vector of gdps
     -   <span></span>
 
