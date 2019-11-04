@@ -7,7 +7,7 @@ subtitle: R for Reproducible Scientific Analysis Part 2
 
 -   Load the gapminder dataset
     -   Make a new R file
-    -   `gap <- read.csv("data/gapminder-FiveYearData.csv")`
+    -   `gap <- read.csv("data/gapminder_data.csv")`
 -   Install packages
     -   <span></span>
 
@@ -28,7 +28,7 @@ subtitle: R for Reproducible Scientific Analysis Part 2
     -   These same concepts get used in most other computer languages => portable skills.
     -   We already saw loops in shell, which actually has functions and conditionals too
 
-## 1a. Vectorization (15 minutes)
+## 1a. Vectorization (5 minutes)
 
 - One reason why R is used so much for data analysis is that it has a neat feature
 - Most functions are "vectorized", meaning they'll operate on a whole list of numbers at once
@@ -83,6 +83,7 @@ subtitle: R for Reproducible Scientific Analysis Part 2
 
 ## 1. Conditional Statements (25 minutes)
 
+-   Often when coding, we want to control what happens in certain situations
 -   We'll start with making choices using *conditional statements*
     -   <span></span>
 
@@ -148,11 +149,11 @@ subtitle: R for Reproducible Scientific Analysis Part 2
         }
         ```
 
-***---------- Socrative #1 ----------***: Number between 45 and 50
+***---------- Socrative #1 ----------***: Test whether number is between 45 and 50 (inclusive)
 
 This is a tricky one, 3 correct answers
 
-## 2. Loops (30 minutes)
+## 2. Loops (40 minutes)
 
 -   Just like the shell, R has for loops, which can do repetitive tasks
 -   But the syntax is slightly different
@@ -328,7 +329,7 @@ This is a tricky one, 3 correct answers
 -   Pass-by-Value: Functions don't change the variables we give them either (usually), we work on a copy.  Safer!
     -   `print(celsius)`
 
-***---------- Socrative #3 ----------***: Testing variable scope
+***---------- Socrative #4 ----------***: Testing variable scope
 
 Both B and D are correct.  
 
@@ -492,10 +493,31 @@ Now write a function that takes two arguments: one the temp to be converted, and
         head(year_country_gdp)
         ```
 
--   dplyr also can use an R version of pipes, like what we saw in the shell lesson
-    -   `yr_country_gdp <- gap %>% select(year, country, gdpPercap)`
-    -   You don't have to bother giving it the data argument anymore.  Easier to read
+
 -   Select lets us subset columns, but what if we want to subset rows?  filter() does that
+
+    -   <span></span>
+
+        ```
+        str(gap)
+        gap_eu <- filter(gap, continent == "Europe")
+        str(gap_eu)
+        ```
+
+-   We can stack these functions to do both
+
+    -   <span></span>
+
+        ```
+        yr_country_gdp_eu <- filter(select(gap, year, country, gdpPercap), 
+            continent=="Europe")
+        ```
+
+- This stacking can quickly become difficult to read, we really want a workflow that's easy to follow
+    -   dplyr also can use an R version of pipes, like what we saw in the shell lesson
+        -   `yr_country_gdp <- gap %>% select(year, country, gdpPercap)`
+        -   You don't have to bother giving it the data argument anymore.  Easier to read
+
     -   <span></span>
 
         ```
@@ -506,14 +528,8 @@ Now write a function that takes two arguments: one the temp to be converted, and
 
     -   Walk through this example, showing the flow
 
-    -   <span></span>
 
-        ```
-        yr_country_gdp_eu <- filter(select(gap, year, country, gdpPercap), 
-            continent=="Europe")
-        ```
-
-***---------- Socrative #5 ----------***: Filter using 2 filters and select 3 cols
+***---------- Socrative #1 ----------***: Filter using 2 filters and select 3 cols
 
 Write a command with pipes that filters the gapminder dataset to only include data from 2007 in Africa, and then select the year, country, and lifeExp columns. 
 
@@ -557,7 +573,7 @@ How many rows are left in the resulting dataset? If you're not sure how to find 
 -   Here we're grouping by continent, which means we calculate a **separate** mean for each one
 
 
-***---------- Socrative #6 ----------***: Avg lifeExp by year for Africa
+***---------- Socrative #2 ----------***: Avg lifeExp by year for Africa
 
 Let's compute the average life expectancy across all African countries by year. In how many years did average African life expectancy decrease?
 
@@ -573,7 +589,9 @@ Let's compute the average life expectancy across all African countries by year. 
     ```
 
 -   What if we wanted to create a new column for gdp per billion people w/o condensing our data down?  Use mutate()
+
     -   <span></span>
+
         ```
         bill_gdp_country_07 <- gap %>%
             filter(year == 2007) %>%
@@ -584,7 +602,9 @@ Let's compute the average life expectancy across all African countries by year. 
         ```
 
 -   We can group multiple variables and summarize multiple things
+
     -   <span></span>
+
         ```
         gdp_by_cont <- gap %>%
             group_by(continent, year) %>%
@@ -603,11 +623,14 @@ Let's compute the average life expectancy across all African countries by year. 
         -   `gdp_by_continents %>% data.frame()`
 
 -   We can combine dplyr and ggplot2
+
     -   <span></span>
+
         ```
-        gap %>% filter(continent == "Asia") %>%
-            ggplot(aes(x = gdpPercap, y = lifeExp)) + 
-                geom_point()
+        gap %>% filter(continent == "Americas") %>%
+            ggplot(aes(x = year, y = lifeExp, color = country)) + 
+            geom_line() + 
+            geom_point()
         ```
 
 - One of the reasons we like dplyr so much, is there's not a lot to remember.
@@ -646,7 +669,7 @@ Let's compute the average life expectancy across all African countries by year. 
 -   We tend to use wide format more because it's more concise, easy to ready, datasheety
 -   R, databases, and other programming languages usually prefer long format
 
-***---------- Socrative #7 ----------***: What format is the gap dataset
+***---------- Socrative #3 ----------***: What format is the gap dataset
 
 Answer: intermediate
 
@@ -664,6 +687,7 @@ Answer: intermediate
     -   So this is the wide format of our data
     -   Notice it's got lots of columns and only 142 rows, one for each country
 -   We're going to convert it to long format with gather()
+
     -   <span></span>
 
         ```
@@ -678,6 +702,7 @@ Answer: intermediate
 -   The first two arguments are new column names: The old column name goes in 1st & value in 2nd
 -   Instead of using starts_with(), we could have just written out all the columns we wanted to gather
 -   We could also just exclude the columns we don't want to gather
+
     -   <span></span>
 
         ```
@@ -696,7 +721,7 @@ Answer: intermediate
         ```
 
 
-***---------- Socrative # ----------***: Use dplyr on the long dataset
+***---------- Socrative #4 ----------***: Use dplyr on the long dataset
 
 Using gap_long, summarize the mean life expectancy by continent
 
@@ -756,7 +781,7 @@ Using gap_long, summarize the mean life expectancy by continent
         ```
 
     -   Arrange is a dplyr function
-    -   It's a good idea to do checks all the time (like all_equal)
+    -   Defensive programming: It's a good idea to do checks all the time (like all_equal)
 
 -   Ok, now let's go back to wide
 -   Remember, we used gather() to put all the columns together, and then separate() to split the year from the variable
@@ -782,16 +807,21 @@ Using gap_long, summarize the mean life expectancy by continent
 -   Data Wrangling Webinar: [https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/](https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/)
 
 
-## 5. Plotting and creating publication-quality graphics
+## 5. Plotting and creating publication-quality graphics (60 minutes)
+
+-   Now we're going to switch gears!
+-   We have a grasp of basic programming in R
+-   Most of our work here is 3 things: data wrangling, graphs, and analyses
+-   We'll cover the first two, since the same stuff applies to everyone
 
 **Question: How many of you have made a plot in R?  How many of you have used ggplot?**
 
 -   R has a few different ways to plot things.  
 -   It comes with a basic plotting package, but most people don't use this anymore, it's harder to modify
-    -   `plot(x = dat$gdpPercap, y = dat$lifeExp)`
+    -   `plot(x = gap$gdpPercap, y = gap$lifeExp)`
 -   Show how to zoom a graph in Rstudio
 -   A better option is ggplot2, which is more flexible, build plots in layers (kinda like photoshop)
-    -   `install.packages("ggplot2")`
+    -   `install.packages(c("tidyr", "dplyr", "knitr", "rmarkdown", "formatR"))`
     -   `library(ggplot2)`
 -   Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation
     -   <span></span>
@@ -808,7 +838,7 @@ Using gap_long, summarize the mean life expectancy by continent
     -   `ggplot(data = gap, aes(x = gdpPercap, y = lifeExp))`
     -   So finally, we add a points (scatterplot) layer called a geometry
   
-***---------- Socrative #8 ----------***: Modify a ggplot graph
+***---------- Socrative #1 ----------***: Modify a ggplot graph
 
 -   `ggplot(data = gap, aes(x=year, y=lifeExp)) + geom_point()`
 
@@ -823,7 +853,7 @@ Using gap_long, summarize the mean life expectancy by continent
 
 -   We're using a line geometry instead of a points geometry now
 -   the **by** aesthetic draws a line for each country, and then we color each continent differently.
--   **Question: What if we wanted the points on the graph too? **
+-   **Question: What if we wanted the points on the graph too?**
     -   <span></span>
 
         ```
@@ -888,7 +918,7 @@ Using gap_long, summarize the mean life expectancy by continent
             geom_point() + scale_x_log10() + geom_smooth(method="lm", size=1.5)
         ```
 
-***---------- Socrative #9 ----------***: Color by continent & add separate trends
+***---------- Socrative #2 ----------***: Color by continent & add separate trends
 
 -   <span></span>
 
@@ -919,9 +949,11 @@ Using gap_long, summarize the mean life expectancy by continent
             geom_smooth(method="lm") + 
             scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, by = 10)) + 
             theme_bw() + 
-            ggtitle("Effects of per-capita GDP on Life Expectancy")
-            xlab("GDP per Capita ($)") + 
-            ylab("Life Expectancy (yrs)")
+            labs(title = "Effects of per-capita GDP on Life Expectancy", 
+                 x = "GDP per Capita ($)", 
+                 y = "Life Expectancy (yrs)", 
+                 color = "Continents", 
+                 shape = "Continents")
         ```
 
 -   Now we have this graph, but we want to save it!
@@ -931,10 +963,23 @@ Using gap_long, summarize the mean life expectancy by continent
         -   `ggsave(file = "life_expectancy.png")`
         -   `ggsave(file = "life_expectancy.pdf")`
 
-***---------- Socrative #10 ----------***: Optional ggsave & ggplot variables
+***---------- Socrative #3 ----------***: Optional ggsave & ggplot variables
 - ggsave will overwrite the graph
-  
+
 ### Facets (if time permits)
+
+-   <span></span>
+
+    ```
+
+    ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+        facet_wrap(~ year) + 
+        geom_point(size = 2, aes(shape = continent)) + 
+        scale_x_log10() +
+        geom_smooth(method = "lm")
+    ```
+
+### Alternate: Facets with dplyr (if time permits)
 
 -   <span></span>
 
@@ -950,7 +995,7 @@ Using gap_long, summarize the mean life expectancy by continent
   
 -   Draws a panel for each unique value in that column
 
-### GGplot2 Challenge #1: write a function that takes vector of countries & creates faceted graph
+### GGplot2 Challenge #2: write a function that takes vector of countries & creates faceted graph
 
 -   <span></span>
 
@@ -970,6 +1015,74 @@ Using gap_long, summarize the mean life expectancy by continent
     -   Nicer quality than default ggplot, it's a theme
     -   Also provides a way to merge two plots into one, eg A & B figures, and annotations
 
+-   Themes
+    - Text size
+
+        -   <span></span>
+
+            ```
+            theme(
+                # Text size for axis ticks
+                axis.text.y = element_text(size = 14),
+                axis.text.x = element_text(size = 14),
+                
+                # Text size for axis labels
+                # Also move them away from the axes a bit for more space
+                axis.title.x = element_text(size = 18, face = "bold", vjust = -1),
+                axis.title.y = element_text(size = 18, face = "bold", vjust = 1.5),
+                
+                # Plot title size, move away from plot
+                plot.title = element_text(size = 20, face = "bold", vjust = 5)
+                )
+            ```
+
+    - Adjust the legend
+
+        -   <span></span>
+
+            ```
+            theme(
+                # Text size
+                legend.text = element_text(size = 14),
+                legend.title = element_text(size = 16, face = "bold"),
+
+                # Position
+                legend.position = c(x = 0.8, y = 0.2)
+                )
+            ```
+
+### GGplot2 Challenge #2: 
+
+-   Create a boxplot showing the spread of life expectancy for each continent
+
+    -   <span></span>
+
+        ```
+        ggplot(data = gap, aes(x = continent, y = lifeExp)) + 
+           geom_boxplot() + 
+           geom_jitter(width = 0.2, alpha = 0.5, color = "tomato")
+
+        ggplot(data = gap, aes(x = continent, y = lifeExp)) + 
+            geom_boxplot() + 
+            geom_jitter(width = 0.2, alpha = 0.5, size = 2, 
+                aes(color = factor(year)))
+        ```
+
+### GGplot2 Challenge #3: 
+
+-   Create a grouped barplot showing life expectancy by year for each continent
+
+    -   <span></span>
+
+        ```
+        ggplot(data = gap, aes(x = continent)) + 
+            geom_bar()
+
+        ggplot(data = gap, aes(x = continent, y = lifeExp, fill = factor(year))) + 
+            geom_bar(stat = "summary", fun.y = "mean", position = "dodge")
+        ```
+
+
 ### Resources
 
 -   R Graph catalog: [http://shiny.stat.ubc.ca/r-graph-catalog/](http://shiny.stat.ubc.ca/r-graph-catalog/)
@@ -979,18 +1092,9 @@ Using gap_long, summarize the mean life expectancy by continent
 -   Rstudio cheatsheets: [https://www.rstudio.com/resources/cheatsheets/](https://www.rstudio.com/resources/cheatsheets/)
 -   Cowplot: [https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html)
 
-### GGplot2 Challenge #2: 
 
--   Create a boxplot showing the spread of life expectancy for each continent
-    -   <span></span>
 
-        ```
-        ggplot(data = gap, aes(x = continent, y = lifeExp)) + 
-           geom_boxplot() + 
-           geom_jitter(alpha = 0.5, color = "tomato")
-        ```
-
-## 6. Producing reports and notebooks with knitr
+## 6. Producing reports and notebooks with knitr (20 minutes)
 
 **Question: How many of you could just send your code to your advisor or collaborator?**
 
@@ -1001,14 +1105,22 @@ Using gap_long, summarize the mean life expectancy by continent
 -   Basically a fancy lab notebook!
 
 -   Create a new R notebook and save it.  
-    -   Run the graph code
-    -   Add a new chunk with `head(cars, 30)` and run it
-    -   Show how to switch between inline and console, explain inline usefulness
+    -   Talk about the header chunk
+    -   Explain code chunks
+        -   Run the graph code
+        -   Add a new chunk with `head(cars, 30)` and run it
+        -   Show how to switch between inline and console, explain inline usefulness
     -   Click preview to see the html
     -   Show where the file is saved
 -   Notice how we got some nice formatted text.  This is using something called markdown
     -   [http://rmarkdown.rstudio.com](http://rmarkdown.rstudio.com)
-    -   Demo headings, bullets, numbered lists, bold, italic, and links
+    -   Demo
+        -   headings `### Heading`
+        -   bullets `* Bullet or - Bullet`
+        -   numbered lists `1. list`
+        -   bold `**bold**`
+        -   italic `*italic*`
+        -   links `[Software Carpentry](http://software-carpentry.org/)`
 
 ***---------- Socrative ----------***: R Notebook Challenge
 
@@ -1023,7 +1135,7 @@ Give each R code section a heading and short summary.
         This chunk reads in the gap dataset and shows the first 10 lines
 
         ``{r}
-        gap <- read.csv("data/gapminder-FiveYearData.csv")
+        gap <- read.csv("data/gapminder-data.csv")
         head(gap, 10)
         ``
 
@@ -1038,13 +1150,30 @@ Give each R code section a heading and short summary.
         ``
         ```
 
-
+-   Variables are shared between chunks
+    -   Add a variable to a chunk and print it in another
 -   You could also knit to a word file instead.  Or pdf, though this requires some extra setup
--   I won't show you how to do this, but you can also publish stuff to the internet, and run code from other languages, eg shell and python.  
+-   You can publish stuff to the internet, and run code from other languages, eg bash shell and python. 
+-   There's a format to publish reports to github
+
+    -   <span></span>
+
+        ```
+        github_document:
+            toc: yes
+            toc_depth: 5
+        ```
+
+    - You can name chunks, and control output for graphs
+
+    -   <span></span>
+
+        ```
+        {r "test_graph", fig.height = 6, fig.width = 8, dpi = 300}
+        ```
 
 
-
-## 7. Writing good software
+## 7. Writing good software (5 Minutes)
 
 -   It's really easy to be in a hurry and just quickly write the code for a graph or an analysis with no commentary on how the code works or the results you got!
     -   This will come back to bite you!
