@@ -1126,7 +1126,6 @@ Using gap_long, summarize the mean life expectancy by continent
 
 Modify your R notebook to load the data from gap, show the first 10 lines, and display a graph.  
 Give each R code section a heading and short summary.
-
     -   <span></span>
 
         ```
@@ -1200,3 +1199,38 @@ Give each R code section a heading and short summary.
 
 -   I like to print out `sessionInfo()` in my R Notebooks so I know what package versions I used
     -   Mention `packrat` 
+
+
+
+## 8. Using Git from RStudio (15 minutes)
+
+-   Setup RStudio to use git
+    -   In RStudio, click on Tools > Global Options... > Git/SVN
+    -   Make sure there's a git executable listed there. If not, browse for it, or ask for help
+    -   Make sure the grey box under "SSH RSA Key" shows a file name and a "View public key" link exists next to it.
+        - Clicking on "View public key" opens a window opens which is not blank.  
+    -   If the "SSH RSA Key" box is blank, click "Create RSA key..." and leave the optional Passphrase blank and click "Create".
+
+-   Setup the Project with a git repository
+    -   Go to Tools > Project Options > Git/SVN
+    -   Set version control system to Git, and allow RStudio to initialize repository
+
+-   Now we have a git tab: Explore the interface
+    -   Check the boxes on some files (**stage**)
+    -   Commit, and add a message. Notice it shows a diff
+    -   Make some changes to a file and save
+    -   Show how to diff and how to revert
+    -   Click the history button to see the history
+
+-   Syncing with GitHub
+    -   We have push and pull buttons, but they're grayed out
+    -   To enable them, we need to add a remote
+    -   Go to Tools > Terminal > New Terminal or Git > Gear > Shell
+
+    -   <span></span>
+
+        ```
+        git remote add origin https://github.com/mickley/rstudio-test.git
+        git push -u origin master
+        ```
+

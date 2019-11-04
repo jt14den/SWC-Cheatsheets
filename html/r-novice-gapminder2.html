@@ -1019,10 +1019,8 @@ ggplot(data = gap, aes(x = continent, y = lifeExp, fill = factor(year))) +
 </ul>
 <p><strong><em>———- Socrative ———-</em></strong>: R Notebook Challenge</p>
 <p>Modify your R notebook to load the data from gap, show the first 10 lines, and display a graph.<br />
-Give each R code section a heading and short summary.</p>
-<pre><code>-   &lt;span&gt;&lt;/span&gt;
-
-    ```
+Give each R code section a heading and short summary. - <span></span></p>
+<pre><code>    ```
     ## Reading &amp; Displaying Data
 
     This chunk reads in the gap dataset and shows the first 10 lines
@@ -1103,6 +1101,42 @@ Give each R code section a heading and short summary.</p>
 <li>I like to print out <code>sessionInfo()</code> in my R Notebooks so I know what package versions I used
 <ul>
 <li>Mention <code>packrat</code></li>
+</ul></li>
+</ul>
+<h2 id="using-git-from-rstudio-15-minutes">8. Using Git from RStudio (15 minutes)</h2>
+<ul>
+<li>Setup RStudio to use git
+<ul>
+<li>In RStudio, click on Tools &gt; Global Options… &gt; Git/SVN</li>
+<li>Make sure there’s a git executable listed there. If not, browse for it, or ask for help</li>
+<li>Make sure the grey box under “SSH RSA Key” shows a file name and a “View public key” link exists next to it.
+<ul>
+<li>Clicking on “View public key” opens a window opens which is not blank.<br />
+</li>
+</ul></li>
+<li>If the “SSH RSA Key” box is blank, click “Create RSA key…” and leave the optional Passphrase blank and click “Create”.</li>
+</ul></li>
+<li>Setup the Project with a git repository
+<ul>
+<li>Go to Tools &gt; Project Options &gt; Git/SVN</li>
+<li>Set version control system to Git, and allow RStudio to initialize repository</li>
+</ul></li>
+<li>Now we have a git tab: Explore the interface
+<ul>
+<li>Check the boxes on some files (<strong>stage</strong>)</li>
+<li>Commit, and add a message. Notice it shows a diff</li>
+<li>Make some changes to a file and save</li>
+<li>Show how to diff and how to revert</li>
+<li>Click the history button to see the history</li>
+</ul></li>
+<li>Syncing with GitHub
+<ul>
+<li>We have push and pull buttons, but they’re grayed out</li>
+<li>To enable them, we need to add a remote</li>
+<li><p>Go to Tools &gt; Terminal &gt; New Terminal or Git &gt; Gear &gt; Shell</p></li>
+<li><p><span></span></p>
+<pre><code>git remote add origin https://github.com/mickley/rstudio-test.git
+git push -u origin master</code></pre></li>
 </ul></li>
 </ul>
 </body>
