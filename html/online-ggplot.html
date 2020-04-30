@@ -100,6 +100,27 @@
 </ul>
 <p><strong><em>---------- Socrative #1 ----------</em></strong>: Test everything in Zoom</p>
 <h2 id="publication-quality-graphics-60-minutes">5. Publication-quality graphics (60 minutes)</h2>
+<h3 id="background-r">Background R</h3>
+<ul>
+<li>Projects?</li>
+<li>Read in data
+<ul>
+<li>Tab-complete</li>
+<li>CTRL+Enter or CMD+Enter</li>
+<li><code>gap &lt;- read.csv(&quot;data/gapminder_data.csv&quot;)</code></li>
+</ul></li>
+<li>Getting help
+<ul>
+<li><code>?read.csv</code></li>
+</ul></li>
+<li>Examine data
+<ul>
+<li><code>head(gap)</code></li>
+<li><code>str(gap)</code></li>
+</ul></li>
+<li>Dropbox script to follow along</li>
+</ul>
+<h3 id="ggplot">ggplot</h3>
 <p><strong>Question: How many of you have made a plot in R? How many of you have used ggplot?</strong></p>
 <ul>
 <li>R has a few different ways to plot things.<br />
@@ -112,34 +133,34 @@
 <li>Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
     geom_point()</code></pre></li>
 </ul></li>
 <li>First we load ggplot2</li>
-<li>Then we call ggplot, all the options in here apply to all layers (aes maps the data)
+<li>Then we call ggplot, all the options in here apply to all layers (mapping = aes maps the data)
 <ul>
 <li>ggplot is smart enough to look for those columns in the data we gave it, no need to subset</li>
 <li>If we stop here we don't get a graph</li>
-<li><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp))</code></li>
+<li><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp))</code></li>
 <li>So finally, we add a points (scatterplot) layer called a geometry</li>
 </ul></li>
 </ul>
 <p><strong><em>---------- Socrative #2 ----------</em></strong>: Modify a ggplot graph</p>
 <ul>
-<li><p><code>ggplot(data = gap, aes(x=year, y=lifeExp)) + geom_point()</code></p></li>
+<li><p><code>ggplot(data = gap, mapping = aes(x=year, y=lifeExp)) + geom_point()</code></p></li>
 <li>Using a scatterplot probably isn't a good way to show change over time.
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, 
+<pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, 
     by = country, color = continent)) +
     geom_line()</code></pre></li>
 </ul></li>
 <li>We're using a line geometry instead of a points geometry now</li>
-<li>the <strong>by</strong> aesthetic draws a line for each country, and then we color each continent differently.</li>
+<li>the <strong>by</strong> mapping = aesthetic draws a line for each country, and then we color each continent differently.</li>
 <li><strong>Question: What if we wanted the points on the graph too?</strong>
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, 
+<pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, 
     by = country, color = continent)) +
     geom_line() + 
     geom_point()</code></pre></li>
@@ -147,66 +168,66 @@
 <li>Layers get drawn on top of each other
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, by = country)) +
-    geom_line(aes(color = continent)) + 
+<pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, by = country)) +
+    geom_line(mapping = aes(color = continent)) + 
     geom_point()</code></pre></li>
 </ul></li>
-<li>Here we've switched the color aesthetic from global to just the lines</li>
-<li>If we want to set everything on a geometry to the same color, we set it outside the aesthetic function
+<li>Here we've switched the color mapping = aesthetic from global to just the lines</li>
+<li>If we want to set everything on a geometry to the same color, we set it outside the mapping = aesthetic function
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, by = country)) +
-    geom_line(aes(color = continent)) + 
+<pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, by = country)) +
+    geom_line(mapping = aes(color = continent)) + 
     geom_point(color = &quot;blue&quot;)</code></pre></li>
 </ul></li>
 <li>Let's go back to our first example, but color the points by continent
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
     geom_point()</code></pre></li>
 </ul></li>
 <li>Hard to see relationship with all those outliers, so let's use a log scale
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
     geom_point(alpha = 0.5) + 
     scale_x_log10()</code></pre></li>
 </ul></li>
 <li>Notice the data has been transformed before graphing, x axis reflects this (1,000, 10,000, 100,000)</li>
-<li><p>Here we also use transparency so that overlapping points are easier to see. This works with any geometry. We could also set this to use a data column inside aes()</p></li>
+<li><p>Here we also use transparency so that overlapping points are easier to see. This works with any geometry. We could also set this to use a data column inside mapping = aes()</p></li>
 <li>We can fit a simple linear regression line (linear model) using a geom_smooth geometry
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
     geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;)</code></pre></li>
 </ul></li>
 <li>It even gives us a confidence interval! We can make the line thicker using size
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
     geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;, size=1.5)</code></pre></li>
 </ul></li>
 </ul>
 <p><strong><em>---------- Socrative #2 ----------</em></strong>: Color by continent &amp; add separate trends</p>
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
     geom_point(size = 1.5) +
     scale_x_log10() +
-    geom_smooth(method=&quot;lm&quot;)</code></pre></li>
+    geom_smooth(method = &quot;lm&quot;)</code></pre></li>
 <li>Many peope are colorblind. In addition to color, it's a good idea to also use shape
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
-    geom_point(size = 2, aes(shape = continent)) + 
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
+    geom_point(size = 2, mapping = aes(shape = continent)) + 
     scale_x_log10() + 
-    geom_smooth(method=&quot;lm&quot;)</code></pre></li>
+    geom_smooth(method = &quot;lm&quot;)</code></pre></li>
 </ul></li>
 <li>Let's clean it up for publication. We'll add nicer axis labels, a title, and change the y-axis and theme
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
-    geom_point(size = 2, aes(shape = continent)) + 
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
+    geom_point(size = 2, mapping = aes(shape = continent)) + 
     scale_x_log10() + 
     geom_smooth(method=&quot;lm&quot;) + 
     scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, by = 10)) + 
@@ -235,9 +256,9 @@
 <ul>
 <li><p><span></span></p>
 <pre><code>
-ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) + 
     facet_wrap(~ year) + 
-    geom_point(size = 2, aes(shape = continent)) + 
+    geom_point(size = 2, mapping = aes(shape = continent)) + 
     scale_x_log10() +
     geom_smooth(method = &quot;lm&quot;)</code></pre></li>
 </ul>
@@ -249,7 +270,7 @@ ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
 
 L.countries
 
-ggplot(L.countries, aes(x = year, y = lifeExp, color = country)) + 
+ggplot(L.countries, mapping = aes(x = year, y = lifeExp, color = country)) + 
     geom_line() + facet_wrap( ~ country)</code></pre></li>
 <li><p>Draws a panel for each unique value in that column</p></li>
 </ul>
@@ -259,7 +280,7 @@ ggplot(L.countries, aes(x = year, y = lifeExp, color = country)) +
 <pre><code>lifeExp_country &lt;- function(data, countries) {
      country_subset &lt;- data %&gt;%
           filter(country %in% countries)
-     ggplot(country_subset, aes(x = year, y = lifeExp, color = country)) + 
+     ggplot(country_subset, mapping = aes(x = year, y = lifeExp, color = country)) + 
           geom_line() + facet_wrap( ~ country)
 }
 
@@ -308,14 +329,14 @@ lifeExp_country(gap, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;Canada
 <li><p>Create a boxplot showing the spread of life expectancy for each continent</p>
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = continent, y = lifeExp)) + 
+<pre><code>ggplot(data = gap, mapping = aes(x = continent, y = lifeExp)) + 
    geom_boxplot() + 
    geom_jitter(width = 0.2, alpha = 0.5, color = &quot;tomato&quot;)
 
-ggplot(data = gap, aes(x = continent, y = lifeExp)) + 
+ggplot(data = gap, mapping = aes(x = continent, y = lifeExp)) + 
     geom_boxplot() + 
     geom_jitter(width = 0.2, alpha = 0.5, size = 2, 
-        aes(color = factor(year)))</code></pre></li>
+        mapping = aes(color = factor(year)))</code></pre></li>
 </ul></li>
 </ul>
 <h3 id="ggplot2-challenge-3">GGplot2 Challenge #3:</h3>
@@ -323,10 +344,10 @@ ggplot(data = gap, aes(x = continent, y = lifeExp)) +
 <li><p>Create a grouped barplot showing life expectancy by year for each continent</p>
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, aes(x = continent)) + 
+<pre><code>ggplot(data = gap, mapping = aes(x = continent)) + 
     geom_bar()
 
-ggplot(data = gap, aes(x = continent, y = lifeExp, fill = factor(year))) + 
+ggplot(data = gap, mapping = aes(x = continent, y = lifeExp, fill = factor(year))) + 
     geom_bar(stat = &quot;summary&quot;, fun.y = &quot;mean&quot;, position = &quot;dodge&quot;)</code></pre></li>
 </ul></li>
 </ul>

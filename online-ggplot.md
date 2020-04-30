@@ -66,6 +66,22 @@ subtitle: R for Reproducible Scientific Analysis - plotting
 
 ## 5. Publication-quality graphics (60 minutes)
 
+### Background R
+
+-   Projects?
+-   Read in data
+    +   Tab-complete
+    +   CTRL+Enter or CMD+Enter
+    +   `gap <- read.csv("data/gapminder_data.csv")`
+-   Getting help
+    +   `?read.csv`
+-   Examine data
+    +   `head(gap)`
+    +   `str(gap)`
+-   Dropbox script to follow along
+
+### ggplot
+
 **Question: How many of you have made a plot in R?  How many of you have used ggplot?**
 
 -   R has a few different ways to plot things.  
@@ -76,37 +92,37 @@ subtitle: R for Reproducible Scientific Analysis - plotting
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+        ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
             geom_point()
         ```
 
 -   First we load ggplot2
--   Then we call ggplot, all the options in here apply to all layers (aes maps the data)
+-   Then we call ggplot, all the options in here apply to all layers (mapping = aes maps the data)
     -   ggplot is smart enough to look for those columns in the data we gave it, no need to subset
     -   If we stop here we don't get a graph
-    -   `ggplot(data = gap, aes(x = gdpPercap, y = lifeExp))`
+    -   `ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp))`
     -   So finally, we add a points (scatterplot) layer called a geometry
   
 ***---------- Socrative #2 ----------***: Modify a ggplot graph
 
--   `ggplot(data = gap, aes(x=year, y=lifeExp)) + geom_point()`
+-   `ggplot(data = gap, mapping = aes(x=year, y=lifeExp)) + geom_point()`
 
 -   Using a scatterplot probably isn't a good way to show change over time.
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = year, y = lifeExp, 
+        ggplot(data = gap, mapping = aes(x = year, y = lifeExp, 
             by = country, color = continent)) +
             geom_line()
         ```
 
 -   We're using a line geometry instead of a points geometry now
--   the **by** aesthetic draws a line for each country, and then we color each continent differently.
+-   the **by** mapping = aesthetic draws a line for each country, and then we color each continent differently.
 -   **Question: What if we wanted the points on the graph too?**
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = year, y = lifeExp, 
+        ggplot(data = gap, mapping = aes(x = year, y = lifeExp, 
             by = country, color = continent)) +
             geom_line() + 
             geom_point()
@@ -116,18 +132,18 @@ subtitle: R for Reproducible Scientific Analysis - plotting
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = year, y = lifeExp, by = country)) +
-            geom_line(aes(color = continent)) + 
+        ggplot(data = gap, mapping = aes(x = year, y = lifeExp, by = country)) +
+            geom_line(mapping = aes(color = continent)) + 
             geom_point()
         ```
 
--   Here we've switched the color aesthetic from global to just the lines
--   If we want to set everything on a geometry to the same color, we set it outside the aesthetic function
+-   Here we've switched the color mapping = aesthetic from global to just the lines
+-   If we want to set everything on a geometry to the same color, we set it outside the mapping = aesthetic function
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = year, y = lifeExp, by = country)) +
-            geom_line(aes(color = continent)) + 
+        ggplot(data = gap, mapping = aes(x = year, y = lifeExp, by = country)) +
+            geom_line(mapping = aes(color = continent)) + 
             geom_point(color = "blue")
         ```
 
@@ -135,7 +151,7 @@ subtitle: R for Reproducible Scientific Analysis - plotting
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+        ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
             geom_point()
         ```
 
@@ -143,19 +159,19 @@ subtitle: R for Reproducible Scientific Analysis - plotting
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+        ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
             geom_point(alpha = 0.5) + 
             scale_x_log10()
         ```
 
 -   Notice the data has been transformed before graphing, x axis reflects this (1,000, 10,000, 100,000)
--   Here we also use transparency so that overlapping points are easier to see.  This works with any geometry.  We could also set this to use a data column inside aes()
+-   Here we also use transparency so that overlapping points are easier to see.  This works with any geometry.  We could also set this to use a data column inside mapping = aes()
 
 -   We can fit a simple linear regression line (linear model) using a geom_smooth geometry
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+        ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
             geom_point() + scale_x_log10() + geom_smooth(method="lm")
         ```
 
@@ -163,7 +179,7 @@ subtitle: R for Reproducible Scientific Analysis - plotting
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+        ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
             geom_point() + scale_x_log10() + geom_smooth(method="lm", size=1.5)
         ```
 
@@ -172,28 +188,28 @@ subtitle: R for Reproducible Scientific Analysis - plotting
 -   <span></span>
 
     ```
-    ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+    ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
         geom_point(size = 1.5) +
         scale_x_log10() +
-        geom_smooth(method="lm")
+        geom_smooth(method = "lm")
     ```
 
 -   Many peope are colorblind.  In addition to color, it's a good idea to also use shape
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
-            geom_point(size = 2, aes(shape = continent)) + 
+        ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
+            geom_point(size = 2, mapping = aes(shape = continent)) + 
             scale_x_log10() + 
-            geom_smooth(method="lm")
+            geom_smooth(method = "lm")
         ```
 
 -   Let's clean it up for publication.  We'll add nicer axis labels, a title, and change the y-axis and theme
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
-            geom_point(size = 2, aes(shape = continent)) + 
+        ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
+            geom_point(size = 2, mapping = aes(shape = continent)) + 
             scale_x_log10() + 
             geom_smooth(method="lm") + 
             scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, by = 10)) + 
@@ -221,9 +237,9 @@ subtitle: R for Reproducible Scientific Analysis - plotting
 
     ```
 
-    ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+    ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) + 
         facet_wrap(~ year) + 
-        geom_point(size = 2, aes(shape = continent)) + 
+        geom_point(size = 2, mapping = aes(shape = continent)) + 
         scale_x_log10() +
         geom_smooth(method = "lm")
     ```
@@ -238,7 +254,7 @@ subtitle: R for Reproducible Scientific Analysis - plotting
 
     L.countries
 
-    ggplot(L.countries, aes(x = year, y = lifeExp, color = country)) + 
+    ggplot(L.countries, mapping = aes(x = year, y = lifeExp, color = country)) + 
         geom_line() + facet_wrap( ~ country)
     ```
   
@@ -252,7 +268,7 @@ subtitle: R for Reproducible Scientific Analysis - plotting
     lifeExp_country <- function(data, countries) {
          country_subset <- data %>%
               filter(country %in% countries)
-         ggplot(country_subset, aes(x = year, y = lifeExp, color = country)) + 
+         ggplot(country_subset, mapping = aes(x = year, y = lifeExp, color = country)) + 
               geom_line() + facet_wrap( ~ country)
     }
 
@@ -307,14 +323,14 @@ subtitle: R for Reproducible Scientific Analysis - plotting
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = continent, y = lifeExp)) + 
+        ggplot(data = gap, mapping = aes(x = continent, y = lifeExp)) + 
            geom_boxplot() + 
            geom_jitter(width = 0.2, alpha = 0.5, color = "tomato")
 
-        ggplot(data = gap, aes(x = continent, y = lifeExp)) + 
+        ggplot(data = gap, mapping = aes(x = continent, y = lifeExp)) + 
             geom_boxplot() + 
             geom_jitter(width = 0.2, alpha = 0.5, size = 2, 
-                aes(color = factor(year)))
+                mapping = aes(color = factor(year)))
         ```
 
 ### GGplot2 Challenge #3: 
@@ -324,10 +340,10 @@ subtitle: R for Reproducible Scientific Analysis - plotting
     -   <span></span>
 
         ```
-        ggplot(data = gap, aes(x = continent)) + 
+        ggplot(data = gap, mapping = aes(x = continent)) + 
             geom_bar()
 
-        ggplot(data = gap, aes(x = continent, y = lifeExp, fill = factor(year))) + 
+        ggplot(data = gap, mapping = aes(x = continent, y = lifeExp, fill = factor(year))) + 
             geom_bar(stat = "summary", fun.y = "mean", position = "dodge")
         ```
 
