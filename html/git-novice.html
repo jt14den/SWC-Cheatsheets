@@ -1,28 +1,20 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Git Guacamole</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-  </style>
-  <link rel="stylesheet" href="notes.css">
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="notes.css" type="text/css" />
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 </head>
 <body>
-<header>
+<div id="header">
 <h1 class="title">Git Guacamole</h1>
-<p class="subtitle">Novice Git Lesson</p>
-</header>
-<p><em>Credits to Bryon Smith (<a href="https://github.com/bsmith89">@bsmith89</a>) for this. He started <a href="https://github.com/bsmith89/git-novice-outline">this lesson</a>, and I’ve merely added to it</em></p>
+<h1 class="subtitle">Novice Git Lesson</h1>
+</div>
+<p><em>Credits to Bryon Smith (<a href="https://github.com/bsmith89">@bsmith89</a>) for this. He started <a href="https://github.com/bsmith89/git-novice-outline">this lesson</a>, and I've merely added to it</em></p>
 <h2 id="pre-workshop-setup">Pre-Workshop Setup</h2>
 <ul>
 <li><code>mv ~/.gitconfig ~/.gitconfig~</code></li>
@@ -79,7 +71,7 @@
 <li><code>mkdir guacamole; cd guacamole</code></li>
 <li><code>git init</code></li>
 </ul></li>
-<li>We can check that it’s there. That .git folder stores all the data, don’t delete!
+<li>We can check that it's there. That .git folder stores all the data, don't delete!
 <ul>
 <li><code>ls -F -a</code></li>
 </ul></li>
@@ -99,19 +91,19 @@
 </ul></li>
 <li><code>git add instruction.txt</code></li>
 <li><code>git status</code></li>
-<li>Now git knows to keep track of instructions.txt, but it hasn’t recorded changes yet</li>
+<li>Now git knows to keep track of instructions.txt, but it hasn't recorded changes yet</li>
 <li><code>git commit</code>
 <ul>
 <li>Adding instructions.txt</li>
 <li>This is a short recipe for guacamole</li>
 <li>Usually we add a 50 character summary as a title, and then get more descriptive</li>
 </ul></li>
-<li>Now that we’ve run commit, git saves it in the .git directory</li>
+<li>Now that we've run commit, git saves it in the .git directory</li>
 <li>Point out the identifier/hash</li>
 <li><code>git status</code></li>
 <li><p><code>git log</code></p></li>
 <li><code>nano instructions.txt</code></li>
-<li>Add “Enjoy!” as the last line</li>
+<li>Add &quot;Enjoy!&quot; as the last line</li>
 <li><code>git status</code>
 <ul>
 <li>Point out the checkout to discard changes bit</li>
@@ -119,7 +111,7 @@
 <li><code>git diff</code></li>
 <li><p>Discuss how to read a diff</p></li>
 </ul>
-<p><strong><em>———- Socrative #1 ———-</em></strong></p>
+<p><strong><em>---------- Socrative #1 ----------</em></strong></p>
 <ul>
 <li>Instead of opening an editor, we can just put the commit message in the command
 <ul>
@@ -130,10 +122,10 @@
 <li><code>git commit -m &quot;Edited the guacamole instructions</code></li>
 </ul></li>
 <li><code>git log</code></li>
-<li>Draw a diagram of the three “areas” of git
+<li>Draw a diagram of the three &quot;areas&quot; of git
 <ul>
-<li>[filesystem] –&gt;add [staging area] –&gt;commit [repository]</li>
-<li>Think of commit as taking a snapshot, and add as deciding what’s in it</li>
+<li>[filesystem] --&gt;add [staging area] --&gt;commit [repository]</li>
+<li>Think of commit as taking a snapshot, and add as deciding what's in it</li>
 <li>Staging area
 <ul>
 <li>Lets us only commit some of our file changes.</li>
@@ -141,8 +133,8 @@
 </ul></li>
 </ul></li>
 </ul>
-<p><strong><em>———- Socrative #2 ———-</em></strong></p>
-<p><strong><em>———- Socrative #3 ———-</em></strong></p>
+<p><strong><em>---------- Socrative #2 ----------</em></strong></p>
+<p><strong><em>---------- Socrative #3 ----------</em></strong></p>
 <ul>
 <li>Add a new file <code>ingredients.txt</code>: 2 Avocados, 1 lime, 2 tsp salt
 <ul>
@@ -167,11 +159,11 @@
 <li><code>git log --oneline</code></li>
 </ul></li>
 </ul>
-<p><strong><em>———- Socrative #4 ———-</em></strong></p>
+<p><strong><em>---------- Socrative #4 ----------</em></strong></p>
 <h2 id="exploring-history">5. Exploring History</h2>
 <h4 id="identifying-and-recovering-old-versions-of-files-reviewing-changes">Identifying and recovering old versions of files, reviewing changes</h4>
 <ul>
-<li>Let’s add another step to instructions.txt: Squeeze orange</li>
+<li>Let's add another step to instructions.txt: Squeeze orange</li>
 <li>Remember when we learned that each commit has an identifier?
 <ul>
 <li>The most recent commit is called HEAD,</li>
@@ -179,21 +171,21 @@
 <li><code>git diff HEAD instructions.txt</code></li>
 <li><code>git diff HEAD~1 instructions.txt</code></li>
 <li><code>HEAD</code> refers to the most recent commit</li>
-<li><code>~1</code> means “minus one”</li>
+<li><code>~1</code> means &quot;minus one&quot;</li>
 <li><code>git log --oneline</code></li>
 <li><p><code>git diff &lt;HASH&gt; instructions.txt</code></p></li>
-<li>If we can see past states, we can also restore them! Let’s get rid of orange.</li>
+<li>If we can see past states, we can also restore them! Let's get rid of orange.</li>
 <li><code>git status</code></li>
 <li><code>git checkout HEAD instructions.txt</code></li>
 <li><code>git status</code></li>
 <li><code>cat instructions.txt</code></li>
-<li><p>Notice that reverting a small change is much easier becuase we’ve split our work up into multiple files.</p></li>
+<li><p>Notice that reverting a small change is much easier becuase we've split our work up into multiple files.</p></li>
 </ul>
-<p><strong><em>———- Socrative #5 ———-</em></strong></p>
-<p><strong><em>———- Socrative #6 ———-</em></strong></p>
+<p><strong><em>---------- Socrative #5 ----------</em></strong></p>
+<p><strong><em>---------- Socrative #6 ----------</em></strong></p>
 <h2 id="ignoring-things-.gitignore">6. Ignoring things (<code>.gitignore</code>)</h2>
 <ul>
-<li>What if we include some files that we don’t want to track?
+<li>What if we include some files that we don't want to track?
 <ul>
 <li><code>nano a.log</code></li>
 <li><code>nano b.log</code></li>
@@ -218,7 +210,7 @@
 <ul>
 <li>Git is great for collaboration!</li>
 <li>Direct learners to make a github account and/or log in</li>
-<li>Make a github repository called ‘guacamole’
+<li>Make a github repository called 'guacamole'
 <ul>
 <li>This is like mkdir, cd, and git init on the GitHub server</li>
 <li>But we want to connect the two</li>
@@ -226,7 +218,7 @@
 <li>Follow the instructions to add the remote repository
 <ul>
 <li>Be sure to use HTTPS</li>
-<li>SSH is preferred and more secure, but it’s more complicated to setup</li>
+<li>SSH is preferred and more secure, but it's more complicated to setup</li>
 <li><code>git remote add origin [URL]</code></li>
 <li><code>git remote -v</code></li>
 <li>The name origin is the local nickname for the remote repository.<br />
@@ -241,8 +233,8 @@
 <ul>
 <li>Viewing files, seeing history of file, editing</li>
 </ul></li>
-<li>Show students that local changes which are NOT committed don’t end up on the remote.</li>
-<li>Ask students to discuss the difference between ‘commit’ and ‘push’.</li>
+<li>Show students that local changes which are NOT committed don't end up on the remote.</li>
+<li>Ask students to discuss the difference between 'commit' and 'push'.</li>
 <li>To get the latest version FROM the remote:
 <ul>
 <li><code>git pull origin master</code></li>
@@ -258,7 +250,7 @@
 <li><code>git clone https://github.com/mickley/guacamole.git ~/Desktop/james-guacamole</code></li>
 <li><code>cd james-guacamole</code></li>
 </ul></li>
-<li><p>Make changes and push back to the collaborator’s repository.</p></li>
+<li><p>Make changes and push back to the collaborator's repository.</p></li>
 <li>Back in your original repository:
 <ul>
 <li><code>git pull origin master</code></li>
@@ -270,8 +262,8 @@
 <h2 id="conflicts">9. Conflicts</h2>
 <h4 id="how-git-handles-conflicts">How git handles conflicts</h4>
 <ul>
-<li>When people are working in parallel (or on 2 computers), there’s a chance they could both edit the same file</li>
-<li><p>So let’s make one, and see what happens and what to do about it</p></li>
+<li>When people are working in parallel (or on 2 computers), there's a chance they could both edit the same file</li>
+<li><p>So let's make one, and see what happens and what to do about it</p></li>
 <li>Make an arbitrary change to your collaborators <code>instructions.txt</code>.</li>
 <li>Push that change upstream.</li>
 <li>Make (and commit) a different change to <em>your</em> <code>instructions.txt</code> <strong>on the same line as your collaborator changed</strong>.</li>
@@ -281,7 +273,7 @@
 <li><code>git pull origin master</code></li>
 <li><code>git status</code></li>
 <li><code>cat instructions.txt</code></li>
-<li>HEAD is your version, the commit id is the version on the github repository (your collaborator’s)</li>
+<li>HEAD is your version, the commit id is the version on the github repository (your collaborator's)</li>
 <li>You need to rectify things first before you can send it back to the repository
 <ul>
 <li><code>nano instruction.txt</code></li>
@@ -291,7 +283,7 @@
 </ul></li>
 <li><code>git log</code></li>
 <li><p><code>git push origin master</code></p></li>
-<li>In practice, it’s a good idea to run <code>git pull origin master</code> before making changes</li>
+<li>In practice, it's a good idea to run <code>git pull origin master</code> before making changes</li>
 <li>Show them how to comment on a diff in Github</li>
 <li><p>Merging is another reason to split up changes into small groups of files</p></li>
 </ul>
@@ -299,24 +291,24 @@
 <ul>
 <li>Branching is just collaboration with yourself.<br />
 </li>
-<li>You’re carrying on a parallel line of thought</li>
+<li>You're carrying on a parallel line of thought</li>
 <li>Experiment with reformatting your entire thesis without risking your progress.</li>
 <li>Or rewrite a paper for a particular publication</li>
 </ul>
 <h2 id="hosting">13. Hosting</h2>
 <ul>
-<li>One nice thing about git is that it’s “distributed”
+<li>One nice thing about git is that it's &quot;distributed&quot;
 <ul>
-<li>Any git repository can also be the server, there’s no need for a central server</li>
+<li>Any git repository can also be the server, there's no need for a central server</li>
 <li>So two users can just collaborate with each other without the need for github etc.</li>
-<li>It’s also easy to move from github to some other service</li>
+<li>It's also easy to move from github to some other service</li>
 </ul></li>
-<li>But websites like GitHub are very useful. They’re a little nicer than the commandline version of git.
+<li>But websites like GitHub are very useful. They're a little nicer than the commandline version of git.
 <ul>
 <li>Github, however, is built on openness. By default all repositories are public</li>
 <li>This may not be ideal for you, or may even be illegal (HIPAA)</li>
 <li>Some options:
-<ol type="1">
+<ol style="list-style-type: decimal">
 <li>Use another service that allows private repositories. Gitlab and Bitbucket are a bit better.<br />
 </li>
 <li>Apply for gitlab for Educational Use: https://education.github.com/discount_requests/new</li>
@@ -330,7 +322,7 @@
 <h2 id="open-science">10. Open Science</h2>
 <ul>
 <li>This is basically an electronic lab notebook</li>
-<li>It’s also a good way to share information for reproducibility
+<li>It's also a good way to share information for reproducibility
 <ul>
 <li>The data, and code are there together. Maybe also figures or the paper itself</li>
 </ul></li>

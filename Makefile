@@ -5,3 +5,4 @@ all:
 	pandoc --css notes.css -H header.html -o html/r-novice-gapminder2.html r-novice-gapminder2.md
 	pandoc --css notes.css -H header.html -o html/openrefine-sql.html openrefine-sql.md
 	pandoc --css notes.css -H header.html -o html/template.html template.md
+	pandoc --css notes.css -H header.html -o html/online-ggplot.html online-ggplot.md

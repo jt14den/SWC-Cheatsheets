@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Online Workshop - ggplot2</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="notes.css" type="text/css" />
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+</head>
+<body>
+<div id="header">
+<h1 class="title">Online Workshop - ggplot2</h1>
+<h1 class="subtitle">R for Reproducible Scientific Analysis - plotting</h1>
+</div>
+<h2 id="before-the-workshop-starts">Before the workshop starts</h2>
+<ol style="list-style-type: decimal">
+<li>Turn on Do-Not-Disturb (phone + computer)</li>
+<li>Clear desktop, download the data, and save on desktop</li>
+<li>Close as many running programs as possible</li>
+<li>Open up Socrative and login to the teacher tools</li>
+<li>Open up etherpad, and the course website</li>
+<li>Make sure Dropbox is running</li>
+<li>Screen share the etherpad TODO list: (workshop website, etherpad, introduce yourself, choose breakout room, install packages/test software, pre-workshop survey)</li>
+</ol>
+<h2 id="workshop-introduction">Workshop introduction</h2>
+<ul>
+<li>Etherpad intro
+<ul>
+<li>Collaborative note taking. Anyone can contribute notes, but instructors will be adding a lot, so that you don't have to. This way you can focus on listening and coding, rather than notes.</li>
+<li>A place to ask questions. We'd prefer this over the Zoom chat, we can keep the chat.</li>
+</ul></li>
+<li>Code of Conduct
+<ul>
+<li>We ask that you please be respectful to everyone here.</li>
+<li>Teaching this is hard work, and not everyone is on the same knowledge level.</li>
+<li>Please do not record this session, there are privacy implications to this</li>
+<li>Please pay attention to what you are screen sharing, and any private messages, and practice respect here too.</li>
+</ul></li>
+<li>Helpers
+<ul>
+<li>We have a bunch of helpers to help you when we break into small groups</li>
+<li>They're also available to answer questions and troubleshoot</li>
+</ul></li>
+<li>Socrative
+<ul>
+<li>We'll use this to ask questions and do short checkpoint assignments</li>
+</ul></li>
+<li>Why do this workshop?
+<ul>
+<li>Time-saving!!! Work smarter, not harder!</li>
+<li>Reproducible research, collaboration</li>
+</ul></li>
+</ul>
+<h2 id="intro-to-zoom">Intro to Zoom</h2>
+<ul>
+<li>Non-Verbal feedback
+<ul>
+<li>Even though we're not in the same room, we want to see your feedback</li>
+<li>We will use the Yes and No non-verbal feedback icons in the Participants window to answer questions and as Stop and Go signs.
+<ul>
+<li>If you're stuck, use these to let me know if you need me to slow down</li>
+<li>I'll also remind you to use them at times</li>
+<li>Go ahead and click on the Participants button at the bottom of your screen</li>
+<li>There's also a Raise Hand icon that you can use to ask a question</li>
+</ul></li>
+</ul></li>
+<li>Muting and Unmuting
+<ul>
+<li>Please keep yourself muted when you can, so we can hear.</li>
+<li>You can temporarily unmute by pressing spacebar.</li>
+</ul></li>
+<li>Breakout rooms + screen sharing
+<ul>
+<li>We'll use this for you to work through problems in small groups</li>
+<li>If you get a message to join or leave a breakout room, say yes.</li>
+<li>Your helper will help you out while there.</li>
+</ul></li>
+<li>Setting up your screen
+<ul>
+<li>If you have a way of using two screens, do that.</li>
+<li>Your main screen will be your coding screen, and you can watch me on your other one</li>
+<li>If you only have one screen, try to put RStudio and Zoom side-by-side
+<ul>
+<li>Set Zoom to Fit to Window</li>
+</ul></li>
+</ul></li>
+<li>What happens if Zoom crashes?
+<ul>
+<li>We will try to return to the same meeting</li>
+<li>Watch the Etherpad for updates</li>
+</ul></li>
+<li>Let's start
+<ul>
+<li>Put up a Yes in the participant window if you have Socrative open in a tab</li>
+<li>Now, we're going to break up into groups.</li>
+<li>With your helper and partner, work through the list of tasks on Socrative.</li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #1 ----------</em></strong>: Test everything in Zoom</p>
+<h2 id="publication-quality-graphics-60-minutes">5. Publication-quality graphics (60 minutes)</h2>
+<p><strong>Question: How many of you have made a plot in R? How many of you have used ggplot?</strong></p>
+<ul>
+<li>R has a few different ways to plot things.<br />
+</li>
+<li>It comes with a basic plotting package, but most people don't use this anymore, it's harder to modify</li>
+<li>A better option is ggplot2, which is more flexible, build plots in layers (kinda like photoshop)
+<ul>
+<li><code>library(ggplot2)</code></li>
+</ul></li>
+<li>Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+    geom_point()</code></pre></li>
+</ul></li>
+<li>First we load ggplot2</li>
+<li>Then we call ggplot, all the options in here apply to all layers (aes maps the data)
+<ul>
+<li>ggplot is smart enough to look for those columns in the data we gave it, no need to subset</li>
+<li>If we stop here we don't get a graph</li>
+<li><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp))</code></li>
+<li>So finally, we add a points (scatterplot) layer called a geometry</li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #2 ----------</em></strong>: Modify a ggplot graph</p>
+<ul>
+<li><p><code>ggplot(data = gap, aes(x=year, y=lifeExp)) + geom_point()</code></p></li>
+<li>Using a scatterplot probably isn't a good way to show change over time.
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, 
+    by = country, color = continent)) +
+    geom_line()</code></pre></li>
+</ul></li>
+<li>We're using a line geometry instead of a points geometry now</li>
+<li>the <strong>by</strong> aesthetic draws a line for each country, and then we color each continent differently.</li>
+<li><strong>Question: What if we wanted the points on the graph too?</strong>
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, 
+    by = country, color = continent)) +
+    geom_line() + 
+    geom_point()</code></pre></li>
+</ul></li>
+<li>Layers get drawn on top of each other
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, by = country)) +
+    geom_line(aes(color = continent)) + 
+    geom_point()</code></pre></li>
+</ul></li>
+<li>Here we've switched the color aesthetic from global to just the lines</li>
+<li>If we want to set everything on a geometry to the same color, we set it outside the aesthetic function
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, by = country)) +
+    geom_line(aes(color = continent)) + 
+    geom_point(color = &quot;blue&quot;)</code></pre></li>
+</ul></li>
+<li>Let's go back to our first example, but color the points by continent
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+    geom_point()</code></pre></li>
+</ul></li>
+<li>Hard to see relationship with all those outliers, so let's use a log scale
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+    geom_point(alpha = 0.5) + 
+    scale_x_log10()</code></pre></li>
+</ul></li>
+<li>Notice the data has been transformed before graphing, x axis reflects this (1,000, 10,000, 100,000)</li>
+<li><p>Here we also use transparency so that overlapping points are easier to see. This works with any geometry. We could also set this to use a data column inside aes()</p></li>
+<li>We can fit a simple linear regression line (linear model) using a geom_smooth geometry
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+    geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;)</code></pre></li>
+</ul></li>
+<li>It even gives us a confidence interval! We can make the line thicker using size
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
+    geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;, size=1.5)</code></pre></li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #2 ----------</em></strong>: Color by continent &amp; add separate trends</p>
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+    geom_point(size = 1.5) +
+    scale_x_log10() +
+    geom_smooth(method=&quot;lm&quot;)</code></pre></li>
+<li>Many peope are colorblind. In addition to color, it's a good idea to also use shape
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+    geom_point(size = 2, aes(shape = continent)) + 
+    scale_x_log10() + 
+    geom_smooth(method=&quot;lm&quot;)</code></pre></li>
+</ul></li>
+<li>Let's clean it up for publication. We'll add nicer axis labels, a title, and change the y-axis and theme
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+    geom_point(size = 2, aes(shape = continent)) + 
+    scale_x_log10() + 
+    geom_smooth(method=&quot;lm&quot;) + 
+    scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, by = 10)) + 
+    theme_bw() + 
+    labs(title = &quot;Effects of per-capita GDP on Life Expectancy&quot;, 
+         x = &quot;GDP per Capita ($)&quot;, 
+         y = &quot;Life Expectancy (yrs)&quot;, 
+         color = &quot;Continents&quot;, 
+         shape = &quot;Continents&quot;)</code></pre></li>
+</ul></li>
+<li>Now we have this graph, but we want to save it!
+<ul>
+<li>Rstudio has an export button: pdf, image, or to clipboard, lets you change size
+<ul>
+<li>The problem with this is that it's not reproducible. You fiddle with the size, but then months from now you need to change something</li>
+</ul></li>
+<li>Better to do it programmatically
+<ul>
+<li><code>ggsave(file = &quot;life_expectancy.png&quot;)</code></li>
+<li><code>ggsave(file = &quot;life_expectancy.pdf&quot;)</code></li>
+</ul></li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #3 ----------</em></strong>: Optional ggsave &amp; ggplot variables - ggsave will overwrite the graph</p>
+<h3 id="facets-if-time-permits">Facets (if time permits)</h3>
+<ul>
+<li><p><span></span></p>
+<pre><code>
+ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+    facet_wrap(~ year) + 
+    geom_point(size = 2, aes(shape = continent)) + 
+    scale_x_log10() +
+    geom_smooth(method = &quot;lm&quot;)</code></pre></li>
+</ul>
+<h3 id="alternate-facets-with-dplyr-if-time-permits">Alternate: Facets with dplyr (if time permits)</h3>
+<ul>
+<li><p><span></span></p>
+<pre><code>L.countries &lt;- gap %&gt;% 
+    filter(country %in% c(&quot;Lebanon&quot;, &quot;Lesotho&quot;, &quot;Liberia&quot;, &quot;Libya&quot;))
+
+L.countries
+
+ggplot(L.countries, aes(x = year, y = lifeExp, color = country)) + 
+    geom_line() + facet_wrap( ~ country)</code></pre></li>
+<li><p>Draws a panel for each unique value in that column</p></li>
+</ul>
+<h3 id="ggplot2-challenge-2-write-a-function-that-takes-vector-of-countries-creates-faceted-graph">GGplot2 Challenge #2: write a function that takes vector of countries &amp; creates faceted graph</h3>
+<ul>
+<li><p><span></span></p>
+<pre><code>lifeExp_country &lt;- function(data, countries) {
+     country_subset &lt;- data %&gt;%
+          filter(country %in% countries)
+     ggplot(country_subset, aes(x = year, y = lifeExp, color = country)) + 
+          geom_line() + facet_wrap( ~ country)
+}
+
+lifeExp_country(gap, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;Canada&quot;))</code></pre></li>
+<li>Cover cowplot:
+<ul>
+<li><code>library(cowplot)</code></li>
+<li>Nicer quality than default ggplot, it's a theme</li>
+<li>Also provides a way to merge two plots into one, eg A &amp; B figures, and annotations</li>
+</ul></li>
+<li>Themes
+<ul>
+<li><p>Text size</p>
+<ul>
+<li><p><span></span></p>
+<pre><code>theme(
+    # Text size for axis ticks
+    axis.text.y = element_text(size = 14),
+    axis.text.x = element_text(size = 14),
+
+    # Text size for axis labels
+    # Also move them away from the axes a bit for more space
+    axis.title.x = element_text(size = 18, face = &quot;bold&quot;, vjust = -1),
+    axis.title.y = element_text(size = 18, face = &quot;bold&quot;, vjust = 1.5),
+
+    # Plot title size, move away from plot
+    plot.title = element_text(size = 20, face = &quot;bold&quot;, vjust = 5)
+    )</code></pre></li>
+</ul></li>
+<li><p>Adjust the legend</p>
+<ul>
+<li><p><span></span></p>
+<pre><code>theme(
+    # Text size
+    legend.text = element_text(size = 14),
+    legend.title = element_text(size = 16, face = &quot;bold&quot;),
+
+    # Position
+    legend.position = c(x = 0.8, y = 0.2)
+    )</code></pre></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="ggplot2-challenge-2">GGplot2 Challenge #2:</h3>
+<ul>
+<li><p>Create a boxplot showing the spread of life expectancy for each continent</p>
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = continent, y = lifeExp)) + 
+   geom_boxplot() + 
+   geom_jitter(width = 0.2, alpha = 0.5, color = &quot;tomato&quot;)
+
+ggplot(data = gap, aes(x = continent, y = lifeExp)) + 
+    geom_boxplot() + 
+    geom_jitter(width = 0.2, alpha = 0.5, size = 2, 
+        aes(color = factor(year)))</code></pre></li>
+</ul></li>
+</ul>
+<h3 id="ggplot2-challenge-3">GGplot2 Challenge #3:</h3>
+<ul>
+<li><p>Create a grouped barplot showing life expectancy by year for each continent</p>
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, aes(x = continent)) + 
+    geom_bar()
+
+ggplot(data = gap, aes(x = continent, y = lifeExp, fill = factor(year))) + 
+    geom_bar(stat = &quot;summary&quot;, fun.y = &quot;mean&quot;, position = &quot;dodge&quot;)</code></pre></li>
+</ul></li>
+</ul>
+<h3 id="resources">Resources</h3>
+<ul>
+<li>R Graph catalog: <a href="http://shiny.stat.ubc.ca/r-graph-catalog/" class="uri">http://shiny.stat.ubc.ca/r-graph-catalog/</a></li>
+<li>GGPlot2 online help: <a href="">http://docs.ggplot2.org/</a></li>
+<li>R Graph Cookbook: <a href="http://www.cookbook-r.com/Graphs/" class="uri">http://www.cookbook-r.com/Graphs/</a></li>
+<li>ggplot2 essentials: <a href="http://www.sthda.com/english/wiki/ggplot2-essentials" class="uri">http://www.sthda.com/english/wiki/ggplot2-essentials</a></li>
+<li>Rstudio cheatsheets: <a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a></li>
+<li>Cowplot: <a href="https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html" class="uri">https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html</a></li>
+</ul>
+</body>
+</html>
