@@ -15,7 +15,7 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
 6.    Make sure Dropbox is running
 7.    Screen share the etherpad TODO list: (workshop website, etherpad, introduce yourself, choose breakout room, install packages/test software, pre-workshop survey)
 
-## Workshop introduction
+## Workshop introduction (5 minutes)
 
 -   Etherpad intro
     +   Collaborative note taking. Anyone can contribute notes, but instructors will be adding a lot, so that you don't have to. This way you can focus on listening and coding, rather than notes.
@@ -34,7 +34,7 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
     +   Time-saving!!!  Work smarter, not harder! 
     +   Reproducible research, collaboration
 
-## Intro to Zoom
+## Intro to Zoom (20 minutes)
 
 -   Non-Verbal feedback
     +   Even though we're not in the same room, we want to see your feedback
@@ -97,14 +97,14 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
 -   It comes with a basic plotting package, but most people don't use this anymore, it's harder to modify
 -   A better option is ggplot2, which is more flexible, build plots in layers (kinda like photoshop)
     +   First we load ggplot2
-    +   `library(ggplot2)`
+        *   `library(ggplot2)`
 -   Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation
 
 -   Then we call ggplot, all the options in here apply to all layers
     +   mapping = aes() tells ggplot how data variables map to aesthetic properties
     +   ggplot is smart enough to look for those columns in the data we gave it, no need to subset
     +   If we stop here we don't get a graph
-    +   `ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp))`
+        *   `ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp))`
     +   So finally, we add a points (scatterplot) layer called a geometry
     +   <span></span>
 
@@ -211,14 +211,15 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
 
 ***---------- Socrative #3 ----------***: Color by continent & add separate trends
 
--   <span></span>
+-   Solution
+    +   <span></span>
 
-    ```
-    ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
-        geom_point(aes(color = continent), size = 0.5) +
-        scale_x_log10() +
-        geom_smooth(aes(group = continent), method = "lm")
-    ```
+        ```
+        ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
+            geom_point(aes(color = continent), size = 0.5) +
+            scale_x_log10() +
+            geom_smooth(aes(group = continent), method = "lm")
+        ```
 
 -   Many peope are colorblind.  In addition to color, it's a good idea to also use shape
     +   <span></span>
@@ -253,6 +254,7 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
 
 ***---------- Socrative #4 ----------***: Optional build new plot & make pub quality
 
+-   Solution:
     +   <span></span>
 
         ```
@@ -277,17 +279,17 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
 
 ***---------- Socrative #5 ----------***: Optional ggsave & ggplot variables
 
-- ggsave will overwrite the graph
--   <span></span>
+-   Solution: ggsave will overwrite the graph
+    +   <span></span>
 
-    ```
-    lifeExp_plot <- ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) + 
-        geom_point()
+        ```
+        lifeExp_plot <- ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) + 
+            geom_point()
 
-    lifeExp_plot
+        lifeExp_plot
 
-    ggsave(plot = lifeExp_plot, file = "figures/life_expectancy_gdpPerCapita.pdf")
-    ```
+        ggsave(plot = lifeExp_plot, file = "figures/life_expectancy_gdpPerCapita.pdf")
+        ```
 
 ### Facets (15 minutes)
 
@@ -316,16 +318,17 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
 
 ***---------- Socrative #6 ----------***: Optional Facets, facet by year, color by continent
 
--   <span></span>
+-   Solution
+    +   <span></span>
 
-    ```
-    ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, 
-        color = continent)) + 
-        facet_wrap(~ year) + 
-        geom_point(alpha = 0.5) + 
-        scale_x_log10() +
-        geom_smooth(method = "lm")
-    ```
+        ```
+        ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, 
+            color = continent)) + 
+            facet_wrap(~ year) + 
+            geom_point(alpha = 0.5) + 
+            scale_x_log10() +
+            geom_smooth(method = "lm")
+        ```
 
 ### Cowplot (10 minutes)
 
@@ -385,7 +388,6 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
 -   Rather than using theme_minimal() or theme_cowplot() by itself, we can customize that, too
 -   [http://ggplot2.tidyverse.org./reference/ggtheme.html](ggplot2.tidyverse.org./reference/ggtheme.html)
 -   [http://ggplot2.tidyverse.org./reference/theme.html](ggplot2.tidyverse.org./reference/theme.html)
--   
 -   Adjust text size
     +   <span></span>
 

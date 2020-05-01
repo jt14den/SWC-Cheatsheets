@@ -25,7 +25,7 @@
 <li>Make sure Dropbox is running</li>
 <li>Screen share the etherpad TODO list: (workshop website, etherpad, introduce yourself, choose breakout room, install packages/test software, pre-workshop survey)</li>
 </ol>
-<h2 id="workshop-introduction">Workshop introduction</h2>
+<h2 id="workshop-introduction-5-minutes">Workshop introduction (5 minutes)</h2>
 <ul>
 <li>Etherpad intro
 <ul>
@@ -54,7 +54,7 @@
 <li>Reproducible research, collaboration</li>
 </ul></li>
 </ul>
-<h2 id="intro-to-zoom">Intro to Zoom</h2>
+<h2 id="intro-to-zoom-20-minutes">Intro to Zoom (20 minutes)</h2>
 <ul>
 <li>Non-Verbal feedback
 <ul>
@@ -141,16 +141,20 @@
 <li>It comes with a basic plotting package, but most people don't use this anymore, it's harder to modify</li>
 <li>A better option is ggplot2, which is more flexible, build plots in layers (kinda like photoshop)
 <ul>
-<li>First we load ggplot2</li>
+<li>First we load ggplot2
+<ul>
 <li><code>library(ggplot2)</code></li>
+</ul></li>
 </ul></li>
 <li><p>Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation</p></li>
 <li>Then we call ggplot, all the options in here apply to all layers
 <ul>
 <li>mapping = aes() tells ggplot how data variables map to aesthetic properties</li>
 <li>ggplot is smart enough to look for those columns in the data we gave it, no need to subset</li>
-<li>If we stop here we don't get a graph</li>
+<li>If we stop here we don't get a graph
+<ul>
 <li><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp))</code></li>
+</ul></li>
 <li>So finally, we add a points (scatterplot) layer called a geometry</li>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
@@ -236,11 +240,14 @@
 </ul>
 <p><strong><em>---------- Socrative #3 ----------</em></strong>: Color by continent &amp; add separate trends</p>
 <ul>
+<li>Solution
+<ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
     geom_point(aes(color = continent), size = 0.5) +
     scale_x_log10() +
     geom_smooth(aes(group = continent), method = &quot;lm&quot;)</code></pre></li>
+</ul></li>
 <li>Many peope are colorblind. In addition to color, it's a good idea to also use shape
 <ul>
 <li><p><span></span></p>
@@ -271,21 +278,21 @@
 </ul></li>
 </ul>
 <p><strong><em>---------- Socrative #4 ----------</em></strong>: Optional build new plot &amp; make pub quality</p>
-<pre><code>+   &lt;span&gt;&lt;/span&gt;
-
-    ```
-    ggplot(data = gap, mapping = aes(x = pop, y = gdpPercap, 
-         color = continent)) + 
-         geom_point() +
-         scale_x_log10(labels = comma) + 
-         scale_y_log10(labels = comma) +
-         theme_minimal() +
-         labs(x = &quot;GDP per Capita ($)&quot;, 
-              y = &quot;Life Expectancy (yrs)&quot;, 
-              color = &quot;Continents&quot;)
-    ```</code></pre>
-<h3 id="saving-10-minutes">Saving (10 minutes)</h3>
 <ul>
+<li>Solution:
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, mapping = aes(x = pop, y = gdpPercap, 
+     color = continent)) + 
+     geom_point() +
+     scale_x_log10(labels = comma) + 
+     scale_y_log10(labels = comma) +
+     theme_minimal() +
+     labs(x = &quot;GDP per Capita ($)&quot;, 
+          y = &quot;Life Expectancy (yrs)&quot;, 
+          color = &quot;Continents&quot;)</code></pre>
+<h3 id="saving-10-minutes">Saving (10 minutes)</h3></li>
+</ul></li>
 <li>Now we have this graph, but we want to save it!
 <ul>
 <li>Rstudio has an export button: pdf, image, or to clipboard, lets you change size
@@ -301,7 +308,8 @@
 </ul>
 <p><strong><em>---------- Socrative #5 ----------</em></strong>: Optional ggsave &amp; ggplot variables</p>
 <ul>
-<li>ggsave will overwrite the graph</li>
+<li>Solution: ggsave will overwrite the graph
+<ul>
 <li><p><span></span></p>
 <pre><code>lifeExp_plot &lt;- ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) + 
     geom_point()
@@ -309,6 +317,7 @@
 lifeExp_plot
 
 ggsave(plot = lifeExp_plot, file = &quot;figures/life_expectancy_gdpPerCapita.pdf&quot;)</code></pre></li>
+</ul></li>
 </ul>
 <h3 id="facets-15-minutes">Facets (15 minutes)</h3>
 <ul>
@@ -333,6 +342,8 @@ ggsave(plot = lifeExp_plot, file = &quot;figures/life_expectancy_gdpPerCapita.pd
 </ul>
 <p><strong><em>---------- Socrative #6 ----------</em></strong>: Optional Facets, facet by year, color by continent</p>
 <ul>
+<li>Solution
+<ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, 
     color = continent)) + 
@@ -340,6 +351,7 @@ ggsave(plot = lifeExp_plot, file = &quot;figures/life_expectancy_gdpPerCapita.pd
     geom_point(alpha = 0.5) + 
     scale_x_log10() +
     geom_smooth(method = &quot;lm&quot;)</code></pre></li>
+</ul></li>
 </ul>
 <h3 id="cowplot-10-minutes">Cowplot (10 minutes)</h3>
 <ul>
@@ -394,7 +406,6 @@ ggplotly(yearLifeExp)</code></pre></li>
 <li>Rather than using theme_minimal() or theme_cowplot() by itself, we can customize that, too</li>
 <li><a href="ggplot2.tidyverse.org./reference/ggtheme.html">http://ggplot2.tidyverse.org./reference/ggtheme.html</a></li>
 <li><a href="ggplot2.tidyverse.org./reference/theme.html">http://ggplot2.tidyverse.org./reference/theme.html</a></li>
-<li></li>
 <li>Adjust text size
 <ul>
 <li><p><span></span></p>
