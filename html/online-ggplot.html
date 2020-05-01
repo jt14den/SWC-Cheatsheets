@@ -282,7 +282,8 @@
 <li>Solution:
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, mapping = aes(x = pop, y = gdpPercap, 
+<pre><code>library(scales)
+ggplot(data = gap, mapping = aes(x = pop, y = gdpPercap, 
      color = continent)) + 
      geom_point() +
      scale_x_log10(labels = comma) + 
@@ -290,9 +291,11 @@
      theme_minimal() +
      labs(x = &quot;GDP per Capita ($)&quot;, 
           y = &quot;Life Expectancy (yrs)&quot;, 
-          color = &quot;Continents&quot;)</code></pre>
-<h3 id="saving-10-minutes">Saving (10 minutes)</h3></li>
+          color = &quot;Continents&quot;)</code></pre></li>
 </ul></li>
+</ul>
+<h3 id="saving-10-minutes">Saving (10 minutes)</h3>
+<ul>
 <li>Now we have this graph, but we want to save it!
 <ul>
 <li>Rstudio has an export button: pdf, image, or to clipboard, lets you change size

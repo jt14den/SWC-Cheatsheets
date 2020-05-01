@@ -258,6 +258,7 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
     +   <span></span>
 
         ```
+        library(scales)
         ggplot(data = gap, mapping = aes(x = pop, y = gdpPercap, 
              color = continent)) + 
              geom_point() +
@@ -268,6 +269,7 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
                   y = "Life Expectancy (yrs)", 
                   color = "Continents")
         ```
+        
 ### Saving (10 minutes)
 
 -   Now we have this graph, but we want to save it!
