@@ -14,6 +14,7 @@
 <h1 class="title">Online Workshop - ggplot2</h1>
 <h1 class="subtitle">R for Reproducible Scientific Analysis - plotting</h1>
 </div>
+<p>Import the Socrative quiz bank for this module with <strong>SOC-46399671</strong></p>
 <h2 id="before-the-workshop-starts">Before the workshop starts</h2>
 <ol style="list-style-type: decimal">
 <li>Turn on Do-Not-Disturb (phone + computer)</li>
@@ -99,16 +100,28 @@
 </ul></li>
 </ul>
 <p><strong><em>---------- Socrative #1 ----------</em></strong>: Test everything in Zoom</p>
-<h2 id="publication-quality-graphics-60-minutes">5. Publication-quality graphics (60 minutes)</h2>
-<h3 id="background-r">Background R</h3>
+<h2 id="publication-quality-graphics">5. Publication-quality graphics</h2>
+<h3 id="background-r-10-minutes">Background R (10 minutes)</h3>
 <ul>
-<li>Projects?</li>
+<li>Projects
+<ul>
+<li>In many cases, people's data and results look like this:
+<ul>
+<li><a href="(show%20screenshot)">http://swcarpentry.github.io/r-novice-gapminder/02-project-intro/index.html</a></li>
+<li>One thing that's really helpful for reproducibility and sharing, is to have a self-contained and well-organized project</li>
+</ul></li>
+<li>Create a new project through RStudio on the desktop named <code>ggplot-workshop</code></li>
+<li>Make folders for <code>data</code>, and <code>figures</code> (I also add <code>analyses</code>)</li>
+<li>Move your gapminder_data.csv file on your desktop into your <code>data</code> folder.</li>
+<li>Show how you'd open this project again.</li>
+</ul></li>
 <li>Read in data
 <ul>
 <li>Tab-complete</li>
 <li>CTRL+Enter or CMD+Enter</li>
 <li><code>gap &lt;- read.csv(&quot;data/gapminder_data.csv&quot;)</code></li>
 </ul></li>
+<li>Comments</li>
 <li>Getting help
 <ul>
 <li><code>?read.csv</code></li>
@@ -120,7 +133,7 @@
 </ul></li>
 <li>Dropbox script to follow along</li>
 </ul>
-<h3 id="ggplot">ggplot</h3>
+<h3 id="ggplot-introduction-60-minutes">ggplot Introduction (60 minutes)</h3>
 <p><strong>Question: How many of you have made a plot in R? How many of you have used ggplot?</strong></p>
 <ul>
 <li>R has a few different ways to plot things.<br />
@@ -128,31 +141,36 @@
 <li>It comes with a basic plotting package, but most people don't use this anymore, it's harder to modify</li>
 <li>A better option is ggplot2, which is more flexible, build plots in layers (kinda like photoshop)
 <ul>
+<li>First we load ggplot2</li>
 <li><code>library(ggplot2)</code></li>
 </ul></li>
-<li>Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation
+<li><p>Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation</p></li>
+<li>Then we call ggplot, all the options in here apply to all layers
 <ul>
-<li><p><span></span></p>
-<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
-    geom_point()</code></pre></li>
-</ul></li>
-<li>First we load ggplot2</li>
-<li>Then we call ggplot, all the options in here apply to all layers (mapping = aes maps the data)
-<ul>
+<li>mapping = aes() tells ggplot how data variables map to aesthetic properties</li>
 <li>ggplot is smart enough to look for those columns in the data we gave it, no need to subset</li>
 <li>If we stop here we don't get a graph</li>
 <li><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp))</code></li>
 <li>So finally, we add a points (scatterplot) layer called a geometry</li>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
+    geom_point()</code></pre></li>
 </ul></li>
 </ul>
 <p><strong><em>---------- Socrative #2 ----------</em></strong>: Modify a ggplot graph</p>
 <ul>
-<li><p><code>ggplot(data = gap, mapping = aes(x=year, y=lifeExp)) + geom_point()</code></p></li>
+<li>Solution:
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, 
+    color = continent)) +
+    geom_point()</code></pre></li>
+</ul></li>
 <li>Using a scatterplot probably isn't a good way to show change over time.
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, 
-    by = country, color = continent)) +
+    group = country, color = continent)) +
     geom_line()</code></pre></li>
 </ul></li>
 <li>We're using a line geometry instead of a points geometry now</li>
@@ -161,32 +179,35 @@
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, 
-    by = country, color = continent)) +
+    group = country, color = continent)) +
     geom_line() + 
     geom_point()</code></pre></li>
 </ul></li>
 <li>Layers get drawn on top of each other
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, by = country)) +
+<pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, 
+    group = country)) +
     geom_line(mapping = aes(color = continent)) + 
     geom_point()</code></pre></li>
 </ul></li>
 <li>Here we've switched the color mapping = aesthetic from global to just the lines</li>
-<li>If we want to set everything on a geometry to the same color, we set it outside the mapping = aesthetic function
+<li>If we want to set everything on a geometry to the same color, we set it outside the aesthetic function
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, by = country)) +
+<pre><code>ggplot(data = gap, mapping = aes(x = year, y = lifeExp, 
+    group = country)) +
     geom_line(mapping = aes(color = continent)) + 
     geom_point(color = &quot;blue&quot;)</code></pre></li>
 </ul></li>
 <li>Let's go back to our first example, but color the points by continent
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, 
+    color = continent)) +
     geom_point()</code></pre></li>
 </ul></li>
-<li>Hard to see relationship with all those outliers, so let's use a log scale
+<li>Hard to see relationship with all those outliers, so let's use a log scale &amp; transparency
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
@@ -194,50 +215,77 @@
     scale_x_log10()</code></pre></li>
 </ul></li>
 <li>Notice the data has been transformed before graphing, x axis reflects this (1,000, 10,000, 100,000)</li>
-<li><p>Here we also use transparency so that overlapping points are easier to see. This works with any geometry. We could also set this to use a data column inside mapping = aes()</p></li>
-<li>We can fit a simple linear regression line (linear model) using a geom_smooth geometry
+<li>Here we also use transparency so that overlapping points are easier to see. This works with any geometry.</li>
+<li><p>We could also set this to use a data column inside mapping = aes()</p></li>
+<li>We can fit a simple linear regression line (linear model) using a geom_smooth geometry layer
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
-    geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;)</code></pre></li>
+    geom_point() + 
+    scale_x_log10() + 
+    geom_smooth(method = &quot;lm&quot;)</code></pre></li>
 </ul></li>
 <li>It even gives us a confidence interval! We can make the line thicker using size
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
-    geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;, size=1.5)</code></pre></li>
+    geom_point() + 
+    scale_x_log10() + 
+    geom_smooth(method = &quot;lm&quot;, size = 1.5)</code></pre></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #2 ----------</em></strong>: Color by continent &amp; add separate trends</p>
+<p><strong><em>---------- Socrative #3 ----------</em></strong>: Color by continent &amp; add separate trends</p>
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
-    geom_point(size = 1.5) +
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) +
+    geom_point(aes(color = continent), size = 0.5) +
     scale_x_log10() +
-    geom_smooth(method = &quot;lm&quot;)</code></pre></li>
+    geom_smooth(aes(group = continent), method = &quot;lm&quot;)</code></pre></li>
 <li>Many peope are colorblind. In addition to color, it's a good idea to also use shape
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, 
+    color = continent)) +
     geom_point(size = 2, mapping = aes(shape = continent)) + 
     scale_x_log10() + 
     geom_smooth(method = &quot;lm&quot;)</code></pre></li>
 </ul></li>
+</ul>
+<h3 id="publication-15-minutes">Publication (15 minutes)</h3>
+<ul>
 <li>Let's clean it up for publication. We'll add nicer axis labels, a title, and change the y-axis and theme
 <ul>
 <li><p><span></span></p>
-<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) +
-    geom_point(size = 2, mapping = aes(shape = continent)) + 
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, 
+    color = continent)) +
+    geom_point(mapping = aes(shape = continent), size = 2, alpha = 0.5) + 
     scale_x_log10() + 
-    geom_smooth(method=&quot;lm&quot;) + 
+    geom_smooth(method = &quot;lm&quot;) + 
     scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, by = 10)) + 
-    theme_bw() + 
-    labs(title = &quot;Effects of per-capita GDP on Life Expectancy&quot;, 
-         x = &quot;GDP per Capita ($)&quot;, 
-         y = &quot;Life Expectancy (yrs)&quot;, 
-         color = &quot;Continents&quot;, 
-         shape = &quot;Continents&quot;)</code></pre></li>
+    theme_minimal() + 
+    labs(title = &quot;Effects of per-capita GDP on Life Expectancy&quot;, # graph title
+        x = &quot;GDP per Capita ($)&quot;, # x-axis title
+        y = &quot;Life Expectancy (yrs)&quot;, # y-axis title
+        color = &quot;Continents&quot;, # color legend title
+        shape = &quot;Continents&quot;) # shape legend title</code></pre></li>
 </ul></li>
+</ul>
+<p><strong><em>---------- Socrative #4 ----------</em></strong>: Optional build new plot &amp; make pub quality</p>
+<pre><code>+   &lt;span&gt;&lt;/span&gt;
+
+    ```
+    ggplot(data = gap, mapping = aes(x = pop, y = gdpPercap, 
+         color = continent)) + 
+         geom_point() +
+         scale_x_log10(labels = comma) + 
+         scale_y_log10(labels = comma) +
+         theme_minimal() +
+         labs(x = &quot;GDP per Capita ($)&quot;, 
+              y = &quot;Life Expectancy (yrs)&quot;, 
+              color = &quot;Continents&quot;)
+    ```</code></pre>
+<h3 id="saving-10-minutes">Saving (10 minutes)</h3>
+<ul>
 <li>Now we have this graph, but we want to save it!
 <ul>
 <li>Rstudio has an export button: pdf, image, or to clipboard, lets you change size
@@ -246,54 +294,108 @@
 </ul></li>
 <li>Better to do it programmatically
 <ul>
-<li><code>ggsave(file = &quot;life_expectancy.png&quot;)</code></li>
-<li><code>ggsave(file = &quot;life_expectancy.pdf&quot;)</code></li>
+<li><code>ggsave(file = &quot;figures/life_expectancy.png&quot;)</code></li>
+<li><code>ggsave(file = &quot;figures/life_expectancy.pdf&quot;)</code></li>
 </ul></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #3 ----------</em></strong>: Optional ggsave &amp; ggplot variables - ggsave will overwrite the graph</p>
-<h3 id="facets-if-time-permits">Facets (if time permits)</h3>
+<p><strong><em>---------- Socrative #5 ----------</em></strong>: Optional ggsave &amp; ggplot variables</p>
+<ul>
+<li>ggsave will overwrite the graph</li>
+<li><p><span></span></p>
+<pre><code>lifeExp_plot &lt;- ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) + 
+    geom_point()
+
+lifeExp_plot
+
+ggsave(plot = lifeExp_plot, file = &quot;figures/life_expectancy_gdpPerCapita.pdf&quot;)</code></pre></li>
+</ul>
+<h3 id="facets-15-minutes">Facets (15 minutes)</h3>
+<ul>
+<li>Often, we want multi-paneled graphs, e.g., to show how trends differ across continents</li>
+<li>For this, we use facets</li>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) + 
+     facet_wrap(~ continent) + 
+     geom_point(alpha = 0.5) + 
+     scale_x_log10() +
+     geom_smooth(method = &quot;lm&quot;)</code></pre></li>
+<li>This draws a panel for each unique value in column we give facet_wrap()</li>
+<li>We can also change some things in the facet: independent scales and # cols
 <ul>
 <li><p><span></span></p>
-<pre><code>
-ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, color = continent)) + 
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) + 
+     facet_wrap(~ continent, scales = &quot;free&quot;, ncol = 2) + 
+     geom_point(alpha = 0.5) + 
+     scale_x_log10() +
+     geom_smooth(method = &quot;lm&quot;)</code></pre></li>
+</ul></li>
+</ul>
+<p><strong><em>---------- Socrative #6 ----------</em></strong>: Optional Facets, facet by year, color by continent</p>
+<ul>
+<li><p><span></span></p>
+<pre><code>ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp, 
+    color = continent)) + 
     facet_wrap(~ year) + 
-    geom_point(size = 2, mapping = aes(shape = continent)) + 
+    geom_point(alpha = 0.5) + 
     scale_x_log10() +
     geom_smooth(method = &quot;lm&quot;)</code></pre></li>
 </ul>
-<h3 id="alternate-facets-with-dplyr-if-time-permits">Alternate: Facets with dplyr (if time permits)</h3>
+<h3 id="cowplot-10-minutes">Cowplot (10 minutes)</h3>
 <ul>
-<li><p><span></span></p>
-<pre><code>L.countries &lt;- gap %&gt;% 
-    filter(country %in% c(&quot;Lebanon&quot;, &quot;Lesotho&quot;, &quot;Liberia&quot;, &quot;Libya&quot;))
-
-L.countries
-
-ggplot(L.countries, mapping = aes(x = year, y = lifeExp, color = country)) + 
-    geom_line() + facet_wrap( ~ country)</code></pre></li>
-<li><p>Draws a panel for each unique value in that column</p></li>
-</ul>
-<h3 id="ggplot2-challenge-2-write-a-function-that-takes-vector-of-countries-creates-faceted-graph">GGplot2 Challenge #2: write a function that takes vector of countries &amp; creates faceted graph</h3>
-<ul>
-<li><p><span></span></p>
-<pre><code>lifeExp_country &lt;- function(data, countries) {
-     country_subset &lt;- data %&gt;%
-          filter(country %in% countries)
-     ggplot(country_subset, mapping = aes(x = year, y = lifeExp, color = country)) + 
-          geom_line() + facet_wrap( ~ country)
-}
-
-lifeExp_country(gap, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;Canada&quot;))</code></pre></li>
 <li>Cover cowplot:
 <ul>
-<li><code>library(cowplot)</code></li>
-<li>Nicer quality than default ggplot, it's a theme</li>
+<li>Nicer pub quality theme than default ggplot theme or theme minimal</li>
 <li>Also provides a way to merge two plots into one, eg A &amp; B figures, and annotations</li>
-</ul></li>
-<li>Themes
+<li><p><span></span></p>
+<pre><code>plotA &lt;- ggplot(data = gap, mapping = aes(x = gdpPercap, y = lifeExp)) + 
+     geom_point(alpha = 0.5) + 
+     scale_x_log10() +
+     geom_smooth(method = &quot;lm&quot;) +
+     theme_cowplot()
+plotA
+plotB &lt;- ggplot(data = gap, mapping = aes(x = continent, y = lifeExp)) + 
+     geom_boxplot() + 
+     theme_cowplot()
+
+plotB
+
+plot_grid(plotA, plotB, labels = c(&quot;A&quot;, &quot;B&quot;))</code></pre></li>
+<li>Google &quot;cowplot package&quot;, show how to get to vignette
 <ul>
-<li><p>Text size</p>
+<li>Or: <code>browseVignettes(&quot;cowplot&quot;)</code></li>
+</ul></li>
+<li>I use ggdraw() a lot as a more flexible plot_grid()
+<ul>
+<li><p><span></span></p>
+<pre><code>ggdraw() +
+    draw_plot(plotA, x = 0, y = 0, width = 0.3, height = 1) + 
+    draw_plot(plotB, x = 0.3, y = 0, width = 0.7, height = 1)</code></pre></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="interactive-graphs-5-minutes">Interactive graphs (5 minutes)</h3>
+<ul>
+<li>many options, but we'll show you ggplotly
+<ul>
+<li><p><span></span></p>
+<pre><code>library(plotly)
+yearLifeExp &lt;- ggplot(data = gap, mapping = aes(x = year, y = lifeExp, 
+    group = country)) +
+    facet_wrap(~ continent) +
+    geom_line() +
+    scale_x_log10()
+
+ggplotly(yearLifeExp)</code></pre></li>
+</ul></li>
+</ul>
+<h3 id="themes-10-minutes">Themes (10 minutes)</h3>
+<ul>
+<li>Rather than using theme_minimal() or theme_cowplot() by itself, we can customize that, too</li>
+<li><a href="ggplot2.tidyverse.org./reference/ggtheme.html">http://ggplot2.tidyverse.org./reference/ggtheme.html</a></li>
+<li><a href="ggplot2.tidyverse.org./reference/theme.html">http://ggplot2.tidyverse.org./reference/theme.html</a></li>
+<li></li>
+<li>Adjust text size
 <ul>
 <li><p><span></span></p>
 <pre><code>theme(
@@ -310,7 +412,7 @@ lifeExp_country(gap, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;Canada
     plot.title = element_text(size = 20, face = &quot;bold&quot;, vjust = 5)
     )</code></pre></li>
 </ul></li>
-<li><p>Adjust the legend</p>
+<li>Adjust legend position
 <ul>
 <li><p><span></span></p>
 <pre><code>theme(
@@ -322,9 +424,8 @@ lifeExp_country(gap, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;Canada
     legend.position = c(x = 0.8, y = 0.2)
     )</code></pre></li>
 </ul></li>
-</ul></li>
 </ul>
-<h3 id="ggplot2-challenge-2">GGplot2 Challenge #2:</h3>
+<h3 id="ggplot2-challenge-1">GGplot2 Challenge #1:</h3>
 <ul>
 <li><p>Create a boxplot showing the spread of life expectancy for each continent</p>
 <ul>
@@ -339,7 +440,7 @@ ggplot(data = gap, mapping = aes(x = continent, y = lifeExp)) +
         mapping = aes(color = factor(year)))</code></pre></li>
 </ul></li>
 </ul>
-<h3 id="ggplot2-challenge-3">GGplot2 Challenge #3:</h3>
+<h3 id="ggplot2-challenge-2">GGplot2 Challenge #2:</h3>
 <ul>
 <li><p>Create a grouped barplot showing life expectancy by year for each continent</p>
 <ul>
@@ -354,7 +455,7 @@ ggplot(data = gap, mapping = aes(x = continent, y = lifeExp, fill = factor(year)
 <h3 id="resources">Resources</h3>
 <ul>
 <li>R Graph catalog: <a href="http://shiny.stat.ubc.ca/r-graph-catalog/" class="uri">http://shiny.stat.ubc.ca/r-graph-catalog/</a></li>
-<li>GGPlot2 online help: <a href="">http://docs.ggplot2.org/</a></li>
+<li>GGPlot2 online help: <a href="ggplot2.tidyverse.org">http://ggplot2.tidyverse.org</a></li>
 <li>R Graph Cookbook: <a href="http://www.cookbook-r.com/Graphs/" class="uri">http://www.cookbook-r.com/Graphs/</a></li>
 <li>ggplot2 essentials: <a href="http://www.sthda.com/english/wiki/ggplot2-essentials" class="uri">http://www.sthda.com/english/wiki/ggplot2-essentials</a></li>
 <li>Rstudio cheatsheets: <a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a></li>
