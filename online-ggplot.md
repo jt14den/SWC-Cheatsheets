@@ -65,7 +65,7 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
 
 ***---------- Socrative #1 ----------***: Test everything in Zoom
 
-## 5. Publication-quality graphics
+## Publication-quality graphics
 
 ### Background R (10 minutes)
 
@@ -353,6 +353,9 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
         plotB
 
         plot_grid(plotA, plotB, labels = c("A", "B"))
+
+        ggsave(file = "figures/test.pdf", width = 10, height = 5, 
+            units = "in", dpi = 300)
         ```
     +   Google "cowplot package", show how to get to vignette
         *   Or: `browseVignettes("cowplot")`
@@ -364,9 +367,6 @@ Import the Socrative quiz bank for this module with **SOC-46399671**
                 draw_plot(plotA, x = 0, y = 0, width = 0.3, height = 1) + 
                 draw_plot(plotB, x = 0.3, y = 0, width = 0.7, height = 1)
             ```
-
-
-
 
 ### Interactive graphs (5 minutes)
 

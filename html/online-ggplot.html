@@ -100,7 +100,7 @@
 </ul></li>
 </ul>
 <p><strong><em>---------- Socrative #1 ----------</em></strong>: Test everything in Zoom</p>
-<h2 id="publication-quality-graphics">5. Publication-quality graphics</h2>
+<h2 id="publication-quality-graphics">Publication-quality graphics</h2>
 <h3 id="background-r-10-minutes">Background R (10 minutes)</h3>
 <ul>
 <li>Projects
@@ -375,7 +375,10 @@ plotB &lt;- ggplot(data = gap, mapping = aes(x = continent, y = lifeExp)) +
 
 plotB
 
-plot_grid(plotA, plotB, labels = c(&quot;A&quot;, &quot;B&quot;))</code></pre></li>
+plot_grid(plotA, plotB, labels = c(&quot;A&quot;, &quot;B&quot;))
+
+ggsave(file = &quot;figures/test.pdf&quot;, width = 10, height = 5, 
+    units = &quot;in&quot;, dpi = 300)</code></pre></li>
 <li>Google &quot;cowplot package&quot;, show how to get to vignette
 <ul>
 <li>Or: <code>browseVignettes(&quot;cowplot&quot;)</code></li>
