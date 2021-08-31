@@ -53,11 +53,19 @@ I've altered it a bit.
 #### Where does git store information
 
 -   Create the repository
-    -   `cd ~/Desktop`
-    -   `mkdir guacamole; cd guacamole`
-    -   `git init`
+
+~~~
+cd ~/Desktop
+mkdir guacamole; cd guacamole
+git init
+~~~
+
 -   We can check that it's there.  That `.git` folder stores all the data, don't delete!
-    -   `ls -F -a`
+
+~~~
+ls -F -a`
+~~~
+
 -   `git status`
 
 ## 4. Tracking changes ##
