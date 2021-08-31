@@ -3,6 +3,8 @@ title: Git Guacamole
 subtitle: Novice Git Lesson
 ...
 
+TODO: master & main 
+
 *Credits to:
 1. Bryon Smith ([&#64;bsmith89](https://github.com/bsmith89)) for this.  He started [this lesson](https://github.com/bsmith89/git-novice-outline) & 
 2. Dr. James Mickley @mickley who enhanced and extended. 
@@ -16,11 +18,12 @@ I've altered it a bit.
 -   `PS1="$ "`
 -   Open lesson for PhDComics slide: <http://swcarpentry.github.io/git-novice/01-basics/>
 -   Open hackmd slides 
+-   Etherpad 
 
 ### Open up Socrative again ###
 -   You can import my quiz with 
 -   Advise learners to go to <https://b.socrative.com/login/student/>
--   Type in DENNIS3943 for the room name
+-   Type in **DENNIS3943** for the room name
 
 **QUESTION: How many of you have used git or other version control software before?**
 
@@ -50,6 +53,7 @@ I've altered it a bit.
     - <https://help.github.com/articles/keeping-your-email-address-private/>
 
 ## 3. Creating a repository ##
+
 #### Where does git store information
 
 -   Create the repository
@@ -66,7 +70,9 @@ git init
 ls -F -a`
 ~~~
 
--   `git status`
+~~~
+git status
+~~~
 
 ## 4. Tracking changes ##
 #### Recording changes, checking status, and adding notes
@@ -76,8 +82,11 @@ ls -F -a`
     -   Chop avocados, squeeze lime, add salt, and mix well
 -   `git status`
     -   One untracked file
--   `git add instruction.txt`
--   `git status`
+~~~
+git add instruction.txt
+git status
+~~~
+
 -   Now git knows to keep track of instructions.txt, but it hasn't recorded changes yet
 -   `git commit`
     -   Adding instructions.txt
@@ -99,9 +108,13 @@ ls -F -a`
 ***---------- Socrative #1 ----------***
 
 -   Instead of opening an editor, we can just put the commit message in the command
-    -   `git commit -m "Edited the guacamole instructions`
-    -   Anybody know what happened? 
-    -  Yes we need to add the file before we commit. Any thoughts on why? 
+
+~~~
+git commit -m "Edited the guacamole instructions"
+~~~
+
+-  What happened? 
+-  Yes we need to add the file before we commit. Any thoughts on why? 
 
 ~~~
 git status
@@ -110,12 +123,15 @@ git commit -m "Edited the guacamole instructions
 ~~~
     
 -   `git log`
--   Draw a diagram of the three "areas" of git
-    -   [filesystem] -->add [staging area] -->commit [repository]
-    -   Think of commit as taking a snapshot, and add as deciding what's in it
-    -   Staging area
-        -   Lets us only commit some of our file changes. 
-        -   Keep changes with a related theme together
+
+-   Show image of the three "areas" of git:
+-   <https://hackmd.io/@timdennis/HJ0a0nuBD#/10>
+
+-  Think of commit as taking a snapshot, 
+-  And add as deciding what's in it
+-  Staging area
+    -  Lets us only commit some of our file changes. 
+    -  Keep changes with a related theme together
 
 
 ***---------- Socrative #2 ----------***
@@ -123,16 +139,41 @@ git commit -m "Edited the guacamole instructions
 ***---------- Socrative #3 ----------***
 
 
--   Add a new file `ingredients.txt`: 2 Avocados, 1 lime, 2 tsp salt
-    -   `git status`
-    -   `git add ingredients.txt`
-    -   `git commit`
--   Add a new ingredient, onion, to both the instructions and the ingredients;
-    -   `git status`
-    -   `git diff`
-    -   `git add .`
-    -   `git status`
-    -   `git commit -m "Added onion to the recipe"`
+- Let's add a new file `ingredients.txt`: 
+- How do we do this? 
+- Yes, we type:
+
+~~~
+nano ingredients.txt
+~~~
+
+Then in nano we: 
+
+~~~
+2 Avocados, 
+1 lime, 
+2 tsp salt
+~~~
+
+* Let's see what we've done. 
+* Waht command do we use to see what we've done? 
+
+~~~
+git status
+git add ingredients.txt
+git commit
+~~~
+
+* Add a new ingredient, onion, to both the instructions and the ingredients;
+
+~~~
+git status
+git diff
+git add .
+git status
+git commit -m "Added onion to the recipe"
+~~~
+
 -   Discuss changes to multiple files
 -   `git log`
 -   Our log is getting long, some solutions:
@@ -147,23 +188,33 @@ git commit -m "Edited the guacamole instructions
 ## 5. Exploring History ##
 #### Identifying and recovering old versions of files, reviewing changes
 
-
--   Let's add another step to instructions.txt: Squeeze orange
+-   Let's add another step to instructions.txt: **Squeeze orange**
 -   Remember when we learned that each commit has an identifier?
     -   The most recent commit is called HEAD, 
--   `git diff HEAD instructions.txt`
--   `git diff HEAD~1 instructions.txt`
+
+~~~
+git diff HEAD instructions.txt
+git diff HEAD~1 instructions.txt
+~~~
+
 -   `HEAD` refers to the most recent commit
 -   `~1` means "minus one"
--   `git log --oneline`
--   `git diff <HASH> instructions.txt`
+
+~~~
+git log --oneline
+git diff <HASH> instructions.txt
+~~~
 
 -   If we can see past states, we can also restore them!  Let's get rid of orange.
--   `git status`
--   `git checkout HEAD instructions.txt`
--   `git status`
--   `cat instructions.txt`
--   Notice that reverting a small change is much easier becuase we've split
+
+~~~
+git status
+git checkout HEAD instructions.txt
+git status
+cat instructions.txt
+~~~
+
+- Notice that reverting a small change is much easier becuase we've split
     our work up into multiple files.
 
 
@@ -171,7 +222,7 @@ git commit -m "Edited the guacamole instructions
 
 ***---------- Socrative #6 ----------***
 
-
+### skip for RT2
 ## 6. Ignoring things (`.gitignore`) ##
 
 -   What if we include some files that we don't want to track?
@@ -200,11 +251,33 @@ git commit -m "Edited the guacamole instructions
     -   This is like mkdir, cd, and git init on the GitHub server
     -   But we want to connect the two
 -   Follow the instructions to add the remote repository
-    -   Be sure to use HTTPS
-    -   SSH is preferred and more secure, but it's more complicated to setup
-    -   `git remote add origin [URL]`
-    -   `git remote -v`
-    -   The name origin is the local nickname for the remote repository.  
+    -   Be sure to use the SSH instructions b/c as of last week this is required! 
+
+![](https://librarycarpentry.org/lc-git/fig/github-repo-connect.png)
+
+~~~
+ git remote add origin [gitURL]
+ git remote -v
+~~~
+
+### One more step: SSH setup 
+
+-   SSH is now required and more secure, but it's more complicated to setup.
+-   SORRY!!! 
+1. Let's look in our .ssh folder. We do this b/c our key might already exist! 
+
+~~~
+ls -al ~/.ssh
+~~~
+
+NEED TO FINISH with SSH instructions 
+maybe more screen shots 
+maybe delete my key and add again? 
+
+
+### Pushing our Changes 
+
+-   The name origin is the local nickname for the remote repository.  
 -   Push our local repository to the remote
     -   `git push origin master`
     -   Pushing branch master to origin
@@ -222,16 +295,23 @@ git commit -m "Edited the guacamole instructions
 -   Pair students up into groups of two.
 -   One student should add the other as a collaborator
     - Explain git clone
-    -   `cd ~/Desktop`
-    -   `git clone https://github.com/mickley/guacamole.git ~/Desktop/james-guacamole`
-    -   `cd james-guacamole`
--   Make changes and push back to the collaborator's repository.
 
+~~~
+cd ~/Desktop
+git clone https://github.com/mickley/guacamole.git ~/Desktop/james-guacamole
+cd james-guacamole
+~~~
+
+-   Make changes and push back to the collaborator's repository.
 -   Back in your original repository:
-    -   `git pull origin master`
-    -   `git status`
-    -   Pull the collaborators changes to your own repository.
-    -   Check out the result.
+
+~~~
+git pull origin master
+git status
+~~~
+
+-   Pull the collaborators changes to your own repository.
+-   Check out the result.
 
 ## 9. Conflicts ##
 #### How git handles conflicts
@@ -247,15 +327,24 @@ git commit -m "Edited the guacamole instructions
 
 -   What happened?  Git detected overlap and prevented us from messing it up
 -   We now have to get the changes from the server, and merge them with ours
--   `git pull origin master`
--   `git status`
--   `cat instructions.txt`
--   HEAD is your version, the commit id is the version on the github repository (your collaborator's)
--   You need to rectify things first before you can send it back to the repository
-    -   `nano instruction.txt`
-    -   `git add instuctions.txt`
-    -   `git status`
-    -   `git commit <...>`  This actually is the merge
+
+~~~
+git pull origin master
+git status
+cat instructions.txt
+~~~
+
+- HEAD is your version, the commit id is the version on the github repository (your collaborator's)
+-  You need to rectify things first before you can send it back to the repository
+
+~~~
+nano instruction.txt
+git add instuctions.txt
+git status
+git commit <...>  
+~~~~
+
+This actually is the merge
 -   `git log`
 -   `git push origin master`
 
@@ -290,9 +379,3 @@ git commit -m "Edited the guacamole instructions
 -   This is basically an electronic lab notebook
 -   It's also a good way to share information for reproducibility
     -   The data, and code are there together.  Maybe also figures or the paper itself
-
-## 14. Using Git from RStudio ##
-
-## 11. Licensing ##
-
-## 12. Citation ##
