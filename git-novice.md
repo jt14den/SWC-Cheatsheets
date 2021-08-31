@@ -3,7 +3,11 @@ title: Git Guacamole
 subtitle: Novice Git Lesson
 ...
 
-*Credits to Bryon Smith ([&#64;bsmith89](https://github.com/bsmith89)) for this.  He started [this lesson](https://github.com/bsmith89/git-novice-outline), and I've merely added to it*
+*Credits to:
+1. Bryon Smith ([&#64;bsmith89](https://github.com/bsmith89)) for this.  He started [this lesson](https://github.com/bsmith89/git-novice-outline) & 
+2. Dr. James Mickley @mickley who enhanced and extended. 
+
+I've altered it a bit. 
 
 ## Pre-Workshop Setup ##
 
@@ -11,18 +15,20 @@ subtitle: Novice Git Lesson
 -   `mv ~/.bash_aliases ~/.bash_aliases~`
 -   `PS1="$ "`
 -   Open lesson for PhDComics slide: <http://swcarpentry.github.io/git-novice/01-basics/>
+-   Open hackmd slides 
 
 ### Open up Socrative again ###
--   You can import my quiz with SOC-24313213
+-   You can import my quiz with 
 -   Advise learners to go to <https://b.socrative.com/login/student/>
--   Type in MICKLEY for the room name
+-   Type in DENNIS3943 for the room name
 
 **QUESTION: How many of you have used git or other version control software before?**
 
 ## 1. Introduction: Automated Version Control ##
 
+-   Run thru slides 
 -   Show the PhDComics slide
--   Talk about a time when git saved my ass
+-   Talk about a time when git saved my ass!! 
 -   Unlimited undo, helps us know what each change does: Who made it & why?
 -   Lets people collaborate on the same code at the same time (Have you used google docs?)
 -   All of these things are useful for repeatability, history, fixing problems etc.  
@@ -41,7 +47,7 @@ subtitle: Novice Git Lesson
 -   Talk about how git is run with subcommands `git <verb>`
     -   Kind of like saying bash <verb>.  Git is another commandline interpreter
 -   If email privacy is needed: 
-    - https://help.github.com/articles/keeping-your-email-address-private/
+    - <https://help.github.com/articles/keeping-your-email-address-private/>
 
 ## 3. Creating a repository ##
 #### Where does git store information
@@ -50,7 +56,7 @@ subtitle: Novice Git Lesson
     -   `cd ~/Desktop`
     -   `mkdir guacamole; cd guacamole`
     -   `git init`
--   We can check that it's there.  That .git folder stores all the data, don't delete!
+-   We can check that it's there.  That `.git` folder stores all the data, don't delete!
     -   `ls -F -a`
 -   `git status`
 
@@ -85,11 +91,16 @@ subtitle: Novice Git Lesson
 ***---------- Socrative #1 ----------***
 
 -   Instead of opening an editor, we can just put the commit message in the command
-    -   ` git commit -m "Edited the guacamole instructions`
-    -   Oops, we need to add the file first
-    -   `git status`
-    -   `git add instructions.txt`
-    -   ` git commit -m "Edited the guacamole instructions`
+    -   `git commit -m "Edited the guacamole instructions`
+    -   Anybody know what happened? 
+    -  Yes we need to add the file before we commit. Any thoughts on why? 
+
+~~~
+git status
+git add instructions.txt
+git commit -m "Edited the guacamole instructions
+~~~
+    
 -   `git log`
 -   Draw a diagram of the three "areas" of git
     -   [filesystem] -->add [staging area] -->commit [repository]
