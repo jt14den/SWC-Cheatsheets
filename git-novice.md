@@ -410,7 +410,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDmRA3d51X0uu9wXek559gfn6UFNF69yZjChyBIU2qKI
 1. Now, going to GitHub.com, click on your profile icon in the top right corner to get the drop-down menu.  
 2. Click "Settings," then on the settings page, click "SSH and GPG keys," on the left side "Account settings" menu.  
 3. Click the "New SSH key" button on the right side. 
-4. Now, you can add the title (I us "Tim's Laptop" so he can remember where the original key pair files are located), paste your SSH key into the field, and click the "Add SSH key" to complete the setup.
+4. Now, you can add the title (I use "Tim's Mac Teaching" so I can remember where the original key pair files are located), paste your SSH key into the field, and click the "Add SSH key" to complete the setup.
 
 Now that we’ve set that up, let’s check our authentication again from the command line. 
 
@@ -419,11 +419,10 @@ $ ssh -T git@github.com
 ~~~
 
 ~~~
-Hi Tim! You've successfully authenticated, but GitHub does not provide shell access.
+Hi `jt14de` You've successfully authenticated, but GitHub does not provide shell access.
 ~~~
 
 * Whew! give yourself a hand! That was a lot. 
-
 
 ### Pushing our Changes 
 
@@ -438,18 +437,27 @@ Hi Tim! You've successfully authenticated, but GitHub does not provide shell acc
 -   To get the latest version FROM the remote:
 
 ~~~
-git pull origin main`
+git pull origin main
 ~~~
 
 ## 8. Collaborating ##
 
--   Pair students up into groups of two.
--   One student should add the other as a collaborator
-    - Explain git clone
+-  For the next step, get into pairs. One person will be the “Owner” and the other will be the “Collaborator”. 
+- The goal is that the Collaborator add changes into the Owner’s repository.
+- The Owner needs to give the Collaborator access. On GitHub, click the settings button on the right, select Manage access, click Invite a collaborator, and then enter your partner’s username.
+- Explain git clone
+
+#### Pair up
+
+Add your github username to owner or collaborator below to pair up. 
+
+* owner: 
+* collab: 
+   
 
 ~~~
 cd ~/Desktop
-git clone https://github.com/jt14den/guacamole.git ~/Desktop/james-guacamole
+git clone https://github.com/jt14den/guacamole.git ~/Desktop/tim-guacamole
 cd james-guacamole
 ~~~
 
@@ -506,9 +514,9 @@ git push origin main
 -   Merging is another reason to split up changes into small groups of files
 
 
-## Fork and Create a PULL REQUEST practice (larger scale)
+## 11. Fork and Create a PULL REQUEST practice (larger scale)
 
-1. Go to this repository I made:  https://github.com/ucla-data-archive/git-collaboration
+1. Go to this repository I made:  <https://github.com/ucla-data-archive/git-collaboration>
 2. Click on the 'fork'  - this will make a copy of my repo into your account - notice how they are linked
 3. Inside the countries folder, edit one country and provide the information needed 
 4. Add a commit message and save. 

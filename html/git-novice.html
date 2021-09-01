@@ -373,11 +373,11 @@ git@github.com: Permission denied (publickey).</code></pre>
 <li>Click “Settings,” then on the settings page, click “SSH and GPG keys,” on the left side “Account settings” menu.<br />
 </li>
 <li>Click the “New SSH key” button on the right side.</li>
-<li>Now, you can add the title (I us “Tim’s Laptop” so he can remember where the original key pair files are located), paste your SSH key into the field, and click the “Add SSH key” to complete the setup.</li>
+<li>Now, you can add the title (I use “Tim’s Mac Teaching” so I can remember where the original key pair files are located), paste your SSH key into the field, and click the “Add SSH key” to complete the setup.</li>
 </ol>
 <p>Now that we’ve set that up, let’s check our authentication again from the command line.</p>
 <pre><code>$ ssh -T git@github.com</code></pre>
-<pre><code>Hi Tim! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code></pre>
+<pre><code>Hi `jt14de` You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code></pre>
 <ul>
 <li>Whew! give yourself a hand! That was a lot.</li>
 </ul>
@@ -398,17 +398,22 @@ git@github.com: Permission denied (publickey).</code></pre>
 <li>Ask students to discuss the difference between ‘commit’ and ‘push’.</li>
 <li>To get the latest version FROM the remote:</li>
 </ul>
-<pre><code>git pull origin main`</code></pre>
+<pre><code>git pull origin main</code></pre>
 <h2 id="collaborating">8. Collaborating</h2>
 <ul>
-<li>Pair students up into groups of two.</li>
-<li>One student should add the other as a collaborator
-<ul>
+<li>For the next step, get into pairs. One person will be the “Owner” and the other will be the “Collaborator”.</li>
+<li>The goal is that the Collaborator add changes into the Owner’s repository.</li>
+<li>The Owner needs to give the Collaborator access. On GitHub, click the settings button on the right, select Manage access, click Invite a collaborator, and then enter your partner’s username.</li>
 <li>Explain git clone</li>
-</ul></li>
+</ul>
+<h4 id="pair-up">Pair up</h4>
+<p>Add your github username to owner or collaborator below to pair up.</p>
+<ul>
+<li>owner:</li>
+<li>collab:</li>
 </ul>
 <pre><code>cd ~/Desktop
-git clone https://github.com/jt14den/guacamole.git ~/Desktop/james-guacamole
+git clone https://github.com/jt14den/guacamole.git ~/Desktop/tim-guacamole
 cd james-guacamole</code></pre>
 <ul>
 <li>Make changes and push back to the collaborator’s repository.</li>
@@ -451,9 +456,9 @@ git push origin main</code></pre>
 <li>Show them how to comment on a diff in Github</li>
 <li>Merging is another reason to split up changes into small groups of files</li>
 </ul>
-<h2 id="fork-and-create-a-pull-request-practice-larger-scale">Fork and Create a PULL REQUEST practice (larger scale)</h2>
+<h2 id="fork-and-create-a-pull-request-practice-larger-scale">11. Fork and Create a PULL REQUEST practice (larger scale)</h2>
 <ol type="1">
-<li>Go to this repository I made: https://github.com/ucla-data-archive/git-collaboration</li>
+<li>Go to this repository I made: <a href="https://github.com/ucla-data-archive/git-collaboration" class="uri">https://github.com/ucla-data-archive/git-collaboration</a></li>
 <li>Click on the ‘fork’ - this will make a copy of my repo into your account - notice how they are linked</li>
 <li>Inside the countries folder, edit one country and provide the information needed</li>
 <li>Add a commit message and save.</li>
