@@ -1,25 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>R Novice Gapminder</title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <link rel="stylesheet" href="notes.css" type="text/css" />
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="notes.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 </head>
 <body>
-<div id="header">
+<header id="title-block-header">
 <h1 class="title">R Novice Gapminder</h1>
-<h1 class="subtitle">R for Reproducible Scientific Analysis Part 2</h1>
-</div>
+<p class="subtitle">R for Reproducible Scientific Analysis Part 2</p>
+</header>
 <h2 id="pre-workshop-setup">Pre-Workshop Setup</h2>
 <ul>
 <li>Load the gapminder dataset
 <ul>
 <li>Make a new R file</li>
-<li><code>gap &lt;- read.csv(&quot;data/gapminder_data.csv&quot;)</code></li>
+<li><code>gap &lt;- read.csv("data/gapminder_data.csv")</code></li>
 </ul></li>
 <li>Install packages
 <ul>
@@ -30,13 +41,13 @@
 </ul>
 <h3 id="open-up-socrative-again">Open up Socrative again</h3>
 <ul>
-<li>You can import my quiz with SOC-26147790</li>
-<li>Advise learners to go to <a href="https://b.socrative.com/login/student/" class="uri">https://b.socrative.com/login/student/</a></li>
+<li><p>You can import my quiz with SOC-26147790</p></li>
+<li><p>Advise learners to go to <a href="https://b.socrative.com/login/student/" class="uri">https://b.socrative.com/login/student/</a></p></li>
 <li><p>Type in MICKLEY for the room name</p></li>
-<li>So far, we've just had R do exactly what we told it to do.<br />
-</li>
-<li>It becomes much more powerful if it can make its own decisions or do repetitive tasks</li>
-<li>We're going to learn conditional statements, functions, and loops that will do just that
+<li><p>So far, we’ve just had R do exactly what we told it to do.<br />
+</p></li>
+<li><p>It becomes much more powerful if it can make its own decisions or do repetitive tasks</p></li>
+<li><p>We’re going to learn conditional statements, functions, and loops that will do just that</p>
 <ul>
 <li>These same concepts get used in most other computer languages =&gt; portable skills.</li>
 <li>We already saw loops in shell, which actually has functions and conditionals too</li>
@@ -45,7 +56,7 @@
 <h2 id="a.-vectorization-5-minutes">1a. Vectorization (5 minutes)</h2>
 <ul>
 <li>One reason why R is used so much for data analysis is that it has a neat feature</li>
-<li>Most functions are &quot;vectorized&quot;, meaning they'll operate on a whole list of numbers at once</li>
+<li>Most functions are “vectorized”, meaning they’ll operate on a whole list of numbers at once</li>
 <li>Here x is a vector of four numbers
 <ul>
 <li><p><span></span></p>
@@ -74,7 +85,7 @@ log(x)</code></pre></li>
 </ul></li>
 <li><strong>Note:</strong>
 <ul>
-<li>The <code>*</code> operator etc gives you element-wise multiplication</li>
+<li><p>The <code>*</code> operator etc gives you element-wise multiplication</p></li>
 <li><p>For matrix multiplication you need to use %*%</p></li>
 <li><p><span></span></p>
 <pre><code>m &lt;- matrix(1:12, nrow=3, ncol=4)
@@ -89,7 +100,7 @@ m %*% matrix(1, nrow=4, ncol=1)
 <h2 id="conditional-statements-25-minutes">1. Conditional Statements (25 minutes)</h2>
 <ul>
 <li>Often when coding, we want to control what happens in certain situations</li>
-<li>We'll start with making choices using <em>conditional statements</em>
+<li>We’ll start with making choices using <em>conditional statements</em>
 <ul>
 <li><p><span></span></p>
 <pre><code>number &lt;- 37
@@ -112,7 +123,7 @@ print(&quot;Finished checking&quot;)</code></pre></li>
 <li>Not equal to: <code>number != 37</code></li>
 <li>Also =&gt; and &lt;=</li>
 </ul></li>
-<li>We don't need an else:
+<li>We don’t need an else:
 <ul>
 <li><p><span></span></p>
 <pre><code>if (number &gt; 100) {
@@ -150,12 +161,12 @@ if (number1 &gt;= 0 | number2 &gt;= 0) {
 }</code></pre></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #1 ----------</em></strong>: Test whether number is between 45 and 50 (inclusive)</p>
+<p><strong><em>———- Socrative #1 ———-</em></strong>: Test whether number is between 45 and 50 (inclusive)</p>
 <p>This is a tricky one, 3 correct answers</p>
 <h2 id="loops-40-minutes">2. Loops (40 minutes)</h2>
 <ul>
-<li>Just like the shell, R has for loops, which can do repetitive tasks</li>
-<li>But the syntax is slightly different
+<li><p>Just like the shell, R has for loops, which can do repetitive tasks</p></li>
+<li><p>But the syntax is slightly different</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>numbers &lt;- c(1:10)
@@ -168,14 +179,14 @@ for(i in 1:5){
     print(numbers[i])
 }</code></pre></li>
 </ul></li>
-<li>Walk through this again
+<li><p>Walk through this again</p>
 <ul>
 <li>i is an <em>increment variable</em>, keeps track of where we are</li>
 <li><code>1:10</code> returns a sequence</li>
 </ul></li>
-<li>The loop or increment variable is just a variable.<br />
-</li>
-<li>Overwrites previous variable, and when the loop finishes, it's the last loop</li>
+<li><p>The loop or increment variable is just a variable.<br />
+</p></li>
+<li><p>Overwrites previous variable, and when the loop finishes, it’s the last loop</p></li>
 <li><p><span></span></p>
 <pre><code>letter &lt;- &quot;z&quot;
 print(letter)
@@ -184,7 +195,7 @@ for (letter in c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)) {
 }
 print(letter)</code></pre></li>
 </ul>
-<p><strong><em>---------- Socrative #2 ----------</em></strong>: For loop to calculate sum of vector</p>
+<p><strong><em>———- Socrative #2 ———-</em></strong>: For loop to calculate sum of vector</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>numbers &lt;- c(4, 8, 15, 16, 23, 42)
@@ -193,7 +204,7 @@ for (number in numbers) {
      running_sum = running_sum + number
 }
 print(running_sum)</code></pre></li>
-<li>The loop variable can be useful to us
+<li><p>The loop variable can be useful to us</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>for(i in 1:10){
@@ -219,7 +230,7 @@ for(i in 1:3){
 <li><p>Gives me every combination. Notice the order of nesting matters</p></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #3 ----------</em></strong>: For loop to find years with life expectancy &lt; 35</p>
+<p><strong><em>———- Socrative #3 ———-</em></strong>: For loop to find years with life expectancy &lt; 35</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>for (i in 1:10) {
@@ -227,7 +238,7 @@ for(i in 1:3){
           print(gap$year[i])
      }
 }</code></pre></li>
-<li>We could extend this to the whole dataset, and have it tell us the country too
+<li><p>We could extend this to the whole dataset, and have it tell us the country too</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>for (i in 1:nrow(gap)) {
@@ -239,7 +250,7 @@ for(i in 1:3){
 </ul>
 <h3 id="while-loops-5-minutes-optional">While Loops (5 minutes, optional)</h3>
 <ul>
-<li>Sometimes we need to just keep doing something until a certain condition is met</li>
+<li><p>Sometimes we need to just keep doing something until a certain condition is met</p></li>
 <li><p>Break R with a While loop, stop the script</p>
 <ul>
 <li><p><span></span></p>
@@ -248,9 +259,9 @@ while (z &gt; 0.1) {
     print(z)
 }</code></pre></li>
 </ul></li>
-<li>Let's fix it by updating z, so it has a chance to quit
+<li><p>Let’s fix it by updating z, so it has a chance to quit</p>
 <ul>
-<li><code>runif()</code> is used to pick a random number between zero and 1</li>
+<li><p><code>runif()</code> is used to pick a random number between zero and 1</p></li>
 <li><p><span></span></p>
 <pre><code>runif(1)
 z &lt;- 1
@@ -263,10 +274,10 @@ while (z &gt; 0.1) {
 <h2 id="creating-and-using-functions-30-minutes">3. Creating and using functions (30 minutes)</h2>
 <p><strong>QUESTION: How many of you end up doing the same thing more than once while analyzing your data?</strong></p>
 <ul>
-<li>Functions package a bit of code we want to re-use so that we don't have to re-write it or remember how it works later</li>
-<li>Almost like little programs in the shell</li>
-<li>Often, the function will take some variables as arguments and return something back to us (but doesn't have to)</li>
-<li>We've actually been using them all along!
+<li><p>Functions package a bit of code we want to re-use so that we don’t have to re-write it or remember how it works later</p></li>
+<li><p>Almost like little programs in the shell</p></li>
+<li><p>Often, the function will take some variables as arguments and return something back to us (but doesn’t have to)</p></li>
+<li><p>We’ve actually been using them all along!</p>
 <ul>
 <li><code>read.csv()</code> is a function. We give it a filename and it gives us a dataframe</li>
 <li>Do any of you know what it actually does?</li>
@@ -280,16 +291,16 @@ while (z &gt; 0.1) {
 
 # Without running previous code: 
 fahr_to_kelvin(32)</code></pre></li>
-<li>Function code must be run before it's called</li>
-<li>Freezing point
+<li><p>Function code must be run before it’s called</p></li>
+<li><p>Freezing point</p>
 <ul>
 <li><code>fahr_to_kelvin(32)</code></li>
 </ul></li>
-<li>Boiling point
+<li><p>Boiling point</p>
 <ul>
 <li><code>fahr_to_kelvin(212)</code></li>
 </ul></li>
-<li>We can make another function to convert to Celsius
+<li><p>We can make another function to convert to Celsius</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>kelvin_to_celsius &lt;- function(temp) {
@@ -299,17 +310,17 @@ fahr_to_kelvin(32)</code></pre></li>
 
 kelvin_to_celsius(0)</code></pre></li>
 </ul></li>
-<li>Variable Scope: Variables defined inside functions stay there, a function is it's own little box/environment</li>
-<li>Pass-by-Value: Functions don't change the variables we give them either (usually), we work on a copy. Safer!
+<li><p>Variable Scope: Variables defined inside functions stay there, a function is it’s own little box/environment</p></li>
+<li><p>Pass-by-Value: Functions don’t change the variables we give them either (usually), we work on a copy. Safer!</p>
 <ul>
 <li><code>print(celsius)</code></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #4 ----------</em></strong>: Testing variable scope</p>
+<p><strong><em>———- Socrative #4 ———-</em></strong>: Testing variable scope</p>
 <p>Both B and D are correct.</p>
 <ul>
 <li><p>Defensive programming: notice how we used a different name for the output of the function = better</p></li>
-<li>We can mix, match and combine functions with themselves to get larger chunks of code
+<li><p>We can mix, match and combine functions with themselves to get larger chunks of code</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>fahr_to_celsius &lt;- function(temp) {
@@ -321,12 +332,12 @@ kelvin_to_celsius(0)</code></pre></li>
 # freezing point of water in Celsius
 fahr_to_celsius(32.0)</code></pre></li>
 </ul></li>
-<li>Another way to do this would be to nest the first two functions together (walk through this)
+<li><p>Another way to do this would be to nest the first two functions together (walk through this)</p>
 <ul>
 <li><code>kelvin_to_celsius(fahr_to_kelvin(32.0))</code></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #4 ----------</em></strong>: Write a C to F function</p>
+<p><strong><em>———- Socrative #4 ———-</em></strong>: Write a C to F function</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>celsius_to_fahr &lt;- function(temp){
@@ -337,9 +348,9 @@ fahr_to_celsius(32.0)</code></pre></li>
 celsius_to_fahr(100)</code></pre></li>
 </ul>
 <h3 id="function-challenge">Function Challenge</h3>
-<p>Now write a function that takes two arguments: one the temp to be converted, and another that says whether to convert from fahrenheit to celsius or celsius to fahrenheit. Using if...then, make the same function do both.</p>
+<p>Now write a function that takes two arguments: one the temp to be converted, and another that says whether to convert from fahrenheit to celsius or celsius to fahrenheit. Using if…then, make the same function do both.</p>
 <ul>
-<li><code>tempconvert(temp = 14, to = &quot;fahrenheit&quot;)</code>
+<li><code>tempconvert(temp = 14, to = "fahrenheit")</code>
 <ul>
 <li><p><span></span></p>
 <pre><code>tempconvert &lt;- function(temp, to) {
@@ -354,10 +365,10 @@ celsius_to_fahr(100)</code></pre></li>
 tempconvert(100, &quot;fahrenheit&quot;)
 tempconvert(212, &quot;celsius&quot;)</code></pre></li>
 </ul></li>
-<li>What happens if we capitalize celsius?: <code>tempconvert(212, &quot;Celsius&quot;)</code>
+<li>What happens if we capitalize celsius?: <code>tempconvert(212, "Celsius")</code>
 <ul>
-<li>Good idea to try to forsee ways that things might break</li>
-<li><p>adding an &quot;else&quot; is a good idea:</p>
+<li><p>Good idea to try to forsee ways that things might break</p></li>
+<li><p>adding an “else” is a good idea:</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>else {
@@ -365,21 +376,21 @@ tempconvert(212, &quot;celsius&quot;)</code></pre></li>
     print(&quot;Error: &#39;to&#39; was not fahrenheit or celsius&quot;)
 }</code></pre></li>
 </ul></li>
-<li>Note that we need to re-run the function code for the changes to take effect!</li>
+<li><p>Note that we need to re-run the function code for the changes to take effect!</p></li>
 </ul></li>
-<li>When you write a function like this, you often don't use it again until months later.<br />
+<li>When you write a function like this, you often don’t use it again until months later.<br />
 </li>
 <li>Or someone else needs to use it.
 <ul>
-<li>So it's a good idea to add documentation!
-<ol style="list-style-type: decimal">
+<li>So it’s a good idea to add documentation!
+<ol type="1">
 <li>What does the function do?<br />
 </li>
-<li>What are it's arguments?</li>
+<li>What are it’s arguments?</li>
 <li>What does it return?</li>
 </ol></li>
 </ul></li>
-<li>We can also add a default value for some of the arguments, so we don't need to include them unless we want to
+<li>We can also add a default value for some of the arguments, so we don’t need to include them unless we want to
 <ul>
 <li><p><span></span></p>
 <pre><code>tempconvert &lt;- function(temp, to = &quot;celsius&quot;) {
@@ -396,7 +407,7 @@ tempconvert(212)</code></pre></li>
 <ul>
 <li>Make a function that calculates gdp of a nation from gapminder
 <ul>
-<li>Function should take a dataset with pop and gdpPercap columns and return a vector of gdps</li>
+<li><p>Function should take a dataset with pop and gdpPercap columns and return a vector of gdps</p></li>
 <li><p><span></span></p>
 <pre><code># Takes a dataset and multiplies the population column
 # with the GDP per capita column.
@@ -437,22 +448,22 @@ calcGDP(gapminder, country=&quot;Australia&quot;)
 </ul>
 <h2 id="subsetting-and-reshaping-data-with-dplyr-and-tidyr">4. Subsetting and reshaping data with dplyr and tidyr</h2>
 <ul>
-<li>Now we're going to switch gears!</li>
-<li>We have a grasp of basic programming in R</li>
-<li>Most of our work here is 3 things: data wrangling, graphs, and analyses</li>
-<li><p>We'll cover the first two, since the same stuff applies to everyone</p></li>
-<li>The subsetting and data-wrangling tools bundled with R are not the best</li>
-<li><p>We're going to use dplyr and tidyr instead.</p></li>
+<li><p>Now we’re going to switch gears!</p></li>
+<li><p>We have a grasp of basic programming in R</p></li>
+<li><p>Most of our work here is 3 things: data wrangling, graphs, and analyses</p></li>
+<li><p>We’ll cover the first two, since the same stuff applies to everyone</p></li>
+<li><p>The subsetting and data-wrangling tools bundled with R are not the best</p></li>
+<li><p>We’re going to use dplyr and tidyr instead.</p></li>
 </ul>
 <h3 id="dplyr">dplyr</h3>
 <ul>
-<li>Setup</li>
-<li>Install packages
+<li><p>Setup</p></li>
+<li><p>Install packages</p>
 <ul>
-<li><code>install.packages(c(&quot;tidyr&quot;, &quot;dplyr&quot;, &quot;knitr&quot;, &quot;rmarkdown&quot;, &quot;formatR&quot;))</code></li>
+<li><code>install.packages(c("tidyr", "dplyr", "knitr", "rmarkdown", "formatR"))</code></li>
 <li><code>library(dplyr)</code></li>
 </ul></li>
-<li>Select lets you only use some columns. You can also re-order them
+<li><p>Select lets you only use some columns. You can also re-order them</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>head(gap)
@@ -472,12 +483,12 @@ str(gap_eu)</code></pre></li>
 <pre><code>yr_country_gdp_eu &lt;- filter(select(gap, year, country, gdpPercap), 
     continent==&quot;Europe&quot;)</code></pre></li>
 </ul></li>
-<li>This stacking can quickly become difficult to read, we really want a workflow that's easy to follow
+<li><p>This stacking can quickly become difficult to read, we really want a workflow that’s easy to follow</p>
 <ul>
-<li>dplyr also can use an R version of pipes, like what we saw in the shell lesson
+<li><p>dplyr also can use an R version of pipes, like what we saw in the shell lesson</p>
 <ul>
 <li><code>yr_country_gdp &lt;- gap %&gt;% select(year, country, gdpPercap)</code></li>
-<li>You don't have to bother giving it the data argument anymore. Easier to read</li>
+<li>You don’t have to bother giving it the data argument anymore. Easier to read</li>
 </ul></li>
 <li><p><span></span></p>
 <pre><code>yr_country_gdp_eu &lt;- gap %&gt;%
@@ -486,9 +497,9 @@ str(gap_eu)</code></pre></li>
 <li><p>Walk through this example, showing the flow</p></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #1 ----------</em></strong>: Filter using 2 filters and select 3 cols</p>
+<p><strong><em>———- Socrative #1 ———-</em></strong>: Filter using 2 filters and select 3 cols</p>
 <p>Write a command with pipes that filters the gapminder dataset to only include data from 2007 in Africa, and then select the year, country, and lifeExp columns.</p>
-<p>How many rows are left in the resulting dataset? If you're not sure how to find the number of rows, discuss with your neighbors.</p>
+<p>How many rows are left in the resulting dataset? If you’re not sure how to find the number of rows, discuss with your neighbors.</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>africa_07_lifeExp %
@@ -507,15 +518,15 @@ str(africa_07_lifeExp)</code></pre>
 <li>Note that the order is really important! Since select removes continent, it has to come second</li>
 <li>We could have used two filter commands instead</li>
 </ul></li>
-<li>Summarize lets us condense data down
+<li><p>Summarize lets us condense data down</p>
 <ul>
 <li><code>mean_gdp &lt;- gap %&gt;% summarize(meanGDP = mean(gdpPercap))</code></li>
 </ul></li>
-<li>Not very useful by itself, we could have used this instead
+<li><p>Not very useful by itself, we could have used this instead</p>
 <ul>
 <li><code>mean(gap$gdpPercap)</code></li>
 </ul></li>
-<li>But if we combine it with the group_by() function, we can get the mean gdp for each continent
+<li><p>But if we combine it with the group_by() function, we can get the mean gdp for each continent</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>gdp_by_cont &lt;- gap %&gt;%
@@ -524,10 +535,10 @@ str(africa_07_lifeExp)</code></pre>
 
 gdp_by_cont</code></pre></li>
 </ul></li>
-<li><p>Here we're grouping by continent, which means we calculate a <strong>separate</strong> mean for each one</p></li>
+<li><p>Here we’re grouping by continent, which means we calculate a <strong>separate</strong> mean for each one</p></li>
 </ul>
-<p><strong><em>---------- Socrative #2 ----------</em></strong>: Avg lifeExp by year for Africa</p>
-<p>Let's compute the average life expectancy across all African countries by year. In how many years did average African life expectancy decrease?</p>
+<p><strong><em>———- Socrative #2 ———-</em></strong>: Avg lifeExp by year for Africa</p>
+<p>Let’s compute the average life expectancy across all African countries by year. In how many years did average African life expectancy decrease?</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>africa_lifeExp_yr &lt;- gap %&gt;%
@@ -558,9 +569,9 @@ head(bill_gdp_country_07)</code></pre></li>
         se_gdp = sd_gdp / sqrt(sample_size))
 
 gdp_by_cont</code></pre></li>
-<li>n() is a special function that gives the sample size for that grouping, very useful</li>
-<li>Notice that we only see 10 rows. Summarize actually has returned a &quot;special&quot; table-dataframe</li>
-<li>In most cases it acts the same, but if we want to see the whole thing, we can pipe it to data.frame()
+<li><p>n() is a special function that gives the sample size for that grouping, very useful</p></li>
+<li><p>Notice that we only see 10 rows. Summarize actually has returned a “special” table-dataframe</p></li>
+<li><p>In most cases it acts the same, but if we want to see the whole thing, we can pipe it to data.frame()</p>
 <ul>
 <li><code>gdp_by_continents %&gt;% data.frame()</code></li>
 </ul></li>
@@ -573,7 +584,7 @@ gdp_by_cont</code></pre></li>
     geom_line() + 
     geom_point()</code></pre></li>
 </ul></li>
-<li>One of the reasons we like dplyr so much, is there's not a lot to remember.
+<li><p>One of the reasons we like dplyr so much, is there’s not a lot to remember.</p>
 <ul>
 <li>Most of your work can be done with the 5 functions we just learned
 <ul>
@@ -585,7 +596,7 @@ gdp_by_cont</code></pre></li>
 <ul>
 <li>Setup
 <ul>
-<li><code>install.packages(&quot;tidyr&quot;)</code></li>
+<li><code>install.packages("tidyr")</code></li>
 <li><code>library(tidyr)</code></li>
 </ul></li>
 <li>The same dataset can be represented in different ways</li>
@@ -606,14 +617,14 @@ Felis   Weight          5
 Felis   Length          14</code></pre></li>
 </ul></li>
 <li>In long format, each column is a variable and each row is a single measurement or observation</li>
-<li>We tend to use wide format more because it's more concise, easy to ready, datasheety</li>
+<li>We tend to use wide format more because it’s more concise, easy to ready, datasheety</li>
 <li>R, databases, and other programming languages usually prefer long format</li>
 </ul>
-<p><strong><em>---------- Socrative #3 ----------</em></strong>: What format is the gap dataset</p>
+<p><strong><em>———- Socrative #3 ———-</em></strong>: What format is the gap dataset</p>
 <p>Answer: intermediate</p>
 <ul>
-<li>We could have a column for each year * pop/lifeExp/gdpPerCap</li>
-<li>We have 3 ID columns (country, continent, year), and 3 observation columns (gdpPercap, lifeExp, pop) (instead of 1)
+<li><p>We could have a column for each year * pop/lifeExp/gdpPerCap</p></li>
+<li><p>We have 3 ID columns (country, continent, year), and 3 observation columns (gdpPercap, lifeExp, pop) (instead of 1)</p>
 <ul>
 <li>Important to be able to convert, some R tools need specific format</li>
 </ul></li>
@@ -622,9 +633,9 @@ Felis   Length          14</code></pre></li>
 str(gap_wide)</code></pre>
 <ul>
 <li>So this is the wide format of our data</li>
-<li>Notice it's got lots of columns and only 142 rows, one for each country</li>
+<li>Notice it’s got lots of columns and only 142 rows, one for each country</li>
 </ul></li>
-<li><p>We're going to convert it to long format with gather()</p>
+<li><p>We’re going to convert it to long format with gather()</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>gap_long &lt;- gap_wide %&gt;%
@@ -633,17 +644,17 @@ str(gap_wide)</code></pre>
 str(gap_long)
 head(gap_long)</code></pre></li>
 </ul></li>
-<li>Notice how we've mixed dplyr pipes with the gather() function from tidyr</li>
-<li>The first two arguments are new column names: The old column name goes in 1st &amp; value in 2nd</li>
-<li>Instead of using starts_with(), we could have just written out all the columns we wanted to gather</li>
-<li><p>We could also just exclude the columns we don't want to gather</p>
+<li><p>Notice how we’ve mixed dplyr pipes with the gather() function from tidyr</p></li>
+<li><p>The first two arguments are new column names: The old column name goes in 1st &amp; value in 2nd</p></li>
+<li><p>Instead of using starts_with(), we could have just written out all the columns we wanted to gather</p></li>
+<li><p>We could also just exclude the columns we don’t want to gather</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>gap_long &lt;- gap_wide %&gt;% 
     gather(obstype_year, obs_values, -continent, -country)
 str(gap_long)</code></pre></li>
 </ul></li>
-<li>Our new column obstype_year actually has 2 pieces of information. We should separate them
+<li><p>Our new column obstype_year actually has 2 pieces of information. We should separate them</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>gap_long &lt;- gap_long %&gt;% 
@@ -651,7 +662,7 @@ str(gap_long)</code></pre></li>
      mutate(year = as.integer(year))</code></pre></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #4 ----------</em></strong>: Use dplyr on the long dataset</p>
+<p><strong><em>———- Socrative #4 ———-</em></strong>: Use dplyr on the long dataset</p>
 <p>Using gap_long, summarize the mean life expectancy by continent</p>
 <ul>
 <li><p><span></span></p>
@@ -659,7 +670,7 @@ str(gap_long)</code></pre></li>
     filter(obs_type == &quot;lifeExp&quot;) %&gt;%
     group_by(continent) %&gt;%
     summarize(lifeExp = mean(obs_values))</code></pre></li>
-<li>Now that we have our long format, let's convert it to the intermediate format
+<li><p>Now that we have our long format, let’s convert it to the intermediate format</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>gap_normal &lt;- gap_long %&gt;% 
@@ -668,9 +679,9 @@ head(gap_normal)
 dim(gap_normal)
 dim(gap)</code></pre></li>
 </ul></li>
-<li>Notice how the contents of obs_type became the column names</li>
-<li>Looks like the same dataset, cool, we're back</li>
-<li>Columns are in a different order though, let's fix that
+<li><p>Notice how the contents of obs_type became the column names</p></li>
+<li><p>Looks like the same dataset, cool, we’re back</p></li>
+<li><p>Columns are in a different order though, let’s fix that</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>names(gap_normal)
@@ -679,14 +690,14 @@ gap_normal &lt;- gap_normal %&gt;%
     select(country, year, pop, continent, lifeExp, gdpPercap)
 names(gap_normal)</code></pre></li>
 </ul></li>
-<li>Let's see if they're equal. Not so good, they're sorted differently
+<li><p>Let’s see if they’re equal. Not so good, they’re sorted differently</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>all_equal(gap_normal, gap)
 head(gap_normal)
 head(gap)</code></pre></li>
 </ul></li>
-<li>The new dataset is sorted first by continent, gap was by country
+<li><p>The new dataset is sorted first by continent, gap was by country</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>gap_normal &lt;- gap_normal %&gt;% 
@@ -695,12 +706,12 @@ head(gap)</code></pre></li>
 all.equal(gap_normal, gap)
 head(gap_normal)
 head(gap)</code></pre></li>
-<li>Arrange is a dplyr function</li>
-<li><p>Defensive programming: It's a good idea to do checks all the time (like all_equal)</p></li>
+<li><p>Arrange is a dplyr function</p></li>
+<li><p>Defensive programming: It’s a good idea to do checks all the time (like all_equal)</p></li>
 </ul></li>
-<li>Ok, now let's go back to wide</li>
-<li>Remember, we used gather() to put all the columns together, and then separate() to split the year from the variable</li>
-<li>So we just have to do the opposite in reverse order
+<li><p>Ok, now let’s go back to wide</p></li>
+<li><p>Remember, we used gather() to put all the columns together, and then separate() to split the year from the variable</p></li>
+<li><p>So we just have to do the opposite in reverse order</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>gap_wide_new &lt;- gap_long %&gt;% 
@@ -708,7 +719,7 @@ head(gap)</code></pre></li>
     spread(var_names, obs_values)
 str(gap_wide_new)</code></pre></li>
 </ul></li>
-<li>Just like dplyr, tidyr is nice because it's only a few functions
+<li><p>Just like dplyr, tidyr is nice because it’s only a few functions</p>
 <ul>
 <li>We can go from wide to long and back, and combine or split columns with 4 functions
 <ul>
@@ -718,30 +729,30 @@ str(gap_wide_new)</code></pre></li>
 </ul>
 <h3 id="resources">Resources:</h3>
 <ul>
-<li>Rstudio cheatsheets: <a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a></li>
-<li>Package documentation: <a href="https://rdrr.io/cran/dplyr/" class="uri">https://rdrr.io/cran/dplyr/</a>, <a href="https://rdrr.io/cran/tidyr/" class="uri">https://rdrr.io/cran/tidyr/</a></li>
-<li>R Cookbook: <a href="http://www.cookbook-r.com/Manipulating_data/" class="uri">http://www.cookbook-r.com/Manipulating_data/</a></li>
-<li>Data Wrangling Webinar: <a href="https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/" class="uri">https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/</a></li>
+<li>Rstudio cheatsheets: <a href="https://www.rstudio.com/resources/cheatsheets/">https://www.rstudio.com/resources/cheatsheets/</a></li>
+<li>Package documentation: <a href="https://rdrr.io/cran/dplyr/">https://rdrr.io/cran/dplyr/</a>, <a href="https://rdrr.io/cran/tidyr/">https://rdrr.io/cran/tidyr/</a></li>
+<li>R Cookbook: <a href="http://www.cookbook-r.com/Manipulating_data/">http://www.cookbook-r.com/Manipulating_data/</a></li>
+<li>Data Wrangling Webinar: <a href="https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/">https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/</a></li>
 </ul>
 <h2 id="plotting-and-creating-publication-quality-graphics-60-minutes">5. Plotting and creating publication-quality graphics (60 minutes)</h2>
 <ul>
-<li>Now we're going to switch gears!</li>
+<li>Now we’re going to switch gears!</li>
 <li>We have a grasp of basic programming in R</li>
 <li>Most of our work here is 3 things: data wrangling, graphs, and analyses</li>
-<li>We'll cover the first two, since the same stuff applies to everyone</li>
+<li>We’ll cover the first two, since the same stuff applies to everyone</li>
 </ul>
 <p><strong>Question: How many of you have made a plot in R? How many of you have used ggplot?</strong></p>
 <ul>
 <li>R has a few different ways to plot things.<br />
 </li>
-<li>It comes with a basic plotting package, but most people don't use this anymore, it's harder to modify
+<li>It comes with a basic plotting package, but most people don’t use this anymore, it’s harder to modify
 <ul>
 <li><code>plot(x = gap$gdpPercap, y = gap$lifeExp)</code></li>
 </ul></li>
 <li>Show how to zoom a graph in Rstudio</li>
 <li>A better option is ggplot2, which is more flexible, build plots in layers (kinda like photoshop)
 <ul>
-<li><code>install.packages(c(&quot;tidyr&quot;, &quot;dplyr&quot;, &quot;knitr&quot;, &quot;rmarkdown&quot;, &quot;formatR&quot;))</code></li>
+<li><code>install.packages(c("tidyr", "dplyr", "knitr", "rmarkdown", "formatR"))</code></li>
 <li><code>library(ggplot2)</code></li>
 </ul></li>
 <li>Grammar of graphics: Every plot is a dataset, a coordinate system, and a set of layers that are the visual representation
@@ -754,24 +765,24 @@ str(gap_wide_new)</code></pre></li>
 <li>Then we call ggplot, all the options in here apply to all layers (aes maps the data)
 <ul>
 <li>ggplot is smart enough to look for those columns in the data we gave it, no need to subset</li>
-<li>If we stop here we don't get a graph</li>
+<li>If we stop here we don’t get a graph</li>
 <li><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp))</code></li>
 <li>So finally, we add a points (scatterplot) layer called a geometry</li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #1 ----------</em></strong>: Modify a ggplot graph</p>
+<p><strong><em>———- Socrative #1 ———-</em></strong>: Modify a ggplot graph</p>
 <ul>
 <li><p><code>ggplot(data = gap, aes(x=year, y=lifeExp)) + geom_point()</code></p></li>
-<li>Using a scatterplot probably isn't a good way to show change over time.
+<li><p>Using a scatterplot probably isn’t a good way to show change over time.</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, 
     by = country, color = continent)) +
     geom_line()</code></pre></li>
 </ul></li>
-<li>We're using a line geometry instead of a points geometry now</li>
-<li>the <strong>by</strong> aesthetic draws a line for each country, and then we color each continent differently.</li>
-<li><strong>Question: What if we wanted the points on the graph too?</strong>
+<li><p>We’re using a line geometry instead of a points geometry now</p></li>
+<li><p>the <strong>by</strong> aesthetic draws a line for each country, and then we color each continent differently.</p></li>
+<li><p><strong>Question: What if we wanted the points on the graph too?</strong></p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, 
@@ -779,57 +790,57 @@ str(gap_wide_new)</code></pre></li>
     geom_line() + 
     geom_point()</code></pre></li>
 </ul></li>
-<li>Layers get drawn on top of each other
+<li><p>Layers get drawn on top of each other</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) + 
     geom_point()</code></pre></li>
 </ul></li>
-<li>Here we've switched the color aesthetic from global to just the lines</li>
-<li>If we want to set everything on a geometry to the same color, we set it outside the aesthetic function
+<li><p>Here we’ve switched the color aesthetic from global to just the lines</p></li>
+<li><p>If we want to set everything on a geometry to the same color, we set it outside the aesthetic function</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) + 
     geom_point(color = &quot;blue&quot;)</code></pre></li>
 </ul></li>
-<li>Let's go back to our first example, but color the points by continent
+<li><p>Let’s go back to our first example, but color the points by continent</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
     geom_point()</code></pre></li>
 </ul></li>
-<li>Hard to see relationship with all those outliers, so let's use a log scale
+<li><p>Hard to see relationship with all those outliers, so let’s use a log scale</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
     geom_point(alpha = 0.5) + 
     scale_x_log10()</code></pre></li>
 </ul></li>
-<li>Notice the data has been transformed before graphing, x axis reflects this (1,000, 10,000, 100,000)</li>
+<li><p>Notice the data has been transformed before graphing, x axis reflects this (1,000, 10,000, 100,000)</p></li>
 <li><p>Here we also use transparency so that overlapping points are easier to see. This works with any geometry. We could also set this to use a data column inside aes()</p></li>
-<li>We can fit a simple linear regression line (linear model) using a geom_smooth geometry
+<li><p>We can fit a simple linear regression line (linear model) using a geom_smooth geometry</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
     geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;)</code></pre></li>
 </ul></li>
-<li>It even gives us a confidence interval! We can make the line thicker using size
+<li><p>It even gives us a confidence interval! We can make the line thicker using size</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp)) +
     geom_point() + scale_x_log10() + geom_smooth(method=&quot;lm&quot;, size=1.5)</code></pre></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #2 ----------</em></strong>: Color by continent &amp; add separate trends</p>
+<p><strong><em>———- Socrative #2 ———-</em></strong>: Color by continent &amp; add separate trends</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
     geom_point(size = 1.5) +
     scale_x_log10() +
     geom_smooth(method=&quot;lm&quot;)</code></pre></li>
-<li>Many peope are colorblind. In addition to color, it's a good idea to also use shape
+<li><p>Many peope are colorblind. In addition to color, it’s a good idea to also use shape</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
@@ -837,7 +848,7 @@ str(gap_wide_new)</code></pre></li>
     scale_x_log10() + 
     geom_smooth(method=&quot;lm&quot;)</code></pre></li>
 </ul></li>
-<li>Let's clean it up for publication. We'll add nicer axis labels, a title, and change the y-axis and theme
+<li><p>Let’s clean it up for publication. We’ll add nicer axis labels, a title, and change the y-axis and theme</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>ggplot(data = gap, aes(x = gdpPercap, y = lifeExp, color = continent)) +
@@ -852,20 +863,20 @@ str(gap_wide_new)</code></pre></li>
          color = &quot;Continents&quot;, 
          shape = &quot;Continents&quot;)</code></pre></li>
 </ul></li>
-<li>Now we have this graph, but we want to save it!
+<li><p>Now we have this graph, but we want to save it!</p>
 <ul>
 <li>Rstudio has an export button: pdf, image, or to clipboard, lets you change size
 <ul>
-<li>The problem with this is that it's not reproducible. You fiddle with the size, but then months from now you need to change something</li>
+<li>The problem with this is that it’s not reproducible. You fiddle with the size, but then months from now you need to change something</li>
 </ul></li>
 <li>Better to do it programmatically
 <ul>
-<li><code>ggsave(file = &quot;life_expectancy.png&quot;)</code></li>
-<li><code>ggsave(file = &quot;life_expectancy.pdf&quot;)</code></li>
+<li><code>ggsave(file = "life_expectancy.png")</code></li>
+<li><code>ggsave(file = "life_expectancy.pdf")</code></li>
 </ul></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #3 ----------</em></strong>: Optional ggsave &amp; ggplot variables - ggsave will overwrite the graph</p>
+<p><strong><em>———- Socrative #3 ———-</em></strong>: Optional ggsave &amp; ggplot variables - ggsave will overwrite the graph</p>
 <h3 id="facets-if-time-permits">Facets (if time permits)</h3>
 <ul>
 <li><p><span></span></p>
@@ -899,13 +910,13 @@ ggplot(L.countries, aes(x = year, y = lifeExp, color = country)) +
 }
 
 lifeExp_country(gap, c(&quot;Ethiopia&quot;, &quot;Australia&quot;, &quot;Canada&quot;))</code></pre></li>
-<li>Cover cowplot:
+<li><p>Cover cowplot:</p>
 <ul>
 <li><code>library(cowplot)</code></li>
-<li>Nicer quality than default ggplot, it's a theme</li>
+<li>Nicer quality than default ggplot, it’s a theme</li>
 <li>Also provides a way to merge two plots into one, eg A &amp; B figures, and annotations</li>
 </ul></li>
-<li>Themes
+<li><p>Themes</p>
 <ul>
 <li><p>Text size</p>
 <ul>
@@ -967,23 +978,23 @@ ggplot(data = gap, aes(x = continent, y = lifeExp, fill = factor(year))) +
 </ul>
 <h3 id="resources-1">Resources</h3>
 <ul>
-<li>R Graph catalog: <a href="http://shiny.stat.ubc.ca/r-graph-catalog/" class="uri">http://shiny.stat.ubc.ca/r-graph-catalog/</a></li>
+<li>R Graph catalog: <a href="http://shiny.stat.ubc.ca/r-graph-catalog/">http://shiny.stat.ubc.ca/r-graph-catalog/</a></li>
 <li>GGPlot2 online help: <a href="">http://docs.ggplot2.org/</a></li>
-<li>R Graph Cookbook: <a href="http://www.cookbook-r.com/Graphs/" class="uri">http://www.cookbook-r.com/Graphs/</a></li>
-<li>ggplot2 essentials: <a href="http://www.sthda.com/english/wiki/ggplot2-essentials" class="uri">http://www.sthda.com/english/wiki/ggplot2-essentials</a></li>
-<li>Rstudio cheatsheets: <a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a></li>
-<li>Cowplot: <a href="https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html" class="uri">https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html</a></li>
+<li>R Graph Cookbook: <a href="http://www.cookbook-r.com/Graphs/">http://www.cookbook-r.com/Graphs/</a></li>
+<li>ggplot2 essentials: <a href="http://www.sthda.com/english/wiki/ggplot2-essentials">http://www.sthda.com/english/wiki/ggplot2-essentials</a></li>
+<li>Rstudio cheatsheets: <a href="https://www.rstudio.com/resources/cheatsheets/">https://www.rstudio.com/resources/cheatsheets/</a></li>
+<li>Cowplot: <a href="https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html">https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html</a></li>
 </ul>
 <h2 id="producing-reports-and-notebooks-with-knitr-20-minutes">6. Producing reports and notebooks with knitr (20 minutes)</h2>
 <p><strong>Question: How many of you could just send your code to your advisor or collaborator?</strong></p>
 <ul>
-<li>We often need to put this stuff in a presentable format: word, powerpoint, email, etc.</li>
-<li>Then we need to change a graph, and update our presentation</li>
-<li>We can do this all in one step, with less work by having R handle it. It's also easier to reproduce.</li>
-<li>We'll do this with an R notebook, which will give us a single html file with all the code, data, graphs, and our notes. We can upload this online, show it as a presentation, or send it to someone.<br />
-</li>
+<li><p>We often need to put this stuff in a presentable format: word, powerpoint, email, etc.</p></li>
+<li><p>Then we need to change a graph, and update our presentation</p></li>
+<li><p>We can do this all in one step, with less work by having R handle it. It’s also easier to reproduce.</p></li>
+<li><p>We’ll do this with an R notebook, which will give us a single html file with all the code, data, graphs, and our notes. We can upload this online, show it as a presentation, or send it to someone.<br />
+</p></li>
 <li><p>Basically a fancy lab notebook!</p></li>
-<li>Create a new R notebook and save it.
+<li><p>Create a new R notebook and save it.</p>
 <ul>
 <li>Talk about the header chunk</li>
 <li>Explain code chunks
@@ -995,9 +1006,9 @@ ggplot(data = gap, aes(x = continent, y = lifeExp, fill = factor(year))) +
 <li>Click preview to see the html</li>
 <li>Show where the file is saved</li>
 </ul></li>
-<li>Notice how we got some nice formatted text. This is using something called markdown
+<li><p>Notice how we got some nice formatted text. This is using something called markdown</p>
 <ul>
-<li><a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a></li>
+<li><a href="http://rmarkdown.rstudio.com">http://rmarkdown.rstudio.com</a></li>
 <li>Demo
 <ul>
 <li>headings <code>### Heading</code></li>
@@ -1009,7 +1020,7 @@ ggplot(data = gap, aes(x = continent, y = lifeExp, fill = factor(year))) +
 </ul></li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative ----------</em></strong>: R Notebook Challenge</p>
+<p><strong><em>———- Socrative ———-</em></strong>: R Notebook Challenge</p>
 <p>Modify your R notebook to load the data from gap, show the first 10 lines, and display a graph.<br />
 Give each R code section a heading and short summary. - <span></span></p>
 <pre><code>    ```
@@ -1033,13 +1044,13 @@ Give each R code section a heading and short summary. - <span></span></p>
     ``
     ```</code></pre>
 <ul>
-<li>Variables are shared between chunks
+<li><p>Variables are shared between chunks</p>
 <ul>
 <li>Add a variable to a chunk and print it in another</li>
 </ul></li>
-<li>You could also knit to a word file instead. Or pdf, though this requires some extra setup</li>
-<li>You can publish stuff to the internet, and run code from other languages, eg bash shell and python.</li>
-<li><p>There's a format to publish reports to github</p>
+<li><p>You could also knit to a word file instead. Or pdf, though this requires some extra setup</p></li>
+<li><p>You can publish stuff to the internet, and run code from other languages, eg bash shell and python.</p></li>
+<li><p>There’s a format to publish reports to github</p>
 <ul>
 <li><p><span></span></p>
 <pre><code>github_document:
@@ -1052,10 +1063,10 @@ Give each R code section a heading and short summary. - <span></span></p>
 </ul>
 <h2 id="writing-good-software-5-minutes">7. Writing good software (5 Minutes)</h2>
 <ul>
-<li>It's really easy to be in a hurry and just quickly write the code for a graph or an analysis with no commentary on how the code works or the results you got!
+<li>It’s really easy to be in a hurry and just quickly write the code for a graph or an analysis with no commentary on how the code works or the results you got!
 <ul>
 <li>This will come back to bite you!</li>
-<li>You'll end up re-spending hours trying remember how something works.</li>
+<li>You’ll end up re-spending hours trying remember how something works.</li>
 </ul></li>
 <li>Readable code is super important!
 <ul>
@@ -1065,23 +1076,23 @@ Give each R code section a heading and short summary. - <span></span></p>
 <li>Rules of thumb
 <ul>
 <li>Indent code inside loops, functions, and if statements</li>
-<li>Use good variable &amp; function names and don't overwrite variables</li>
+<li>Use good variable &amp; function names and don’t overwrite variables</li>
 <li>Use lots of comments to explain what lines of code do</li>
-<li>There's an R style guide: <a href="http://style.tidyverse.org" class="uri">http://style.tidyverse.org</a>
+<li>There’s an R style guide: <a href="http://style.tidyverse.org">http://style.tidyverse.org</a>
 <ul>
 <li>Preferences &gt; Code &gt; Diagnostics, gives you tiny warnings to enforce</li>
 </ul></li>
 </ul></li>
 <li>Break down problems into bite-sized pieces and keep things modular
 <ul>
-<li>e.g. using functions, or even separate files.<br />
+<li>e.g. using functions, or even separate files.<br />
 </li>
 <li>I like to have an R script to get my data from csv ready for analysis
 <ul>
 <li>Then I can just pull this in to different analyses I do.</li>
 </ul></li>
 </ul></li>
-<li>Don't repeat yourself!
+<li>Don’t repeat yourself!
 <ul>
 <li>Re-use code, build functions, use loops</li>
 </ul></li>
@@ -1099,14 +1110,14 @@ Give each R code section a heading and short summary. - <span></span></p>
 <ul>
 <li>Setup RStudio to use git
 <ul>
-<li>In RStudio, click on Tools &gt; Global Options... &gt; Git/SVN</li>
-<li>Make sure there's a git executable listed there. If not, browse for it, or ask for help</li>
-<li>Make sure the grey box under &quot;SSH RSA Key&quot; shows a file name and a &quot;View public key&quot; link exists next to it.
+<li>In RStudio, click on Tools &gt; Global Options… &gt; Git/SVN</li>
+<li>Make sure there’s a git executable listed there. If not, browse for it, or ask for help</li>
+<li>Make sure the grey box under “SSH RSA Key” shows a file name and a “View public key” link exists next to it.
 <ul>
-<li>Clicking on &quot;View public key&quot; opens a window opens which is not blank.<br />
+<li>Clicking on “View public key” opens a window opens which is not blank.<br />
 </li>
 </ul></li>
-<li>If the &quot;SSH RSA Key&quot; box is blank, click &quot;Create RSA key...&quot; and leave the optional Passphrase blank and click &quot;Create&quot;.</li>
+<li>If the “SSH RSA Key” box is blank, click “Create RSA key…” and leave the optional Passphrase blank and click “Create”.</li>
 </ul></li>
 <li>Setup the Project with a git repository
 <ul>
@@ -1123,8 +1134,8 @@ Give each R code section a heading and short summary. - <span></span></p>
 </ul></li>
 <li>Syncing with GitHub
 <ul>
-<li>We have push and pull buttons, but they're grayed out</li>
-<li>To enable them, we need to add a remote</li>
+<li><p>We have push and pull buttons, but they’re grayed out</p></li>
+<li><p>To enable them, we need to add a remote</p></li>
 <li><p>Go to Tools &gt; Terminal &gt; New Terminal or Git &gt; Gear &gt; Shell</p></li>
 <li><p><span></span></p>
 <pre><code>git remote add origin https://github.com/mickley/rstudio-test.git

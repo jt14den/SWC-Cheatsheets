@@ -1,36 +1,49 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Data Cleaning and Databases</title>
-  <style type="text/css">code{white-space: pre;}</style>
-  <link rel="stylesheet" href="notes.css" type="text/css" />
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="notes.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 </head>
 <body>
-<div id="header">
+<header id="title-block-header">
 <h1 class="title">Data Cleaning and Databases</h1>
-<h1 class="subtitle">OpenRefine and SQL</h1>
-</div>
+<p class="subtitle">OpenRefine and SQL</p>
+</header>
 <h2 id="pre-workshop-setup">Pre-Workshop Setup</h2>
 <ul>
 <li>Start OpenRefine
 <ul>
 <li>Windows: Go to folder you downloaded it to and click on openrefine.exe</li>
-<li>If OpenRefine doesn't run, install JDK &amp; JRE, add JAVA_HOME and JDK_HOME to environment.</li>
+<li>If OpenRefine doesn’t run, install JDK &amp; JRE, add JAVA_HOME and JDK_HOME to environment.</li>
 <li>Linux: In terminal, go to folder you downloaded it to and type ./refine</li>
 <li>Mac: Click on OpenRefine app in Applications folder</li>
-<li>Need to allow OpenRefine to run by &quot;Allow Everything&quot; in Settings &gt; Security</li>
+<li>Need to allow OpenRefine to run by “Allow Everything” in Settings &gt; Security</li>
 </ul></li>
 <li>In your browser (non IE), go to http://localhost:3333</li>
 <li>Download data files from the course website and save to your desktop.</li>
 <li>Make sure someone is recording commands in the Etherpad (no log)</li>
-<li>Setup for DB BRowser</li>
+<li>Setup for DB BRowser
+<ul>
 <li>1024 x 768 resolution</li>
 <li>Data browser font size to 14</li>
 <li>SQL editor and log font size to 16</li>
+</ul></li>
 </ul>
 <h3 id="open-up-socrative-again">Open up Socrative again</h3>
 <ul>
@@ -45,8 +58,10 @@
 <h2 id="openrefine-30-minutes">1. OpenRefine (30 minutes)</h2>
 <h3 id="importing-data-3-minutes">Importing Data (3 minutes)</h3>
 <ul>
-<li>Go to <code>Create Project &gt; Choose Files</code></li>
+<li>Go to <code>Create Project &gt; Choose Files</code>
+<ul>
 <li>Pick the burlap-trap.csv file you downloaded, and click Next</li>
+</ul></li>
 <li>Give your project a name</li>
 <li>Check to make sure columns look right.
 <ul>
@@ -67,7 +82,7 @@
 <li><code>Include</code> multiple tree species (Maples)</li>
 <li><code>Invert selection</code> (all except Maples)</li>
 </ul></li>
-<li>Flagging: Flag &quot;Red oak (?)&quot; <code>Edit Rows &gt; Flag Rows</code></li>
+<li>Flagging: Flag “Red oak (?)” <code>Edit Rows &gt; Flag Rows</code></li>
 </ul>
 <h4 id="faceting-challenge-1">Faceting Challenge #1</h4>
 <ul>
@@ -82,9 +97,11 @@
 <h3 id="transforming-columns-5-minutes">Transforming Columns (5 minutes)</h3>
 <ul>
 <li>Instead of editing subsets, we can make changes to a whole column</li>
-<li>All of the problems in Direction column were capitalization and whitespace.</li>
+<li>All of the problems in Direction column were capitalization and whitespace.
+<ul>
 <li><code>Edit Cells &gt; Common Transforms &gt; Trim whitespace</code></li>
 <li><code>Edit Cells &gt; Common Transforms &gt; Titlecase</code></li>
+</ul></li>
 <li>Now, lets address the blanks in the data: <code>Edit Cells &gt; Fill Down</code></li>
 <li>Splitting Columns: <code>Site &gt; Edit Column &gt; Split into several columns</code></li>
 </ul>
@@ -94,37 +111,45 @@
 </ul>
 <h3 id="numeric-facets-5-minutes">Numeric Facets (5 minutes)</h3>
 <ul>
-<li>Before doing numeric facets, we need to make a column numeric:</li>
+<li>Before doing numeric facets, we need to make a column numeric:
+<ul>
 <li><code>Edit Cells &gt; Transform &gt; To Number</code></li>
-<li>Let's make a <code>numeric facet of # egg masses</code></li>
-<li>Let's look at the non-numeric data and fix it</li>
-<li>Let's look at the blank data and flag it</li>
+</ul></li>
+<li>Let’s make a <code>numeric facet of # egg masses</code>
+<ul>
+<li>Let’s look at the non-numeric data and fix it</li>
+<li>Let’s look at the blank data and flag it</li>
 <li>We can also look for numeric outliers</li>
+</ul></li>
 </ul>
-<p><strong><em>---------- Socrative #1 ----------</em></strong>: Clean up DBH, any outliers?</p>
+<p><strong><em>———- Socrative #1 ———-</em></strong>: Clean up DBH, any outliers?</p>
 <ul>
 <li>Use a Numeric Facet to clean up the data in the DBH column. This is the diameter of the trees.<br />
 </li>
-<li>Are there any outliers that might represent mistakes?</li>
+<li>Are there any outliers that might represent mistakes?
+<ul>
 <li>True (<em>correct</em>)</li>
 <li>False</li>
+</ul></li>
 </ul>
 <h3 id="stacking-facets-5-minutes">Stacking Facets (5 minutes)</h3>
 <ul>
-<li>So far, we've only been working with one facet at a time. You can also stack facets</li>
-<li>Let's say that on May 23rd, a student confused Beech Trees for Red Oaks
+<li>So far, we’ve only been working with one facet at a time. You can also stack facets</li>
+<li>Let’s say that on May 23rd, a student confused Beech Trees for Red Oaks
 <ul>
 <li><code>Facet by Date, then by Tree Species</code></li>
 <li>Include, then edit the Beech Tree</li>
 </ul></li>
 </ul>
-<p><strong><em>---------- Socrative #2 ----------</em></strong>: # Black Oaks &gt; 40 cm DBH @ BS_GCL</p>
+<p><strong><em>———- Socrative #2 ———-</em></strong>: # Black Oaks &gt; 40 cm DBH @ BS_GCL</p>
 <ul>
-<li>How many Black Oak trees are at site BS_GCL that are over 40 cm DBH?</li>
+<li>How many Black Oak trees are at site BS_GCL that are over 40 cm DBH?
+<ul>
 <li>5 (black oaks @ site)</li>
 <li>2 (<em>correct</em>)</li>
 <li>27 (total black oaks)</li>
 <li>10 (black oaks over 40 cm)</li>
+</ul></li>
 </ul>
 <h3 id="exporting-1-minute">Exporting (1 minute)</h3>
 <ul>
@@ -147,29 +172,34 @@
 <ul>
 <li>Designed for large datasets (potentially millions of rows), still fast</li>
 <li>Improves quality control, by enforcing data types: one column, one kind of data</li>
-<li>Avoid duplicating data, e.g. species names: makes it easier to change/maintain, less space</li>
+<li>Avoid duplicating data, e.g. species names: makes it easier to change/maintain, less space</li>
 <li>Easier to search for subsets of data</li>
 <li>Less likely to accidentally modify data</li>
 </ul>
 <h3 id="lots-of-different-types-of-databases">Lots of Different types of databases</h3>
 <ul>
 <li>MS Access, Filemaker Pro, MySQL, etc.</li>
-<li>We'll be using SQLite, but the concepts are mostly the same.</li>
+<li>We’ll be using SQLite, but the concepts are mostly the same.
+<ul>
 <li>They all use SQL = Structured Query Language</li>
+</ul></li>
 </ul>
 <h3 id="exploring-in-db-browser-2-minutes">Exploring in DB Browser (2 minutes)</h3>
 <ul>
 <li><code>Open DB Browser</code></li>
 <li>Click <code>Open Database</code> and find our survey.db file</li>
 <li>Workbook = database, worksheet = table, column = field, and row = record</li>
-<li>Expand the person table and show the fields: field name and data type</li>
+<li>Expand the person table and show the fields: field name and data type
+<ul>
 <li>Click on Browse Data tab to see the table, very similar to Excel</li>
 <li>Browse the other tables to see what we have.</li>
 <li>Notice there are some values missing (shown with NULL)</li>
+</ul></li>
 </ul>
 <h2 id="selecting-data-with-select-8-minutes">3. Selecting Data with SELECT (8 minutes)</h2>
 <ul>
-<li>Lets write an SQL query (search term) to display the scientists' names</li>
+<li>Lets write an SQL query (search term) to display the scientists’ names
+<ul>
 <li>Click on <code>Execute SQL</code></li>
 <li>We can make comments using <code>--</code></li>
 <li>Type <code>SELECT personal, family FROM Person;</code> and click the Run button to run the selected line
@@ -178,11 +208,11 @@
 <li>SQL is case-insensitive. We could write <code>select PERSONAL, family From Person;</code></li>
 <li>Convention is to keep SQL commands in all caps, to differentiate, easier to read</li>
 </ul></li>
-<li>Records and fields in a database aren't stored in any particular order, so we can control that
+<li>Records and fields in a database aren’t stored in any particular order, so we can control that
 <ul>
 <li>Example, swap fields <code>SELECT family, personal FROM Person;</code></li>
 </ul></li>
-<li>As a shortcut, we can use * as a wildcard for &quot;all fields&quot;
+<li>As a shortcut, we can use * as a wildcard for “all fields”
 <ul>
 <li><code>SELECT * FROM Person;</code></li>
 </ul></li>
@@ -190,16 +220,18 @@
 <ul>
 <li><code>SELECT id, id FROM Person;</code></li>
 </ul></li>
+</ul></li>
 </ul>
-<p><strong><em>---------- Socrative #3 ----------</em></strong>: person, quant, reading from Survey</p>
+<p><strong><em>———- Socrative #3 ———-</em></strong>: person, quant, reading from Survey</p>
 <p>Write a query that displays the person, quant, and reading fields from the Survey table</p>
 <ul>
 <li><code>SELECT person, quant, reading FROM Survey;</code></li>
 </ul>
 <h2 id="sorting-data-3-minutes">4. Sorting Data (3 minutes)</h2>
 <ul>
-<li>It's often useful to sort the output of our query</li>
-<li>We can do this with <code>ORDER BY</code></li>
+<li>It’s often useful to sort the output of our query</li>
+<li>We can do this with <code>ORDER BY</code>
+<ul>
 <li><code>SELECT * FROM Person ORDER BY id;</code>
 <ul>
 <li>This sorts in Ascending order by default. We could do descending</li>
@@ -207,32 +239,44 @@
 <li><code>SELECT * FROM Person ORDER BY id DESC;</code></li>
 <li>NOTE: It may look like records are in a certain order without sorting
 <ul>
-<li>Only because that's the order the data were imported in</li>
+<li>Only because that’s the order the data were imported in</li>
 <li>Any modifications could easily affect that order</li>
 </ul></li>
 <li>We can make things clearer with <code>ASC</code></li>
-<li>We can order by multiple fields</li>
+</ul></li>
+<li>We can order by multiple fields
+<ul>
 <li><code>SELECT person, quant, reading FROM Survey ORDER BY person ASC, reading DESC;</code></li>
+</ul></li>
 </ul>
 <h2 id="filtering-with-where-15-minutes">5. Filtering with WHERE (15 minutes)</h2>
 <ul>
 <li>A very useful database feature is the ability to quickly filter data, even with large datasets</li>
-<li>We do this by adding a WHERE clause to our SELECT query</li>
+<li>We do this by adding a WHERE clause to our SELECT query
+<ul>
 <li><code>SELECT * FROM Visited;</code></li>
 <li><code>SELECT * FROM Visited WHERE site = 'DR-1';</code>
 <ul>
 <li>Now, the database is checking which records match the WHERE clause, and then checking which fields we want</li>
 </ul></li>
-<li>We can use multiple filters in the WHERE clause: DR-1 before 1930</li>
+</ul></li>
+<li>We can use multiple filters in the WHERE clause: DR-1 before 1930
+<ul>
 <li><code>SELECT * FROM Visited WHERE site = 'DR-1' AND dated &lt; '1930-01-01';</code>
 <ul>
 <li><strong>Sidenote:</strong> This query only works because YYYY-MM-DD HH:MM:SS dates allows sorting. MySQL and other databases have data types specifically for dates to help with this.</li>
 </ul></li>
-<li>Find out what measurements were taken by either Lake or Roerich using OR</li>
+</ul></li>
+<li>Find out what measurements were taken by either Lake or Roerich using OR
+<ul>
 <li><code>SELECT * FROM Survey WHERE person = 'lake' OR person = 'roe';</code></li>
-<li>Alternatively, we can use IN, to see if a value is in a specific list</li>
+</ul></li>
+<li>Alternatively, we can use IN, to see if a value is in a specific list
+<ul>
 <li><code>SELECT * FROM Survey WHERE person IN ('lake', 'roe');</code></li>
-<li>We can combine AND and OR, but need to be careful</li>
+</ul></li>
+<li>We can combine AND and OR, but need to be careful
+<ul>
 <li><code>SELECT * FROM Survey WHERE quant = 'sal' AND person = 'lake' OR person = 'roe';</code>
 <ul>
 <li>Gives us salinity by lake and everything by Roerich</li>
@@ -241,37 +285,45 @@
 <ul>
 <li><code>SELECT * FROM Survey WHERE quant='sal' AND (person='lake' OR person='roe');</code></li>
 </ul></li>
+</ul></li>
 </ul>
-<p><strong><em>---------- Socrative #4 ----------</em></strong>: normalized salinity outliers ouside of [0.0, 1.0]</p>
+<p><strong><em>———- Socrative #4 ———-</em></strong>: normalized salinity outliers ouside of [0.0, 1.0]</p>
 <p>Normalized salinity readings are supposed to be between 0.0 and 1.0. Which query will select all records from Survey with salinity values that are not normalized?</p>
 <ul>
-<li><code>SELECT * FROM Survey WHERE quant='sal' AND reading &gt; 1.0 OR reading &lt; 0.0;</code></li>
-<li><code>SELECT * FROM Survey WHERE quant='sal' AND (reading &gt; 1.0 AND reading &lt; 0.0);</code></li>
-<li><code>SELECT * FROM Survey WHERE quant='sal' AND (reading &gt; 1.0 OR reading &lt; 0.0);</code> (<em>correct</em>)</li>
+<li><p><code>SELECT * FROM Survey WHERE quant='sal' AND reading &gt; 1.0 OR reading &lt; 0.0;</code></p></li>
+<li><p><code>SELECT * FROM Survey WHERE quant='sal' AND (reading &gt; 1.0 AND reading &lt; 0.0);</code></p></li>
+<li><p><code>SELECT * FROM Survey WHERE quant='sal' AND (reading &gt; 1.0 OR reading &lt; 0.0);</code> (<em>correct</em>)</p></li>
 <li><p><code>SELECT * FROM Survey WHERE quant='sal' OR (reading &gt; 1.0 AND reading &lt; 0.0);</code></p></li>
-<li>We can also find partial matches with LIKE</li>
+<li><p>We can also find partial matches with LIKE</p>
+<ul>
 <li><code>SELECT * FROM Visited WHERE site LIKE 'DR%' ORDER BY site ASC;</code>
 <ul>
 <li>Gives us all the sites that start with DR</li>
 <li>The percent symbol is a wildcard, matches any characters. Use anywhere in a string.</li>
 </ul></li>
-<li>Or,we could use DISTINCT to show unique values</li>
+</ul></li>
+<li><p>Or,we could use DISTINCT to show unique values</p>
+<ul>
 <li><code>SELECT DISTINCT person, quant FROM Survey WHERE person = 'lake' OR person = 'roe';</code>
 <ul>
 <li>Note: only unique for those chosen fields, not entire records.</li>
+</ul></li>
 </ul></li>
 </ul>
 <h4 id="minutes-1">63 minutes</h4>
 <h2 id="missing-data-8-minutes-skipabbreviate-if-after-2-pm">6. Missing Data (8 minutes) SKIP/Abbreviate if after 2 PM</h2>
 <ul>
-<li>With real-world data, it's common to have missing data</li>
-<li>Let's take a look at the Visited table</li>
-<li><code>SELECT * FROM Visited;</code></li>
-<li>There's a row without a date, where it says NULL
+<li>With real-world data, it’s common to have missing data</li>
+<li>Let’s take a look at the Visited table
 <ul>
-<li>NULL means &quot;nothing here&quot;. It's not zero or false, or an empty string.</li>
+<li><code>SELECT * FROM Visited;</code></li>
+<li>There’s a row without a date, where it says NULL
+<ul>
+<li>NULL means “nothing here”. It’s not zero or false, or an empty string.</li>
 </ul></li>
-<li>NULL doesn't behave like other values</li>
+</ul></li>
+<li>NULL doesn’t behave like other values
+<ul>
 <li>Select records before 1930 again:
 <ul>
 <li><code>SELECT * FROM Visited WHERE dated &lt; '1930-01-01';</code></li>
@@ -282,10 +334,12 @@
 </ul></li>
 <li>Neither gives us the NULL row.
 <ul>
-<li>A comparison operator like &gt; with a NULL value is neither true nor false</li>
-<li>Just &quot;we don't know&quot;</li>
+<li>A comparison operator like &gt; with a NULL value is neither true nor false
+<ul>
+<li>Just “we don’t know”</li>
 </ul></li>
-<li>Even checking if it equals NULL doesn't work, looks for a string &quot;NULL&quot; (which isn't NULL)
+</ul></li>
+<li>Even checking if it equals NULL doesn’t work, looks for a string “NULL” (which isn’t NULL)
 <ul>
 <li><code>SELECT * FROM Visited WHERE dated = NULL;</code></li>
 </ul></li>
@@ -294,19 +348,24 @@
 <li><code>SELECT * FROM Visited WHERE dated IS NULL;</code></li>
 <li>or inverse <code>SELECT * FROM Visited WHERE dated IS NOT NULL;</code></li>
 </ul></li>
-<li>This can cause headaches. Example: salinity measurements not by Lake:</li>
-<li><code>SELECT * FROM Survey WHERE quant = 'sal' AND person != 'lake';</code> doesn't work
+</ul></li>
+<li>This can cause headaches. Example: salinity measurements not by Lake:
 <ul>
-<li>Note: <code>!=</code> means &quot;not equal to&quot;</li>
+<li><code>SELECT * FROM Survey WHERE quant = 'sal' AND person != 'lake';</code> doesn’t work
+<ul>
+<li>Note: <code>!=</code> means “not equal to”</li>
 </ul></li>
 <li><code>SELECT * FROM Survey WHERE quant='sal' AND (person != 'lake' OR person IS NULL);</code>
 <ul>
 <li>We need an explicit check</li>
 </ul></li>
-<li>In some other kinds of databases, you can specify a default value other than NULL for a field</li>
+</ul></li>
+<li>In some other kinds of databases, you can specify a default value other than NULL for a field
+<ul>
 <li>What might be useful in an R context?</li>
+</ul></li>
 </ul>
-<p><strong><em>---------- Socrative #5 ----------</em></strong>: Visted, sorted by date, excluding NULL</p>
+<p><strong><em>———- Socrative #5 ———-</em></strong>: Visted, sorted by date, excluding NULL</p>
 <p>Write a query that sorts the records in Visited by date, excluding entries for which the date is not known</p>
 <ul>
 <li><code>SELECT * FROM Visited WHERE dated IS NOT NULL ORDER BY dated;</code> (<em>works, but less clear</em>)</li>
@@ -316,26 +375,41 @@
 </ul>
 <h2 id="combining-data-with-join-12-minutes">7. Combining Data with JOIN (12 minutes)</h2>
 <ul>
-<li>We need to do an analysis and need the data fields <code>latitude, longitude, date, quantity, and reading</code></li>
+<li><p>We need to do an analysis and need the data fields <code>latitude, longitude, date, quantity, and reading</code></p>
+<ul>
 <li>But this data is in multiple tables (lat/long in Site, dates in Visited, and Readings in Survey)
 <ul>
 <li>Show figure</li>
-<li>We did it this way to make it easier to manage (eg. change a site's lat/long only once)</li>
+<li>We did it this way to make it easier to manage (eg. change a site’s lat/long only once)</li>
 </ul></li>
-<li>We can combine data from multiple tables with JOIN</li>
+</ul></li>
+<li><p>We can combine data from multiple tables with JOIN</p>
+<ul>
 <li><code>SELECT * FROM Site JOIN Visited ON Site.name = Visited.site;</code>
 <ul>
 <li>The ON part tells SQL to match the name field in the sites table with the site field in the Visited table</li>
 <li>Note that we are now using <code>Table.field</code>. Tables can have fields with the same name, so this distinguishes</li>
 </ul></li>
-<li>We can now select the fields we actually need and format the SQL nicely</li>
+</ul></li>
+<li><p>We can now select the fields we actually need and format the SQL nicely</p>
+<ul>
 <li><p><span></span></p>
-<p><code>SELECT Site.lat, Site.long, Visited.dated   FROM Site JOIN Visited   ON Site.name = Visited.site;</code></p></li>
-<li>We can do more than one JOIN at once to get the data we want</li>
+<pre><code>SELECT Site.lat, Site.long, Visited.dated
+FROM Site JOIN Visited
+ON Site.name = Visited.site;</code></pre></li>
+</ul></li>
+<li><p>We can do more than one JOIN at once to get the data we want</p>
+<ul>
 <li><p><span></span></p>
-<p><code>SELECT Site.lat, Site.long, Visited.dated, Survey.quant, Survey.reading   FROM Site JOIN Visited JOIN Survey   ON Site.name = Visited.site   AND Visited.id = Survey.taken   AND Visited.dated IS NOT NULL;</code></p></li>
+<pre><code>SELECT Site.lat, Site.long, Visited.dated, Survey.quant, Survey.reading
+FROM Site JOIN Visited JOIN Survey
+ON Site.name = Visited.site
+AND Visited.id = Survey.taken
+AND Visited.dated IS NOT NULL;</code></pre></li>
+</ul></li>
 <li><p>And now we can export the output of that SQL command to CSV (button)</p></li>
-<li>The reason we can do this is because this database was carefully set up</li>
+<li><p>The reason we can do this is because this database was carefully set up</p>
+<ul>
 <li>In the Sites and Person table, each record has a unique ID, called a Primary Key
 <ul>
 <li>For example, the Person table has an ID field with no duplicates</li>
@@ -345,14 +419,17 @@
 <li>In this case they are called Foreign Keys: they refer to data in other tables.</li>
 </ul></li>
 <li>What we end up doing then is matching a foreign key to a primary key</li>
-<li>Good database design gives every table a field to act as a primary key</li>
+</ul></li>
+<li><p>Good database design gives every table a field to act as a primary key</p>
+<ul>
 <li>Ideally this should NOT be data, in case data needs to be changed.</li>
 <li>Just have a field numbering the records works well
 <ul>
 <li><strong>Why might the last name used in the Person table be a bad Primary Key?</strong></li>
 </ul></li>
+</ul></li>
 </ul>
-<p><strong><em>---------- Socrative #6 ----------</em></strong>: Site name and salinity readings</p>
+<p><strong><em>———- Socrative #6 ———-</em></strong>: Site name and salinity readings</p>
 <p>Write a query that lists all the salinity readings along with the site names they were collected at</p>
 <ul>
 <li><p><span></span></p>
@@ -365,28 +442,38 @@ WHERE Survey.quant = &quot;sal&quot;;</code></pre></li>
 <h4 id="minutes-break">90 minutes: BREAK</h4>
 <h2 id="data-hygiene-4-minutes">8. Data Hygiene (4 minutes)</h2>
 <ul>
-<li><strong>Rule 1:</strong> Fields shouldn't have multiple pieces of data**</li>
+<li><strong>Rule 1:</strong> Fields shouldn’t have multiple pieces of data**
+<ul>
 <li>If we stored the full name in a field, it would be hard to pull out all the Franks</li>
-<li><strong>Rule 2: Every record should have a unique primary key</strong></li>
+</ul></li>
+<li><strong>Rule 2: Every record should have a unique primary key</strong>
+<ul>
 <li>A unique number with no meaining is good</li>
 <li>If you remember back to our OpenRefine dataset, our lab is using the 3-letter site code</li>
-<li><strong>Rule 3: No redundant information</strong></li>
+</ul></li>
+<li><strong>Rule 3: No redundant information</strong>
+<ul>
 <li>If we run our join query, we could have stored data in a table this way.
 <ul>
-<li>But if a date was wrong, we'd be changing it multiple times</li>
+<li>But if a date was wrong, we’d be changing it multiple times
+<ul>
 <li>The bigger the dataset, the worse the problem</li>
+</ul></li>
+</ul></li>
 </ul></li>
 </ul>
 <h2 id="creating-databases-15-minutes">8. Creating Databases (15 minutes)</h2>
 <ul>
-<li>Let's recreate the Site table</li>
+<li>Let’s recreate the Site table</li>
 </ul>
 <h3 id="drop-table">DROP TABLE</h3>
 <ul>
-<li>First, we drop the old table</li>
+<li>First, we drop the old table
+<ul>
 <li><code>DROP TABLE Site;</code>
 <ul>
 <li>BE CAREFUL WITH THIS! You can lose data!</li>
+</ul></li>
 </ul></li>
 </ul>
 <h3 id="create-table">CREATE TABLE</h3>
@@ -396,18 +483,24 @@ WHERE Survey.quant = &quot;sal&quot;;</code></pre></li>
 </ul>
 <h3 id="data-types">Data Types</h3>
 <ul>
-<li>Note that after the field names there's an additional qualifier (e.g. text)</li>
+<li>Note that after the field names there’s an additional qualifier (e.g. text)</li>
 <li>This is the data type</li>
-<li>SQLite only has a few: text, real (for decimals), integer, blob (binary data like an image)</li>
+<li>SQLite only has a few: text, real (for decimals), integer, blob (binary data like an image)
+<ul>
 <li>Many other databases have additional types for true/false, date, time, and more number/text types</li>
+</ul></li>
 </ul>
 <h3 id="insert-data">Insert Data</h3>
 <ul>
-<li>We can add data back by writing INSERT INTO queries</li>
+<li>We can add data back by writing INSERT INTO queries
+<ul>
 <li><p><span></span></p>
-<p><code>INSERT INTO Site VALUES('DR-1', -49.85, -128.57);   INSERT INTO Site VALUES('DR-3', -47.15, -126.72);   INSERT INTO Site VALUES('MSK-4', -48.87, -123.40);</code></p></li>
+<pre><code>INSERT INTO Site VALUES(&#39;DR-1&#39;, -49.85, -128.57);
+INSERT INTO Site VALUES(&#39;DR-3&#39;, -47.15, -126.72);
+INSERT INTO Site VALUES(&#39;MSK-4&#39;, -48.87, -123.40);</code></pre></li>
+</ul></li>
 </ul>
-<p><strong><em>---------- Socrative #7 ----------</em></strong>: Make family table with unique ID, names, and age</p>
+<p><strong><em>———- Socrative #7 ———-</em></strong>: Make family table with unique ID, names, and age</p>
 <p>Create a table named Family. Make fields for a unique identifier, first and last names, and age. Add a record for yourself, and one for a family member.</p>
 <ul>
 <li><p><span></span></p>
@@ -421,16 +514,22 @@ INSERT INTO Family VALUES(2, &#39;Peter&#39;, &#39;Mickley&#39;, 28);</code></pr
 </ul>
 <h3 id="exporting-a-database">Exporting a Database</h3>
 <ul>
-<li>We can save a database as an SQL file, which can be shared and imported in another database</li>
+<li>We can save a database as an SQL file, which can be shared and imported in another database
+<ul>
 <li>Also works well with Git</li>
+</ul></li>
 <li><code>File &gt; Export &gt; SQL File</code></li>
-<li>Let's take a look</li>
+<li>Let’s take a look
+<ul>
 <li>Notice the <code>IF NOT EXISTS</code>, This is a precaution to prevent overwriting tables that are already there</li>
+</ul></li>
 </ul>
 <h3 id="importing-a-csv">Importing a CSV</h3>
 <ul>
-<li>We could also import a CSV File, such as our burlap trap data</li>
+<li>We could also import a CSV File, such as our burlap trap data
+<ul>
 <li><code>File &gt; Import &gt; CSV</code></li>
+</ul></li>
 <li>This works, but the data types are conservative: all text, no NULLS</li>
 </ul>
 <h2 id="modifying-data-10-minutes">9. Modifying Data (10 minutes)</h2>
@@ -440,28 +539,34 @@ INSERT INTO Family VALUES(2, &#39;Peter&#39;, &#39;Mickley&#39;, 28);</code></pr
 <h3 id="update">UPDATE</h3>
 <ul>
 <li>We can modify using the UPDATE command</li>
-<li>Let's say we found that our MSK-4 site had the wrong lat/long, off by one degree</li>
+<li>Let’s say we found that our MSK-4 site had the wrong lat/long, off by one degree
+<ul>
 <li><code>UPDATE Site SET lat = -47.87, long = -122.4 WHERE name = 'MSK-4';</code></li>
+</ul></li>
 </ul>
-<p><strong><em>---------- Socrative #8 ----------</em></strong>: <strong>OPTIONAL</strong></p>
+<p><strong><em>———- Socrative #8 ———-</em></strong>: <strong>OPTIONAL</strong></p>
 <p>We want to change the first salinity value in the Survey table to be 0.5. What happens when we run the following query?</p>
 <ul>
 <li><code>UPDATE Survey SET reading = 0.5 WHERE quant = 'sal';</code></li>
 </ul>
 <p>It works just as we expected and changes the first salinity value to 0.5 We get an error It changes all the salinity values to 0.5</p>
-<p><strong><em>---------- Socrative #9 ----------</em></strong>: <strong>OPTIONAL</strong></p>
-<p>Write a SQL query to replace all the NULL cells in Survey.person with the string 'unknown'</p>
+<p><strong><em>———- Socrative #9 ———-</em></strong>: <strong>OPTIONAL</strong></p>
+<p>Write a SQL query to replace all the NULL cells in Survey.person with the string ‘unknown’</p>
 <ul>
 <li><code>UPDATE Survey SET person = 'unknown' WHERE person IS NULL;</code></li>
 </ul>
 <h3 id="delete">DELETE</h3>
 <ul>
-<li>To delete records, we use DELETE FROM. We can delete Frank Danforth from the Person table, he has no data</li>
-<li><code>DELETE FROM Person WHERE id = 'danforth';</code></li>
-<li>What problems might we have if we try to delete Anderson Lake instead?</li>
-<li>Our Survey table would still contain records of measurements he'd taken, but a JOIN wouldn't work anymore because lake doesn't exist
+<li>To delete records, we use DELETE FROM. We can delete Frank Danforth from the Person table, he has no data
 <ul>
-<li>That's a big problem with relational databases! It's called referential integrity</li>
+<li><code>DELETE FROM Person WHERE id = 'danforth';</code></li>
+</ul></li>
+<li>What problems might we have if we try to delete Anderson Lake instead?
+<ul>
+<li>Our Survey table would still contain records of measurements he’d taken, but a JOIN wouldn’t work anymore because lake doesn’t exist
+<ul>
+<li>That’s a big problem with relational databases! It’s called referential integrity
+<ul>
 <li>Before we delete something, we need to ensure that all references between tables can be resolved</li>
 <li>A few options
 <ul>
@@ -471,6 +576,8 @@ INSERT INTO Family VALUES(2, &#39;Peter&#39;, &#39;Mickley&#39;, 28);</code></pr
 <li>Other databases like MySQL can have these set up to happen automatically.</li>
 </ul></li>
 </ul></li>
+</ul></li>
+</ul></li>
 </ul>
 <h2 id="calculating-new-values-if-time">10. Calculating New Values (if time)</h2>
 <ul>
@@ -478,7 +585,7 @@ INSERT INTO Family VALUES(2, &#39;Peter&#39;, &#39;Mickley&#39;, 28);</code></pr
 <ul>
 <li><code>SELECT taken, reading / 100 FROM Survey WHERE person='roe' AND quant='sal';</code></li>
 </ul></li>
-<li>Use UNION to combine with everyone else's
+<li>Use UNION to combine with everyone else’s
 <ul>
 <li><code>SELECT taken, reading FROM Survey WHERE person != 'roe' AND quant = 'sal' UNION SELECT taken , reading / 100 FROM Survey WHERE person='roe' AND quant='sal';</code></li>
 </ul></li>
@@ -489,31 +596,39 @@ INSERT INTO Family VALUES(2, &#39;Peter&#39;, &#39;Mickley&#39;, 28);</code></pr
 </ul>
 <h3 id="setup">Setup</h3>
 <ul>
-<li>Let's copy the survey.db database to our R Project folder &amp; open our project</li>
+<li>Let’s copy the survey.db database to our R Project folder &amp; open our project</li>
 <li>Make a new R script Database.R (<strong>note</strong>: dropbox link)</li>
-<li>We need to install and load some libraries</li>
-<li><code>install.packages(&quot;RSQLite&quot;)</code></li>
+<li>We need to install and load some libraries
+<ul>
+<li><code>install.packages("RSQLite")</code></li>
 <li><code>library(RSQLite) library(dplyr)</code></li>
+</ul></li>
 </ul>
 <h3 id="connecting-simple-functions">Connecting &amp; Simple Functions</h3>
 <ul>
-<li>In order to use R functions with a database, we need to make a connection and save it</li>
-<li><code>conn &lt;- dbConnect(drv = SQLite(), dbname = &quot;data/survey.db&quot;)</code>
+<li>In order to use R functions with a database, we need to make a connection and save it
+<ul>
+<li><code>conn &lt;- dbConnect(drv = SQLite(), dbname = "data/survey.db")</code>
 <ul>
 <li>Note: other databases (MySQL) often require a username and password as well</li>
 </ul></li>
 <li>Now, the connection info is stored in the variable con</li>
-<li>We can get some simple information</li>
+</ul></li>
+<li>We can get some simple information
+<ul>
 <li>List tables: <code>dbListTables(conn)</code></li>
-<li>Show fields in a table: <code>dbListFields(conn, &quot;Site&quot;)</code></li>
+<li>Show fields in a table: <code>dbListFields(conn, "Site")</code></li>
+</ul></li>
 </ul>
 <h3 id="executing-queries-in-r">Executing Queries in R</h3>
 <ul>
-<li>What we really want to do is query our database and get the resulting data into R</li>
-<li><code>coords &lt;- dbGetQuery(conn, &quot;SELECT lat, long FROM Site;&quot;)</code></li>
+<li>What we really want to do is query our database and get the resulting data into R
+<ul>
+<li><code>coords &lt;- dbGetQuery(conn, "SELECT lat, long FROM Site;")</code></li>
 <li><code>coords</code></li>
+</ul></li>
 </ul>
-<p><strong><em>---------- Socrative #10 ----------</em></strong>:</p>
+<p><strong><em>———- Socrative #10 ———-</em></strong>:</p>
 <p>Write some R code to execute one of our JOIN queries from earlier, and return the results in R</p>
 <ul>
 <li><p><span></span></p>
@@ -521,27 +636,32 @@ INSERT INTO Family VALUES(2, &#39;Peter&#39;, &#39;Mickley&#39;, 28);</code></pr
   &quot;SELECT Site.lat, Site.long, Visited.dated
   FROM Site JOIN Visited
   ON Site.name = Visited.site;&quot;)</code></pre></li>
-<li>An alternative to get an entire table</li>
-<li><p><code>person &lt;- dbReadTable(conn, &quot;Person&quot;)</code></p></li>
+<li><p>An alternative to get an entire table</p>
+<ul>
+<li><code>person &lt;- dbReadTable(conn, "Person")</code></li>
+</ul></li>
 </ul>
 <h3 id="using-databases-with-dplyr">Using Databases with dplyr</h3>
 <ul>
-<li>Instead of writing queries, we can use dplyr functions to query and filter a database</li>
+<li>Instead of writing queries, we can use dplyr functions to query and filter a database
+<ul>
 <li>We use a function called tbl()
 <ul>
-<li><code>tbl(conn, &quot;Survey&quot;)</code></li>
+<li><code>tbl(conn, "Survey")</code></li>
 </ul></li>
 <li>We can pipe the results to select and filter
 <ul>
-<li>Note: Show output before using collect, to compare</li>
+<li><p>Note: Show output before using collect, to compare</p>
+<ul>
 <li>Explain lazy queries<br />
 </li>
+</ul></li>
 <li><p><span></span></p>
 <pre><code>tbl(conn, &quot;Survey&quot;) %&gt;%
   select(person, quant, reading) %&gt;%
   filter(quant == &quot;sal&quot;) %&gt;%
   collect()</code></pre></li>
-<li>We could then graph this data:</li>
+<li><p>We could then graph this data:</p></li>
 <li><p><span></span></p>
 <pre><code>tbl(conn, &quot;Survey&quot;) %&gt;%
   select(person, quant, reading) %&gt;%
@@ -550,28 +670,35 @@ INSERT INTO Family VALUES(2, &#39;Peter&#39;, &#39;Mickley&#39;, 28);</code></pr
   ggplot(aes(x = person, y = reading)) + 
     geom_boxplot()</code></pre></li>
 </ul></li>
+</ul></li>
 </ul>
 <h3 id="inserting-data">Inserting Data</h3>
 <ul>
-<li>Inserting data: We could add a site using dbSendQuery()</li>
-<li><code>status &lt;- dbSendQuery(conn, &quot;INSERT INTO Site Values('PK-2', -45, -125);&quot;)</code>
+<li>Inserting data: We could add a site using dbSendQuery()
 <ul>
-<li>This doesn't return any result, just some status stuff</li>
+<li><code>status &lt;- dbSendQuery(conn, "INSERT INTO Site Values('PK-2', -45, -125);")</code>
+<ul>
+<li>This doesn’t return any result, just some status stuff</li>
 <li><code>status</code></li>
 <li><code>dbClearResult(status)</code></li>
 </ul></li>
 <li>And check the result
 <ul>
-<li><code>dbGetQuery(conn, &quot;SELECT * FROM Site;&quot;)</code></li>
+<li><code>dbGetQuery(conn, "SELECT * FROM Site;")</code></li>
 </ul></li>
-<li>Or we could just store a whole table into the database</li>
-<li><code>dbWriteTable(conn, name = &quot;iris&quot;, value = iris, row.names = FALSE)</code></li>
-<li><code>dbGetQuery(conn, &quot;SELECT * FROM iris;&quot;) %&gt;% head()</code></li>
+</ul></li>
+<li>Or we could just store a whole table into the database
+<ul>
+<li><code>dbWriteTable(conn, name = "iris", value = iris, row.names = FALSE)</code></li>
+<li><code>dbGetQuery(conn, "SELECT * FROM iris;") %&gt;% head()</code></li>
+</ul></li>
 </ul>
 <h3 id="disconnect-the-database">Disconnect the database</h3>
 <ul>
-<li>We need to release the database when we're done</li>
+<li>We need to release the database when we’re done
+<ul>
 <li><code>dbDisconnect(conn)</code></li>
+</ul></li>
 </ul>
 </body>
 </html>
