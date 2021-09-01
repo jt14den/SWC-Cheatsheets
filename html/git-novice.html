@@ -286,6 +286,13 @@ cat instructions.txt</code></pre>
 <li>Let’s look in our .ssh folder. We do this b/c our key might already exist!</li>
 </ol>
 <pre><code>ls -al ~/.ssh</code></pre>
+<ul>
+<li>My output<br />
+</li>
+<li>Your output is going to look a little different depending on whether or not SSH has ever been set up on the computer you are using.</li>
+<li>If you are like me, you have not set up SSH on my computer, so his output is</li>
+</ul>
+<pre><code>ls: cannot access &#39;/c/Users/Vlad Dracula/.ssh&#39;: No such file or directory</code></pre>
 <p>NEED TO FINISH with SSH instructions maybe more screen shots maybe delete my key and add again?</p>
 <h3 id="pushing-our-changes">Pushing our Changes</h3>
 <ul>
@@ -329,9 +336,9 @@ git status</code></pre>
 <h2 id="conflicts">9. Conflicts</h2>
 <h4 id="how-git-handles-conflicts">How git handles conflicts</h4>
 <ul>
-<li><p>When people are working in parallel (or on 2 computers), there’s a chance they could both edit the same file</p></li>
+<li><p>When people are working in parallel (or on 2 computers), there’s a chance they could both edit the same file &amp; line</p></li>
 <li><p>So let’s make one, and see what happens and what to do about it</p></li>
-<li><p>Make an arbitrary change to your collaborators <code>instructions.txt</code>.</p></li>
+<li><p>Make a change to your collaborators <code>instructions.txt</code>.</p></li>
 <li><p>Push that change upstream.</p></li>
 <li><p>Make (and commit) a different change to <em>your</em> <code>instructions.txt</code> <strong>on the same line as your collaborator changed</strong>.</p></li>
 <li><p><code>git push origin main</code></p></li>
