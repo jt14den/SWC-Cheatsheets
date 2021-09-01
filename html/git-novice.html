@@ -275,6 +275,7 @@ cat instructions.txt</code></pre>
 </ul>
 <p><img src="https://librarycarpentry.org/lc-git/fig/github-repo-connect.png" /></p>
 <pre><code> git remote add origin [gitURL]
+ git branch -M main
  git remote -v</code></pre>
 <h3 id="one-more-step-ssh-setup">One more step: SSH setup</h3>
 <ul>
@@ -292,8 +293,8 @@ cat instructions.txt</code></pre>
 </li>
 <li>Push our local repository to the remote
 <ul>
-<li><code>git push origin master</code></li>
-<li>Pushing branch master to origin</li>
+<li><code>git push origin main</code></li>
+<li>Pushing branch main to origin</li>
 </ul></li>
 <li>Explore the repository on github
 <ul>
@@ -301,11 +302,9 @@ cat instructions.txt</code></pre>
 </ul></li>
 <li>Show students that local changes which are NOT committed don’t end up on the remote.</li>
 <li>Ask students to discuss the difference between ‘commit’ and ‘push’.</li>
-<li>To get the latest version FROM the remote:
-<ul>
-<li><code>git pull origin master</code></li>
-</ul></li>
+<li>To get the latest version FROM the remote:</li>
 </ul>
+<pre><code>git pull origin main`</code></pre>
 <h2 id="collaborating">8. Collaborating</h2>
 <ul>
 <li>Pair students up into groups of two.</li>
@@ -315,13 +314,13 @@ cat instructions.txt</code></pre>
 </ul></li>
 </ul>
 <pre><code>cd ~/Desktop
-git clone https://github.com/mickley/guacamole.git ~/Desktop/james-guacamole
+git clone https://github.com/jt14den/guacamole.git ~/Desktop/james-guacamole
 cd james-guacamole</code></pre>
 <ul>
 <li>Make changes and push back to the collaborator’s repository.</li>
 <li>Back in your original repository:</li>
 </ul>
-<pre><code>git pull origin master
+<pre><code>git pull origin main
 git status</code></pre>
 <ul>
 <li>Pull the collaborators changes to your own repository.</li>
@@ -335,11 +334,11 @@ git status</code></pre>
 <li><p>Make an arbitrary change to your collaborators <code>instructions.txt</code>.</p></li>
 <li><p>Push that change upstream.</p></li>
 <li><p>Make (and commit) a different change to <em>your</em> <code>instructions.txt</code> <strong>on the same line as your collaborator changed</strong>.</p></li>
-<li><p><code>git push origin master</code></p></li>
+<li><p><code>git push origin main</code></p></li>
 <li><p>What happened? Git detected overlap and prevented us from messing it up</p></li>
 <li><p>We now have to get the changes from the server, and merge them with ours</p></li>
 </ul>
-<pre><code>git pull origin master
+<pre><code>git pull origin main
 git status
 cat instructions.txt</code></pre>
 <ul>
@@ -352,12 +351,24 @@ git status
 git commit &lt;...&gt;  </code></pre>
 <p>This actually is the merge:</p>
 <pre><code>git log
-git push origin master</code></pre>
+git push origin main</code></pre>
 <ul>
-<li>In practice, it’s a good idea to run <code>git pull origin master</code> before making changes</li>
+<li>In practice, it’s a good idea to run <code>git pull origin main</code> before making changes</li>
 <li>Show them how to comment on a diff in Github</li>
 <li>Merging is another reason to split up changes into small groups of files</li>
 </ul>
+<h2 id="fork-and-create-a-pull-request-practice-larger-scale">Fork and Create a PULL REQUEST practice (larger scale)</h2>
+<ol type="1">
+<li>Go to this repository I made: https://github.com/ucla-data-archive/git-collaboration</li>
+<li>Click on the ‘fork’ - this will make a copy of my repo into your account - notice how they are linked</li>
+<li>Inside the countries folder, edit one country and provide the information needed</li>
+<li>Add a commit message and save.</li>
+<li>Navigate to the repository home page, you should see a note above the files “This branch is 1 commit ahead of jt14den:master.” with a “Pull Request” link towards the right.</li>
+<li>Click on the “Pull Request” and then ’Create pull request button” - leave a short message and add to it if you need to say more, then “Create pull request”</li>
+<li>This will send a message to me (the owner of the repository you forked from), that you have changes you want me to incorporate in my repository.</li>
+<li>I’ll merge your changes, initiate a discussion about your changes, or resolve conflicts if needed.</li>
+<li>This is how changes and improvements are incorporated in the Carpentries and most big coding projects</li>
+</ol>
 <h2 id="branching">15. Branching</h2>
 <ul>
 <li>Branching is just collaboration with yourself.<br />

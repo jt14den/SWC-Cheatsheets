@@ -281,6 +281,7 @@ cat instructions.txt
 
 ~~~
  git remote add origin [gitURL]
+ git branch -M main
  git remote -v
 ~~~
 
@@ -288,6 +289,7 @@ cat instructions.txt
 
 -   SSH is now required and more secure, but it's more complicated to setup.
 -   SORRY!!! 
+  
 1. Let's look in our .ssh folder. We do this b/c our key might already exist! 
 
 ~~~
@@ -303,16 +305,17 @@ maybe delete my key and add again?
 
 -   The name origin is the local nickname for the remote repository.  
 -   Push our local repository to the remote
-    -   `git push origin master`
-    -   Pushing branch master to origin
+    -   `git push origin main`
+    -   Pushing branch main to origin
 -   Explore the repository on github
     -   Viewing files, seeing history of file, editing
 -   Show students that local changes which are NOT committed don't end up on the remote.
 -   Ask students to discuss the difference between 'commit' and 'push'.
 -   To get the latest version FROM the remote:
-    -   `git pull origin master`
 
-
+~~~
+git pull origin main`
+~~~
 
 ## 8. Collaborating ##
 
@@ -322,7 +325,7 @@ maybe delete my key and add again?
 
 ~~~
 cd ~/Desktop
-git clone https://github.com/mickley/guacamole.git ~/Desktop/james-guacamole
+git clone https://github.com/jt14den/guacamole.git ~/Desktop/james-guacamole
 cd james-guacamole
 ~~~
 
@@ -330,7 +333,7 @@ cd james-guacamole
 -   Back in your original repository:
 
 ~~~
-git pull origin master
+git pull origin main
 git status
 ~~~
 
@@ -342,18 +345,17 @@ git status
 
 -   When people are working in parallel (or on 2 computers), there's a chance they could both edit the same file 
 -   So let's make one, and see what happens and what to do about it
-
 -   Make an arbitrary change to your collaborators `instructions.txt`.
 -   Push that change upstream.
 -   Make (and commit) a different change to _your_ `instructions.txt` **on the same
     line as your collaborator changed**.
--   `git push origin master`
+-   `git push origin main`
 
 -   What happened?  Git detected overlap and prevented us from messing it up
 -   We now have to get the changes from the server, and merge them with ours
 
 ~~~
-git pull origin master
+git pull origin main
 git status
 cat instructions.txt
 ~~~
@@ -372,12 +374,25 @@ This actually is the merge:
 
 ~~~
 git log
-git push origin master
+git push origin main
 ~~~
 
--   In practice, it's a good idea to run `git pull origin master` before making changes
+-   In practice, it's a good idea to run `git pull origin main` before making changes
 -   Show them how to comment on a diff in Github
 -   Merging is another reason to split up changes into small groups of files
+
+
+## Fork and Create a PULL REQUEST practice (larger scale)
+
+1. Go to this repository I made:  https://github.com/ucla-data-archive/git-collaboration
+2. Click on the 'fork'  - this will make a copy of my repo into your account - notice how they are linked
+3. Inside the countries folder, edit one country and provide the information needed 
+4. Add a commit message and save. 
+5. Navigate to the repository home page, you should see a note above the files "This branch is 1 commit ahead of jt14den:master." with a "Pull Request" link towards the right. 
+6. Click on the "Pull Request" and then 'Create pull request button" - leave a short message and add to it if you need to say more, then "Create pull request"
+7. This will send a message to me (the owner of the repository you forked from), that you have changes you want me to incorporate in my repository.
+8. I'll merge your changes, initiate a discussion about your changes, or resolve conflicts if needed. 
+9. This is how changes and improvements are incorporated in the Carpentries and most big coding projects
 
 ## 15. Branching ##
 
