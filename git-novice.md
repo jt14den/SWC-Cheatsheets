@@ -296,6 +296,14 @@ cat instructions.txt
 ls -al ~/.ssh
 ~~~
 
+* My output  
+* Your output is going to look a little different depending on whether or not SSH has ever been set up on the computer you are using. 
+* If you are like me, you have not set up SSH on my computer, so his output is 
+
+~~~
+ls: cannot access '/c/Users/Vlad Dracula/.ssh': No such file or directory
+~~~
+
 NEED TO FINISH with SSH instructions 
 maybe more screen shots 
 maybe delete my key and add again? 
@@ -343,9 +351,9 @@ git status
 ## 9. Conflicts ##
 #### How git handles conflicts
 
--   When people are working in parallel (or on 2 computers), there's a chance they could both edit the same file 
+-   When people are working in parallel (or on 2 computers), there's a chance they could both edit the same file & line 
 -   So let's make one, and see what happens and what to do about it
--   Make an arbitrary change to your collaborators `instructions.txt`.
+-   Make a change to your collaborators `instructions.txt`.
 -   Push that change upstream.
 -   Make (and commit) a different change to _your_ `instructions.txt` **on the same
     line as your collaborator changed**.
