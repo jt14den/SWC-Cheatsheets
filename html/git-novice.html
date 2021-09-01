@@ -25,8 +25,12 @@
 <h1 class="title">Git Guacamole</h1>
 <p class="subtitle">Novice Git Lesson</p>
 </header>
-<p>*Credits to: 1. Bryon Smith (<a href="https://github.com/bsmith89">@bsmith89</a>) for this. He started <a href="https://github.com/bsmith89/git-novice-outline">this lesson</a> &amp; 2. Dr. James Mickley <span class="citation" data-cites="mickley">@mickley</span> who enhanced and extended.</p>
-<p>I’ve altered it a bit.</p>
+<p><strong>Credits to:</strong></p>
+<ol type="1">
+<li>Bryon Smith (<a href="https://github.com/bsmith89">@bsmith89</a>) for this. He started <a href="https://github.com/bsmith89/git-novice-outline">this lesson</a> &amp;</li>
+<li>Dr. James Mickley <span class="citation" data-cites="mickley">@mickley</span> who enhanced and extended.</li>
+</ol>
+<p>I’ve altered it a bit. Added the part on SSH keys.</p>
 <h2 id="pre-workshop-setup">Pre-Workshop Setup</h2>
 <pre><code>mv ~/.gitconfig ~/.gitconfig~
 mv ~/.bash_aliases ~/.bash_aliases~
@@ -94,17 +98,19 @@ git init</code></pre>
 <h2 id="tracking-changes">4. Tracking changes</h2>
 <h4 id="recording-changes-checking-status-and-adding-notes">Recording changes, checking status, and adding notes</h4>
 <ul>
-<li><p><code>nano instructions.txt</code></p></li>
-<li><p>Write a super simple recipe (with bullet points)</p>
+<li><code>nano instructions.txt</code></li>
+<li>Write a super simple recipe (with bullet points)
 <ul>
 <li>Chop avocados, squeeze lime, add salt, and mix well</li>
 </ul></li>
-<li><p><code>git status</code></p>
+<li><code>git status</code>
 <ul>
 <li>One untracked file</li>
+</ul></li>
 </ul>
 <pre><code>git add instruction.txt
-git status</code></pre></li>
+git status</code></pre>
+<ul>
 <li><p>Now git knows to keep track of instructions.txt, but it hasn’t recorded changes yet</p></li>
 <li><p><code>git commit</code></p>
 <ul>
@@ -136,9 +142,10 @@ git status</code></pre></li>
 </ul>
 <pre><code>git status
 git add instructions.txt
-git commit -m &quot;Edited the guacamole instructions</code></pre>
+git commit -m &quot;Edited the guacamole instructions
+# what do you predict this will do?
+git log</code></pre>
 <ul>
-<li><p><code>git log</code></p></li>
 <li><p>Show image of the three “areas” of git:</p></li>
 <li><p><a href="https://hackmd.io/@timdennis/HJ0a0nuBD#/10" class="uri">https://hackmd.io/@timdennis/HJ0a0nuBD#/10</a></p></li>
 <li><p>Think of commit as taking a snapshot,</p></li>
@@ -148,6 +155,10 @@ git commit -m &quot;Edited the guacamole instructions</code></pre>
 <li>Lets us only commit some of our file changes.</li>
 <li>Keep changes with a related theme together</li>
 </ul></li>
+<li><p>Why might we want to do this?</p></li>
+<li><p>Yeah, this let’s us be working on multiple files and bundle up changes that relate.</p></li>
+<li><p>There’s an adage of committing early and often - we also like smaller commits</p></li>
+<li><p>This makes the commits easier to understand and gives us more flexibilty on rolling back.</p></li>
 </ul>
 <p><strong><em>———- Socrative #2 ———-</em></strong></p>
 <p><strong><em>———- Socrative #3 ———-</em></strong></p>
@@ -157,13 +168,13 @@ git commit -m &quot;Edited the guacamole instructions</code></pre>
 <li>Yes, we type:</li>
 </ul>
 <pre><code>nano ingredients.txt</code></pre>
-<p>Then in nano we:</p>
+<p>Then in nano we add:</p>
 <pre><code>2 Avocados, 
 1 lime, 
 2 tsp salt</code></pre>
 <ul>
 <li>Let’s see what we’ve done.</li>
-<li>Waht command do we use to see what we’ve done?</li>
+<li>What command do we use to see the state of our repository?</li>
 </ul>
 <pre><code>git status
 git add ingredients.txt
@@ -178,19 +189,27 @@ git status
 git commit -m &quot;Added onion to the recipe&quot;</code></pre>
 <ul>
 <li>Discuss changes to multiple files</li>
-<li><code>git log</code></li>
+</ul>
+<pre><code>git log</code></pre>
+<ul>
 <li>Our log is getting long, some solutions:
 <ul>
+<li>navigate by:</li>
 <li>d = down, u = up, q = quit</li>
-<li><code>git log -2</code></li>
-<li><code>git log --oneline</code></li>
+<li>Your up and down arrows work too</li>
 </ul></li>
 </ul>
+<pre><code>git log -2
+git log --oneline</code></pre>
 <p><strong><em>———- Socrative #4 ———-</em></strong></p>
 <h2 id="exploring-history">5. Exploring History</h2>
 <h4 id="identifying-and-recovering-old-versions-of-files-reviewing-changes">Identifying and recovering old versions of files, reviewing changes</h4>
 <ul>
 <li>Let’s add another step to instructions.txt: <strong>Squeeze orange</strong></li>
+</ul>
+<pre><code>nano instructions.txt </code></pre>
+<ul>
+<li>add “Squeeze orange”</li>
 <li>Remember when we learned that each commit has an identifier?
 <ul>
 <li>The most recent commit is called HEAD,</li>

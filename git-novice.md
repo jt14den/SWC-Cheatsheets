@@ -3,11 +3,12 @@ title: Git Guacamole
 subtitle: Novice Git Lesson
 ...
 
-*Credits to:
+**Credits to:**
+
 1. Bryon Smith ([&#64;bsmith89](https://github.com/bsmith89)) for this.  He started [this lesson](https://github.com/bsmith89/git-novice-outline) & 
 2. Dr. James Mickley @mickley who enhanced and extended. 
 
-I've altered it a bit. 
+I've altered it a bit. Added the part on SSH keys. 
 
 ## Pre-Workshop Setup ##
 
@@ -88,6 +89,7 @@ git status
     -   Chop avocados, squeeze lime, add salt, and mix well
 -   `git status`
     -   One untracked file
+
 ~~~
 git add instruction.txt
 git status
@@ -126,9 +128,9 @@ git commit -m "Edited the guacamole instructions"
 git status
 git add instructions.txt
 git commit -m "Edited the guacamole instructions
+# what do you predict this will do?
+git log
 ~~~
-    
--   `git log`
 
 -   Show image of the three "areas" of git:
 -   <https://hackmd.io/@timdennis/HJ0a0nuBD#/10>
@@ -138,12 +140,15 @@ git commit -m "Edited the guacamole instructions
 -  Staging area
     -  Lets us only commit some of our file changes. 
     -  Keep changes with a related theme together
+ -  Why might we want to do this? 
+ -  Yeah, this let's us be working on multiple files and bundle up changes that relate.
+ -  There's an adage of committing early and often - we also like smaller commits
+ -  This makes the commits easier to understand and gives us more flexibilty on rolling back.
 
 
 ***---------- Socrative #2 ----------***
 
 ***---------- Socrative #3 ----------***
-
 
 - Let's add a new file `ingredients.txt`: 
 - How do we do this? 
@@ -153,7 +158,7 @@ git commit -m "Edited the guacamole instructions
 nano ingredients.txt
 ~~~
 
-Then in nano we: 
+Then in nano we add: 
 
 ~~~
 2 Avocados, 
@@ -162,7 +167,7 @@ Then in nano we:
 ~~~
 
 * Let's see what we've done. 
-* Waht command do we use to see what we've done? 
+* What command do we use to see the state of our repository? 
 
 ~~~
 git status
@@ -181,12 +186,20 @@ git commit -m "Added onion to the recipe"
 ~~~
 
 -   Discuss changes to multiple files
--   `git log`
--   Our log is getting long, some solutions:
-    -   d = down, u = up, q = quit
-    -   `git log -2`
-    -   `git log --oneline`
 
+~~~
+git log
+~~~ 
+
+-   Our log is getting long, some solutions:
+    -   navigate by: 
+    -   d = down, u = up, q = quit
+    -   Your up and down arrows work too
+
+~~~
+git log -2
+git log --oneline
+~~~
 
 ***---------- Socrative #4 ----------***
 
@@ -195,6 +208,12 @@ git commit -m "Added onion to the recipe"
 #### Identifying and recovering old versions of files, reviewing changes
 
 -   Let's add another step to instructions.txt: **Squeeze orange**
+
+~~~ 
+nano instructions.txt 
+~~~
+
+- add "Squeeze orange" 
 -   Remember when we learned that each commit has an identifier?
     -   The most recent commit is called HEAD, 
 
@@ -220,8 +239,7 @@ git status
 cat instructions.txt
 ~~~
 
-- Notice that reverting a small change is much easier becuase we've split
-    our work up into multiple files.
+- Notice that reverting a small change is much easier becuase we've split our work up into multiple files.
 
 
 ***---------- Socrative #5 ----------***
