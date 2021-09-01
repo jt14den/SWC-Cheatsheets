@@ -287,13 +287,100 @@ cat instructions.txt</code></pre>
 </ol>
 <pre><code>ls -al ~/.ssh</code></pre>
 <ul>
-<li>My output<br />
-</li>
+<li>My output shows an empty folder</li>
 <li>Your output is going to look a little different depending on whether or not SSH has ever been set up on the computer you are using.</li>
-<li>If you are like me, you have not set up SSH on my computer, so his output is</li>
+<li>If you have not set up SSH on you computer, your output will be like this:</li>
 </ul>
 <pre><code>ls: cannot access &#39;/c/Users/Vlad Dracula/.ssh&#39;: No such file or directory</code></pre>
-<p>NEED TO FINISH with SSH instructions maybe more screen shots maybe delete my key and add again?</p>
+<ul>
+<li>If SSH has been set up on the computer you’re using, the public and private key pairs will be listed.</li>
+<li>The file names are either <code>id_ed25519/id_ed25519.pub</code> or <code>id_rsa/id_rsa.pub</code> depending on how the key pairs were set up.</li>
+<li>Who has your keys set?</li>
+<li>Since they don’t exist on my computer, I’ll uses this command to create them:</li>
+</ul>
+<pre><code>$ ssh-keygen -t ed25519 -C &quot;vlad@tran.sylvan.ia&quot;</code></pre>
+<p>If you are using a legacy system that doesn’t support the Ed25519 algorithm, use:</p>
+<pre><code>$ ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</code></pre>
+<pre><code>Generating public/private ed25519 key pair.
+Enter file in which to save the key (/c/Users/Vlad Dracula/.ssh/id_ed25519):</code></pre>
+<ul>
+<li>We want to use the default file, so just press <kbd>Enter</kbd>.</li>
+</ul>
+<pre><code>Created directory &#39;/c/Users/Vlad Dracula/.ssh&#39;.
+Enter passphrase (empty for no passphrase):</code></pre>
+<ul>
+<li>Now, it is prompting us for a passphrase.<br />
+</li>
+<li>You can leave blank if you are the only one who uses your machine.</li>
+<li>if not create a passphrase.<br />
+</li>
+<li>Be sure to use something memorable or save your passphrase somewhere, as there is no “reset my password” option.</li>
+</ul>
+<pre><code>Enter same passphrase again:</code></pre>
+<ul>
+<li>After entering the same passphrase a second time, we receive the confirmation</li>
+</ul>
+<pre><code>Your identification has been saved in /c/Users/Vlad Dracula/.ssh/id_ed25519
+Your public key has been saved in /c/Users/Vlad Dracula/.ssh/id_ed25519.pub
+The key fingerprint is:
+SHA256:SMSPIStNyA00KPxuYu94KpZgRAYjgt9g4BA4kFy3g1o vlad@tran.sylvan.ia
+The key&#39;s randomart image is:
++--[ED25519 256]--+
+|^B== o.          |
+|%*=.*.+          |
+|+=.E =.+         |
+| .=.+.o..        |
+|....  . S        |
+|.+ o             |
+|+ =              |
+|.o.o             |
+|oo+.             |
++----[SHA256]-----+</code></pre>
+<ul>
+<li><p>The “identification” is actually the private key.</p></li>
+<li><p>You should never share it.<br />
+</p></li>
+<li><p>The public key is appropriately named.<br />
+</p></li>
+<li><p>The “key fingerprint” is a shorter version of a public key.</p></li>
+<li><p>Now that we have generated the SSH keys, we will find the SSH files when we check.</p></li>
+</ul>
+<pre><code>ls -al ~/.ssh</code></pre>
+<pre><code>drwxr-xr-x 1 Vlad Dracula 197121   0 Jul 16 14:48 ./
+drwxr-xr-x 1 Vlad Dracula 197121   0 Jul 16 14:48 ../
+-rw-r--r-- 1 Vlad Dracula 197121 419 Jul 16 14:48 id_ed25519
+-rw-r--r-- 1 Vlad Dracula 197121 106 Jul 16 14:48 id_ed25519.pub</code></pre>
+<p>Now we run the command to check if GitHub can read our authentication.</p>
+<pre><code>ssh -T git@github.com</code></pre>
+<pre><code>The authenticity of host &#39;github.com (192.30.255.112)&#39; can&#39;t be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? y
+Please type &#39;yes&#39;, &#39;no&#39; or the fingerprint: yes
+Warning: Permanently added &#39;github.com&#39; (RSA) to the list of known hosts.
+git@github.com: Permission denied (publickey).</code></pre>
+<ul>
+<li>What happened?</li>
+<li>Right, we forgot that we need to give GitHub our public key!<br />
+</li>
+<li>First, we need to copy the public key. Be sure to include the <code>.pub</code> at the end, otherwise you’re looking at the private key.</li>
+</ul>
+<pre><code>cat ~/.ssh/id_ed25519.pub</code></pre>
+<pre><code>ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDmRA3d51X0uu9wXek559gfn6UFNF69yZjChyBIU2qKI vlad@tran.sylvan.ia</code></pre>
+<ol type="1">
+<li>Now, going to GitHub.com, click on your profile icon in the top right corner to get the drop-down menu.<br />
+</li>
+<li>Click “Settings,” then on the settings page, click “SSH and GPG keys,” on the left side “Account settings” menu.<br />
+</li>
+<li>Click the “New SSH key” button on the right side.</li>
+<li>Now, you can add the title (I us “Tim’s Laptop” so he can remember where the original key pair files are located), paste your SSH key into the field, and click the “Add SSH key” to complete the setup.</li>
+</ol>
+<p>Now that we’ve set that up, let’s check our authentication again from the command line.</p>
+<pre><code>$ ssh -T git@github.com</code></pre>
+<pre><code>Hi Tim! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</code></pre>
+<ul>
+<li>Whew! give yourself a hand! That was a lot.</li>
+</ul>
 <h3 id="pushing-our-changes">Pushing our Changes</h3>
 <ul>
 <li>The name origin is the local nickname for the remote repository.<br />
