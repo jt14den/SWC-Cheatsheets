@@ -3,8 +3,6 @@ title: Git Guacamole
 subtitle: Novice Git Lesson
 ...
 
-TODO: master & main 
-
 *Credits to:
 1. Bryon Smith ([&#64;bsmith89](https://github.com/bsmith89)) for this.  He started [this lesson](https://github.com/bsmith89/git-novice-outline) & 
 2. Dr. James Mickley @mickley who enhanced and extended. 
@@ -13,12 +11,15 @@ I've altered it a bit.
 
 ## Pre-Workshop Setup ##
 
--   `mv ~/.gitconfig ~/.gitconfig~`
--   `mv ~/.bash_aliases ~/.bash_aliases~`
--   `PS1="$ "`
+~~~
+mv ~/.gitconfig ~/.gitconfig~
+mv ~/.bash_aliases ~/.bash_aliases~
+PS1="$ "
+~~~
+
 -   Open lesson for PhDComics slide: <http://swcarpentry.github.io/git-novice/01-basics/>
--   Open hackmd slides 
--   Etherpad 
+-   Open hackmd slides <https://hackmd.io/@timdennis/HJ0a0nuBD#/>
+-   Etherpad <https://pad.carpentries.org/2021-rt2>
 
 ### Open up Socrative again ###
 -   You can import my quiz with 
@@ -40,10 +41,14 @@ I've altered it a bit.
 ## 2. Setting up Git ##
 
 - Git needs to know who we are (so we know who changed what)
-    -   `git config --global user.name "Vlad Dracula"`
-    -   `git config --global user.email "vlad@tran.sylvan.ia"`
-    -   `git config --global color.ui "auto"`
-    -   `git config --global core.editor "nano -w"`
+
+~~~
+git config --global user.name "Vlad Dracula"
+git config --global user.email "vlad@tran.sylvan.ia"
+git config --global color.ui "auto"
+git config --global core.editor "nano -w"
+~~~ 
+
 -   `git config --list`
 -   To get help
     -   `git config --help` or git <command> -h
@@ -60,11 +65,12 @@ I've altered it a bit.
 
 ~~~
 cd ~/Desktop
-mkdir guacamole; cd guacamole
+mkdir guacamole
+cd guacamole
 git init
 ~~~
 
--   We can check that it's there.  That `.git` folder stores all the data, don't delete!
+-  We can check that it's there.  That `.git` folder stores all the data, don't delete!
 
 ~~~
 ls -F -a`
@@ -344,9 +350,12 @@ git status
 git commit <...>  
 ~~~~
 
-This actually is the merge
--   `git log`
--   `git push origin master`
+This actually is the merge:
+
+~~~
+git log
+git push origin master
+~~~
 
 -   In practice, it's a good idea to run `git pull origin master` before making changes
 -   Show them how to comment on a diff in Github
